@@ -1,0 +1,15 @@
+Sekertaris : Akun - Laporan akun - Tabel akun
+Tabel : Button tambah - Tabel\
+Isi tabel : Nama - Email - NIP - Password - Jabatan - Bidang
+
+
+Kepala Dinas : Dashboard Chart 4 - Navbar (Lihat Data Program - Lihat Progress Program - Lihat Laporan Akhir )
+Masing - masing menu memiliki button cetak - export
+
+Kepala Bidang : Dashboard chart 4 - Navbar (Kelola Data Akun Pegawai - Kelola Data Program - Kelola Data Kegiatan - Kelola Data Sub Kegiatan )
+Masing masing menu berisi tabel button crud (di tabel sub kegiatan keluar modal untuk mendistribusikan sub kegiatan ke pegawai)
+dimasing masing menu dapat melakukan cek progress secara keseluruhan dari program sampai sub kegiatan
+
+Pegawai : Dashboard 4 - Navbar (Pelaksanaan Sub Kegiatan - Lihat Capaian Pelaksanaan )
+Masing masing menu berisi tabel dengan button crud, di dalam pelaksanaan keluar modal untuk memberikan laporan dokumentasi untuk di upload/
+

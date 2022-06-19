@@ -400,7 +400,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="/dashboardSekertaris"
+                  href="/dashboardKepalaDinas"
                   aria-expanded="false"
                   ><i class="mdi mdi-view-dashboard"></i
                   ><span class="hide-menu">Dashboard</span></a
@@ -409,19 +409,28 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="/kelolaDataAkun"
+                  href="/dataProgram"
                   aria-expanded="false"
                   ><i class="mdi mdi-chart-bar"></i
-                  ><span class="hide-menu">Kelola Data Akun</span></a
+                  ><span class="hide-menu">Data Program</span></a
                 >
               </li>
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="/lihatLaporanAkun"
+                  href="/progresProgram"
                   aria-expanded="false"
                   ><i class="mdi mdi-chart-bubble"></i
-                  ><span class="hide-menu">Lihat Laporan Akun</span></a
+                  ><span class="hide-menu">Progres Program</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/laporanAkhir"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-blur-linear"></i
+                  ><span class="hide-menu">Lihat Laporan Akhir</span></a
                 >
               </li>
             </ul>

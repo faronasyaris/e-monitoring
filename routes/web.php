@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
+Route::group(['mddileware' => 'guest'], function () {
+    Route::get('/', function () {
+        return redirect()->intended('/login');
+    });
+
+    Route::get('/login', [UserController::class, 'loginView']);
+    Route::post('/login', [UserController::class, 'login']);
 });
+
+// Route::get(['middleware' => 'auth'], function () {
+//     Route::get('/logout', [UserController::class, 'logout']);
+// });
+
+// Route::get(['middleware' => ['auth', 'isHeadDivision']], function () {
+// });
+
+// Route::get(['middleware' => ['auth', 'isSecretary']], function () {
+// });
+
+// Route::get(['middleware' => ['auth', 'isEmployee']], function () {
+// });
+
+
 
 //Sekertaris
 Route::get('/dashboardSekertaris', function () {

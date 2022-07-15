@@ -15,7 +15,7 @@ class CreateSubActivityOutputsTable extends Migration
     {
         Schema::create('sub_activity_outputs', function (Blueprint $table) {
             $table->id();
-            $table->integet('target');
+            $table->integer('target');
             $table->string('description');
             $table->foreignId('sub_activity_id');
             $table->timestamps();

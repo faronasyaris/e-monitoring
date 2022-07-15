@@ -24,25 +24,26 @@ Route::group(['mddileware' => 'guest'], function () {
     Route::post('/login', [UserController::class, 'login']);
 });
 
-// Route::get(['middleware' => 'auth'], function () {
-//     Route::get('/logout', [UserController::class, 'logout']);
-// });
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/logout', [UserController::class, 'logout']);
+    Route::get('/dashboard',[UserController::class,'dashboard']);
+});
 
-// Route::get(['middleware' => ['auth', 'isHeadDivision']], function () {
-// });
+Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
+});
 
-// Route::get(['middleware' => ['auth', 'isSecretary']], function () {
-// });
+Route::group(['middleware' => ['auth', 'isSecretary']], function () {
+});
 
-// Route::get(['middleware' => ['auth', 'isEmployee']], function () {
-// });
+Route::group(['middleware' => ['auth', 'isEmployee']], function () {
+});
 
 
 
 //Sekertaris
-Route::get('/dashboardSekertaris', function () {
-    return view('secretary/dashboard');
-});
+// Route::get('/dashboardSekertaris', function () {
+//     return view('secretary/dashboard');
+// });
 Route::get('/kelolaDataAkun', function () {
     return view('secretary/kelolaDataAkun');
 });
@@ -54,9 +55,9 @@ Route::get('/lihatLaporanAkun', function () {
 });
 
 //Kepala Dinas
-Route::get('/dashboardKepalaDinas', function () {
-    return view('headOfDepartment/dashboard');
-});
+// Route::get('/dashboardKepalaDinas', function () {
+//     return view('headOfDepartment/dashboard');
+// });
 Route::get('/dataProgram', function () {
     return view('headOfDepartment/dataProgram');
 });
@@ -67,9 +68,9 @@ Route::get('/laporanAkhir', function () {
     return view('headOfDepartment/laporanAkhir');
 });
 //Kepala Bidang
-Route::get('/dashboardKepalaBidang', function () {
-    return view('headOfDivision/dashboard');
-});
+// Route::get('/dashboardKepalaBidang', function () {
+//     return view('headOfDivision/dashboard');
+// });
 Route::get('/kelolaDataProgram', function () {
     return view('headOfDivision/kelolaDataProgram');
 });

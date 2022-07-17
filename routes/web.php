@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {
     Route::get('/account',[UserController::class,'listAccount']);
+    Route::post('/account',[UserController::class,'store']);
+    Route::get('/field/{id}/head',[FieldController::class,'checkField']);
 });
 
 Route::group(['middleware' => ['auth', 'isEmployee']], function () {

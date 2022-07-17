@@ -62,8 +62,32 @@ class UserController extends Controller
 
     public function listAccount()
     {
+        $kepalaDinas = User::where('role','Kepala Dinas')->first();
         $masters = User::where('role', 'Sekretaris')->orWhere('role', 'Kepala Dinas')->get();
         $fields = Field::with('getUser')->get();
-        return view('secretary.listField', compact('fields','masters'));
+        return view('secretary.listAccount', compact('fields','masters','kepalaDinas'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'nip'=>'required',
+            'role'=>'required'
+        ]);
+
+        $password = bcrypt($request->nip);
+        User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>$password,
+            'nip'=>$request->nip,
+            'role'=>$request->role,
+            'field_id'=>$request->field
+        ]);
+
+        toast('Data Akun berhasil ditambah','success');
+        return back();
     }
 }

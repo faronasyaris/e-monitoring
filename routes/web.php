@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FieldController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {
+    Route::get('/account',[UserController::class,'listAccount']);
 });
 
 Route::group(['middleware' => ['auth', 'isEmployee']], function () {

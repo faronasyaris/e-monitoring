@@ -9,4 +9,8 @@ class Field extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function getUser(){
+        return $this->hasMany(User::class,'field_id');
+    }
 }

@@ -8,193 +8,174 @@ Dashboard
 @include('layouts.secretary-sidebar')
 @endsection
 
-@section("content")
+@section('content')
 
-<div class="row">
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-cyan text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-view-dashboard"></i>
-        </h1>
-        <h6 class="text-white">Dashboard</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-4 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-success text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-chart-areaspline"></i>
-        </h1>
-        <h6 class="text-white">Charts</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-warning text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-collage"></i>
-        </h1>
-        <h6 class="text-white">Widgets</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-danger text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-border-outside"></i>
-        </h1>
-        <h6 class="text-white">Tables</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-info text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-arrow-all"></i>
-        </h1>
-        <h6 class="text-white">Full Width</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <!-- Column -->
-  <div class="col-md-6 col-lg-4 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-danger text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-receipt"></i>
-        </h1>
-        <h6 class="text-white">Forms</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-info text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-relative-scale"></i>
-        </h1>
-        <h6 class="text-white">Buttons</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-cyan text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-pencil"></i>
-        </h1>
-        <h6 class="text-white">Elements</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-success text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-calendar-check"></i>
-        </h1>
-        <h6 class="text-white">Calnedar</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-  <div class="col-md-6 col-lg-2 col-xlg-3">
-    <div class="card card-hover">
-      <div class="box bg-warning text-center">
-        <h1 class="font-light text-white">
-          <i class="mdi mdi-alert"></i>
-        </h1>
-        <h6 class="text-white">Errors</h6>
-      </div>
-    </div>
-  </div>
-  <!-- Column -->
-</div>
->
-<div class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-md-flex align-items-center">
-          <div>
-            <h4 class="card-title">Site Analysis</h4>
-            <h5 class="card-subtitle">Overview of Latest Month</h5>
-          </div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel tile">
+        <div class="x_title">
+            <h3>Dashboard</h3>
+            <div class="clearfix"></div>
         </div>
-        <div class="row">
-          <!-- column -->
-          <div class="col-lg-9">
-            <div class="flot-chart">
-              <div class="flot-chart-content" id="flot-line-chart"></div>
+        <div class="row tile_count">
+
+            <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count text-center mt-2">
+                <span class="count_top"><i class="fa fa-file"></i> Total Input Laporan</span>
+                <div class="count">0</div>
             </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="row">
-              <div class="col-6">
-                <div class="bg-dark p-10 text-white text-center">
-                  <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
-                  <h5 class="mb-0 mt-1">2540</h5>
-                  <small class="font-light">Total Users</small>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="bg-dark p-10 text-white text-center">
-                  <i class="mdi mdi-plus fs-3 font-16"></i>
-                  <h5 class="mb-0 mt-1">120</h5>
-                  <small class="font-light">New Users</small>
-                </div>
-              </div>
-              <div class="col-6 mt-3">
-                <div class="bg-dark p-10 text-white text-center">
-                  <i class="mdi mdi-cart fs-3 mb-1 font-16"></i>
-                  <h5 class="mb-0 mt-1">656</h5>
-                  <small class="font-light">Total Shop</small>
-                </div>
-              </div>
-              <div class="col-6 mt-3">
-                <div class="bg-dark p-10 text-white text-center">
-                  <i class="mdi mdi-tag fs-3 mb-1 font-16"></i>
-                  <h5 class="mb-0 mt-1">9540</h5>
-                  <small class="font-light">Total Orders</small>
-                </div>
-              </div>
-              <div class="col-6 mt-3">
-                <div class="bg-dark p-10 text-white text-center">
-                  <i class="mdi mdi-table fs-3 mb-1 font-16"></i>
-                  <h5 class="mb-0 mt-1">100</h5>
-                  <small class="font-light">Pending Orders</small>
-                </div>
-              </div>
-              <div class="col-6 mt-3">
-                <div class="bg-dark p-10 text-white text-center">
-                  <i class="mdi mdi-web fs-3 mb-1 font-16"></i>
-                  <h5 class="mb-0 mt-1">8540</h5>
-                  <small class="font-light">Online Orders</small>
-                </div>
-              </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count text-center mt-2">
+                <span class="count_top"><i class="fa fa-warning"></i> Laporan Dengan Kendala</span>
+                <div class="count">0</div>
             </div>
-          </div>
-          <!-- column -->
+            <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count text-center mt-2">
+                <span class="count_top"><i class="fa fa-check-square"></i> Laporan Diberikan Saran</span>
+                <div class="count">0</div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count text-center mt-2">
+                <span class="count_top"><i class="fa fa-clock-o"></i> Input Laporan Terakhir</span>
+                <div class="count green">
+                    <h4 class="mt-2">0</h4>
+                </div>
+            </div>
+
         </div>
-      </div>
+        <div class="clearfix"></div>
+        <hr>
+
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel tile  overflow_hidden">
+                <div class="x_title">
+                    <h2>Realisasi Pemetaan Sosial</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div style="text-align: center; margin-bottom: 17px">
+                        <span class="chart" id="pemetaan_fieldstaff" data-percent="">
+                            <span class="percent"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel tile  overflow_hidden">
+                <div class="x_title">
+                    <h2>Realisasi Penyusunan Model</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div style="text-align: center; margin-bottom: 17px">
+                        <span class="chart" id="penyusunanModel_fieldstaff" data-percent="">
+                            <span class="percent"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel tile  overflow_hidden">
+                <div class="x_title">
+                    <h2>Realisasi Pendampingan</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div style="text-align: center; margin-bottom: 17px">
+                        <span class="chart" id="pendampingan_fieldstaff" data-percent="">
+                            <span class="percent"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="x_panel tile  overflow_hidden">
+                <div class="x_title">
+                    <h2>Realisasi Penyusunan Data</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div style="text-align: center; margin-bottom: 17px">
+                        <span class="chart" id="penyusunanData_fieldstaff" data-percent="">
+                            <span class="percent"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+   
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel tile  overflow_hidden">
+            <div class="x_title">
+                <h2>Realisasi Pemetaan Sosial</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div style="text-align: center; margin-bottom: 17px">
+                    <span class="chart" id="pemetaan_fieldstaff" data-percent="">
+                        <span class="percent"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel tile  overflow_hidden">
+            <div class="x_title">
+                <h2>Realisasi Pendampingan</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div style="text-align: center; margin-bottom: 17px">
+                    <span class="chart" id="pendampingan_fieldstaff" data-percent="">
+                        <span class="percent"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 @endsection
+
+@section('script')
+<script>
+    chartDashboard('penyuluhan_fieldstaff', '#455C73');
+    chartDashboard('pemetaan_fieldstaff', '#3498DB');
+    chartDashboard('penyusunanModel_fieldstaff', '#9B59B6');
+    chartDashboard('pendampingan_fieldstaff', '#26B99A');
+    chartDashboard('penyusunanData_fieldstaff', '#BDC3C7');
+
+    function chartDashboard(id, warna) {
+
+        if (typeof($.fn.easyPieChart) === 'undefined') {
+            return;
+        }
+        // console.log('chartDashboard');
+
+        $('#' + id).easyPieChart({
+            easing: 'easeOutElastic',
+            delay: 3000,
+            barColor: warna,
+            trackColor: '#eceff3',
+            scaleColor: false,
+            lineWidth: 20,
+            trackWidth: 16,
+            lineCap: 'butt',
+            onStep: function(from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent) + "%");
+            }
+        });
+
+    };
+</script>
+@endsection
+
 
 @section('js')
 

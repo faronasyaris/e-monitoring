@@ -13,7 +13,7 @@ Data Kegiatan
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h4 class="card-title">Keola Kegiatan</h4>
+            <h4 class="card-title">Kelola Kegiatan</h4>
             <h6>{{\App\Models\Field::getField(auth()->user()->field_id)}}</h6>
             <div class="clearfix"></div>
         </div>

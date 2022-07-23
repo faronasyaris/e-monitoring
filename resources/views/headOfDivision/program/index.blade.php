@@ -20,33 +20,51 @@ Data Program
         <table id="tableProgram" class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Tahun Pelaksanaan</th>
+                    <th>No</th>
+                    <th>Nama Program</th>
+                    <th>Jumlah Kegiatan</th>
+                    <th>Jumlah Indikator</th>
+                    <th>Kinerja Indikator (%)</th>
                     <th>
                         <center>Action
                     </th>
                 </tr>
             </thead>
-         
+            <tbody>
+                @foreach($programs as $program)
+                <tr>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$program->program_name}}</td>
+                    <td class="text-center">{{count($program->getActivity)}}</td>
+                    <td class="text-center">{{count($program->getProgramIndicator)}}</td>
+                    <td class="text-center">0.0</td>
+                    <td class="text-center">
+                    <a href="/program/{{$program->id}}/manage-program" class="btn btn-sm btn-success">Manage</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
         <hr>
-        <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-user-plus"></i> Tambah Periode</button>
+        <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-user-plus"></i> Tambah Program</button>
     </div>
 </div>
 
-<div class="modal fade" id="addPeriodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="addProgramModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Tambah Periode</h4>
+                <h4 class="modal-title" id="myModalLabel">Tambah Program</h4>
             </div>
-            <form action="/period" method="post">
+            <form action="/program" method="post">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="" class="form-label">Masukan Periode Tahun</label>
-                        <input type="number" name="year" class="form-control" min="2000" max="2099" required>
+                        <label for="" class="form-label">Nama Program</label>
+                        <input type="text" name="program_name" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -68,7 +86,7 @@ Data Program
     });
     
     $('#btnTambahPeriode').on('click',function(){
-        $('#addPeriodeModal').modal('show');
+        $('#addProgramModel').modal('show');
     })
 </script>
 @endsection

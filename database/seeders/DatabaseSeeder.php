@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Periode;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(FieldSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(PeriodeSeeder::class);
     }
 }

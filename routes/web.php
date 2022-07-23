@@ -34,12 +34,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [UserController::class, 'logout']);
     Route::get('/dashboard',[UserController::class,'dashboard']);
     Route::get('/program',[ProgramController::class,'index']);
+    Route::get('/program/{id}/manage-program',[ProgramController::class,'detailProgram']);
+    Route::get('/program/{id}/tambah-kegiatan',[ActivityController::class,'create']);
+    Route::post('/program/{id}/tambah-kegiatan',[ActivityController::class,'store']);
+   
     Route::get('/kegiatan',[ActivityController::class,'index']);
+    Route::post('/kegiatan',[ActivityController::class,'store']);
     Route::get('/sub-kegiatan',[SubActivityController::class,'index']);
 });
 
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::get('/approval',[SubActivityController::class,'approval']);
+    Route::post('/program',[ProgramController::class,'store']);
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {

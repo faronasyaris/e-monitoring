@@ -38,6 +38,7 @@ Tambah Kegiatan
                         <div class="form-group">
                             <label for="message">Satuan</label>
                             <select name="unit" class="form-control" required>
+                                <option value="bulan">Bulan</option>
                                 <option value="dokumen">Dokumen</option>
                                 <option value="persen">Persen</option>
                             </select>

@@ -1,9 +1,14 @@
 <?php
 
-use App\Http\Controllers\FieldController;
+use App\Http\Controllers\ActivityController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SubActivityController;
+use App\Models\SubActivity;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +33,20 @@ Route::group(['mddileware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [UserController::class, 'logout']);
     Route::get('/dashboard',[UserController::class,'dashboard']);
+    Route::get('/program',[ProgramController::class,'index']);
+    Route::get('/kegiatan',[ActivityController::class,'index']);
+    Route::get('/sub-kegiatan',[SubActivityController::class,'index']);
 });
 
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
+    Route::get('/approval',[SubActivityController::class,'approval']);
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {
     Route::get('/account',[UserController::class,'listAccount']);
     Route::post('/account',[UserController::class,'store']);
+    Route::get('/period',[PeriodeController::class,'index']);
+    Route::post('/period',[PeriodeController::class,'store']);
     Route::get('/field/{id}/head',[FieldController::class,'checkField']);
 });
 

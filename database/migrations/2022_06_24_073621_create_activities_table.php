@@ -19,7 +19,7 @@ class CreateActivitiesTable extends Migration
             $table->date('date');
             $table->string('activity_unit_target');
             $table->string('activity_goal_indicator');
-            $table->foreignId('program_id');
+            $table->foreignId('program_id')->references('id')->on('programs')->cascadeOnDelete();
             $table->timestamps();
         });
     }

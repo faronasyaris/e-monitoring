@@ -47,7 +47,7 @@
 
                     <div class="navbar nav_title">
                         <div class="logonav" style=" width: 100%;">
-                            <center><img src="{{asset('images/Logo-3.webp')}}" alt="..." class="img-circle profile_img"></center>
+                            <center><img src="{{asset('images/logo.png')}}" alt="..." class=" profile_img" width="50%"></center>
                         </div>
                     </div>
 
@@ -118,13 +118,11 @@
 
             <!-- footer content -->
             <footer>
-                <div class="pull-right">
-                    <!-- Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a> -->
-                    Copyright © 2021. Kantor Wilayah Provinsi Kalimantan Barat.
+                <div class="pull-center">
+                    Copyright © 2022
                 </div>
                 <div class="clearfix"></div>
             </footer>
-            <!-- /footer content -->
         </div>
     </div>
 

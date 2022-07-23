@@ -13,4 +13,9 @@ class Field extends Model
     public function getUser(){
         return $this->hasMany(User::class,'field_id');
     }
+
+    public static function getField($field){
+        $field_name = Field::select('name')->where('id',$field)->first()->name;
+        return $field_name;
+    }
 }

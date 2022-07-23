@@ -20,7 +20,7 @@ Kelola Akun
         <table id="tableMaster" class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th >Nama</th>
+                    <th>Nama</th>
                     <th>Email</th>
                     <th>NIP</th>
                     <th>Jabatan</th>
@@ -202,7 +202,6 @@ Kelola Akun
 @section('js')
 <script src="{(asset('template/assets/extra-libs/multicheck/datatable-checkbox-init.js')}}"></script>
 <script src="{{asset('template/assets/extra-libs/multicheck/jquery.multicheck.js')}}"></script>
-<script src="{{asset('template/assets/extra-libs/DataTables/datatables.min.js')}}"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
 <script>
     $('.tableMaster').dataTable({
@@ -214,7 +213,6 @@ Kelola Akun
         "autoWidth": false,
         info: false,
         lengthChange: false
-
     });
 
 

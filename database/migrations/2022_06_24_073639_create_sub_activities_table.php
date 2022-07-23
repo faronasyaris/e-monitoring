@@ -15,10 +15,9 @@ class CreateSubActivitiesTable extends Migration
     {
         Schema::create('sub_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->foreignId('activity_id')->nullable();
+            $table->string('name');
             $table->string('unit_target');
-            $table->foreign('activity_id')->references('id')->on('sub_activities')->nullOnDelete();
+            $table->foreignId('activity_id')->references('id')->on('sub_activities')->cascadeOnDelete();
             $table->tinyInteger('status')->default(0);
             $table->dateTime('finished_at');
             $table->timestamps();

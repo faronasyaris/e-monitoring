@@ -15,11 +15,10 @@ class CreateProgramsTable extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('program_indicator');
-            $table->string('program_goal_indicator');
+            $table->string('program_name');
             $table->foreignId('created_id')->nullable();
             $table->foreignId('field_id')->nullable();
+            $table->foreignId('year')->references('id')->on('periodes')->cascadeOnDelete();
             $table->foreign('field_id')->references('id')->on('fields')->nullOnDelete();
             $table->foreign('created_id')->references('id')->on('users')->nullOnDelete();
             $table->timestamps();

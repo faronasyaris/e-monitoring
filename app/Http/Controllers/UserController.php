@@ -65,7 +65,7 @@ class UserController extends Controller
         $kepalaDinas = User::where('role','Kepala Dinas')->first();
         $masters = User::where('role', 'Sekretaris')->orWhere('role', 'Kepala Dinas')->get();
         $fields = Field::with('getUser')->get();
-        return view('secretary.listAccount', compact('fields','masters','kepalaDinas'));
+        return view('secretary.account.index', compact('fields','masters','kepalaDinas'));
     }
 
     public function store(Request $request)

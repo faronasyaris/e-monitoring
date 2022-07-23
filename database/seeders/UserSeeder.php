@@ -14,13 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // User::create([
-        //     'name'=>'Kepala Dinas',
-        //     'email'=>'kepaladinas@gmail.com',
-        //     'password'=>bcrypt('password'),
-        //     'NIP'=>'123456',
-        //     'role'=>'Kepala Dinas',
-        // ]);
+        User::create([
+            'name'=>'Kepala Dinas',
+            'email'=>'kepaladinas@gmail.com',
+            'password'=>bcrypt('password'),
+            'NIP'=>'123456',
+            'role'=>'Kepala Dinas',
+        ]);
         User::create([
             'name'=>'Sekretaris',
             'email'=>'sekretaris@gmail.com',

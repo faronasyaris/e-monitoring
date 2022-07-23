@@ -5,7 +5,7 @@ Dashboard
 @endsection
 
 @section('sidebar')
-@include('layouts.headOfDivision-sidebar')
+@include('layouts.headOfDepartement-sidebar')
 @endsection
 
 @section('content')

@@ -197,7 +197,8 @@ table.tile_info td p {
 }
 
 .navbar.nav_title .logonav img {
-    width: 65px;
+    margin-top: 10px;
+    width: 45px;
 }
 .nav-sm .navbar.nav_title .logonav img {
     width: 50px;

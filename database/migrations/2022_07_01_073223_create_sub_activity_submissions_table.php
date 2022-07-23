@@ -15,8 +15,8 @@ class CreateSubActivitySubmissionsTable extends Migration
     {
         Schema::create('sub_activity_submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('worker_id');
-            $table->foreignId('sub_activity_output_id');
+            $table->foreignId('worker_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('sub_activity_output_id')->references('id')->on('sub_activity_outputs')->cascadeOnDelete();
             $table->tinyInteger('status');
             $table->dateTime('approved_at');
             $table->timestamps();

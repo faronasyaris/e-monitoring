@@ -16,10 +16,10 @@ class CreateSubActivityWorkersTable extends Migration
         Schema::create('sub_activity_workers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sub_activity_id')->nullable();
-            $table->foreignId('employee_id')->nullable();
+            $table->foreignId('worker_id')->nullable();
             $table->string('submission_file')->nullable();
             $table->foreign('sub_activity_id')->references('id')->on('sub_activities')->nullOnDelete();
-            $table->foreign('employee_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('worker_id')->references('id')->on('users')->nullOnDelete();
             $table->year('year');
             $table->timestamps();
         });

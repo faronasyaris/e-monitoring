@@ -13,6 +13,14 @@ Data Program
 <div class="col-md-12 col-sm-12 col-xs-12">
 @include('layouts.notif')
 <a href="/program"> < Kembali</a>
+<div class="x_panel" style="margin-top:10px">
+        <h4 class="text-center">Nama Program</h4>
+        <p class="text-center lead">{{$program->program_name}}</p> <hr>       
+        <center>
+        <button class="btn btn-danger " > Delete</button>
+        <button class="btn btn-warning " > Edit</button>
+        </center>
+    </div>
     <div class="x_panel" style="margin-top:10px">
         <div class="x_title">
             <h4 class="card-title">Manage Program (Rincian Outcome)</h4>
@@ -42,7 +50,7 @@ Data Program
             </tbody>
         </table>
         <hr>
-        <button class="btn btn-primary " style="float:right"> <i class="fa fa-user-plus"></i> Tambah Outcome</button>
+        <button class="btn btn-primary " style="float:right"> <i class="fa fa-plus"></i> Tambah Outcome</button>
     </div>
 </div>
 
@@ -80,7 +88,7 @@ Data Program
             </tbody>
         </table>
         <hr>
-        <a href="/program/{{$program->id}}/tambah-kegiatan" class="btn btn-primary " style="float:right"> <i class="fa fa-user-plus"></i> Tambah Kegiatan</a>
+        <a href="/program/{{$program->id}}/tambah-kegiatan" class="btn btn-primary " style="float:right"> <i class="fa fa-plus"></i> Tambah Kegiatan</a>
     </div>
 </div>
 

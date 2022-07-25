@@ -11,6 +11,8 @@ Data Program
 @section("content")
 @include('sweetalert::alert')
 <div class="col-md-12 col-sm-12 col-xs-12">
+@include('layouts.notif')
+
     <div class="x_panel">
         <div class="x_title">
             <h4 class="card-title">Kelola Program {{date('Y')}}</h4>

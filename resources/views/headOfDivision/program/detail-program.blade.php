@@ -11,6 +11,7 @@ Data Program
 @section("content")
 @include('sweetalert::alert')
 <div class="col-md-12 col-sm-12 col-xs-12">
+@include('layouts.notif')
 <a href="/program"> < Kembali</a>
     <div class="x_panel" style="margin-top:10px">
         <div class="x_title">

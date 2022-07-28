@@ -195,18 +195,18 @@ Kelola Akun
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete-modal-label">Apakah anda yakin ?</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                {{-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> --}}
             </div>
             <div class="modal-body">
             Data yang dihapus tidak dapat dikembalikan!!
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form id="delete-form" method="POST">
+                <button type="button" style="display: inline" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form style="display: inline" id="delete-form" method="POST">
                     {{-- <form action="{{route('division.destroy', $division->id)}}" method="POST"> --}}
                     @method('delete')
                     @csrf
-                    <button button type="submit" class="btn btn-danger">Hapus</button>
+                    <button style="display: inline" button type="submit" class="btn btn-danger">Hapus</button>
                 </form>
             </div>
         </div>

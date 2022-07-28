@@ -188,22 +188,21 @@ Kelola Akun
         </div>
     </div>
 </div>
-
-{{-- <!-- Modal Delete --> --}}
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
-    <div class="modal-dialog">
+{{-- modal delete --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-modal-label">Apakah anda yakin ?</h5>
-                {{-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> --}}
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Apakah Anda Yakin ?</h4>
             </div>
             <div class="modal-body">
-            Data yang dihapus tidak dapat dikembalikan!!
+                Data yang dihapus tidak dapat dikembalikan!!
             </div>
             <div class="modal-footer">
                 <button type="button" style="display: inline" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form style="display: inline" id="delete-form" method="POST">
-                    {{-- <form action="{{route('division.destroy', $division->id)}}" method="POST"> --}}
+                <form style="display: inline" id="deleteForm" method="POST">
                     @method('delete')
                     @csrf
                     <button style="display: inline" button type="submit" class="btn btn-danger">Hapus</button>
@@ -212,6 +211,7 @@ Kelola Akun
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('css')
@@ -272,8 +272,7 @@ Kelola Akun
         $('#deleteModal').modal('show');
         var data_id = $(this).attr('data-id');
         var url = '/account/' + data_id;
-        // console.log(url);
-        $('#delete-form').attr('action', url);
+        $('#deleteForm').attr('action', url);
     });
 
 

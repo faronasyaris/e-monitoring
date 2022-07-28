@@ -36,13 +36,20 @@ class PeriodeController extends Controller
         # code...
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        # code...
+        $period = Periode::where('id', $id)->first();
+        $period->year = $request->year;
+        $period->update();
+        toast('Data periode berhasil diubah', 'success');
+        return back();
     }
 
     public function destroy($id)
     {
-        # code...
+        $period = Periode::where('id', $id)->first();
+        $period->delete();
+        toast('Data periode berhasil dihapus', 'success');
+        return back();
     }
 }

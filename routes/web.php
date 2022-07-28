@@ -26,7 +26,7 @@ Route::group(['mddileware' => 'guest'], function () {
         return redirect()->intended('/login');
     });
 
-    Route::get('/login', [UserController::class, 'loginView']);
+    Route::get('/login', [UserController::class, 'loginView'])->name('login');
     Route::post('/login', [UserController::class, 'login']);
 });
 
@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth', 'isSecretary']], function () {
     Route::delete('/account/{id}',[UserController::class,'destroy']);
     Route::get('/period',[PeriodeController::class,'index']);
     Route::post('/period',[PeriodeController::class,'store']);
+    Route::post('/period/{id}',[PeriodeController::class,'update']);
+    Route::delete('/period/{id}',[PeriodeController::class,'destroy']);
     Route::get('/field/{id}/head',[FieldController::class,'checkField']);
 });
 

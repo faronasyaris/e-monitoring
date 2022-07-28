@@ -30,4 +30,19 @@ class PeriodeController extends Controller
         toast('Data Periode berhasil ditambah','success');
         return back();
     }
+
+    public function edit($id)
+    {
+        # code...
+    }
+
+    public function update(Request $request)
+    {
+        # code...
+    }
+
+    public function destroy($id)
+    {
+        # code...
+    }
 }

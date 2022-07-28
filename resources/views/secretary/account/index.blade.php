@@ -39,7 +39,7 @@ Kelola Akun
                     <td>{{$master->role}}</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button class="btn btn-danger btn-sm deleteButton" data-id="{{$master->id}}">Delete</button>
                     </td>
                 </tr>
                 @endforeach
@@ -77,7 +77,7 @@ Kelola Akun
                     <td>{{$user->role}}</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button class="btn btn-danger btn-sm deleteButton" data-id="{{$user->id}}">Delete</button>
                     </td>
                 </tr>
                 @endforeach
@@ -90,6 +90,7 @@ Kelola Akun
 
     @endforeach
 </div>
+{{-- modal  --}}
 <div class="modal fade" id="addMaster" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -139,7 +140,7 @@ Kelola Akun
     </div>
 </div>
 
-
+{{-- modal  --}}
 <div class="modal fade" id="addUserByField" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -184,6 +185,30 @@ Kelola Akun
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+{{-- <!-- Modal Delete --> --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-modal-label">Apakah anda yakin ?</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Data yang dihapus tidak dapat dikembalikan!!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form id="delete-form" method="POST">
+                    {{-- <form action="{{route('division.destroy', $division->id)}}" method="POST"> --}}
+                    @method('delete')
+                    @csrf
+                    <button button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -242,5 +267,16 @@ Kelola Akun
         $('#fieldId').val('');
         $('#kepalaBidang').remove();
     });
+
+    $(document).on('click', '.deleteButton', function(){
+        $('#deleteModal').modal('show');
+        var data_id = $(this).attr('data-id');
+        var url = '/account/' + data_id;
+        // console.log(url);
+        $('#delete-form').attr('action', url);
+    });
+
+
+
 </script>
 @endsection

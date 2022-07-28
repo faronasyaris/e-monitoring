@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {
     Route::get('/account',[UserController::class,'listAccount']);
     Route::post('/account',[UserController::class,'store']);
+    Route::delete('/account/{id}',[UserController::class,'destroy']);
     Route::get('/period',[PeriodeController::class,'index']);
     Route::post('/period',[PeriodeController::class,'store']);
     Route::get('/field/{id}/head',[FieldController::class,'checkField']);

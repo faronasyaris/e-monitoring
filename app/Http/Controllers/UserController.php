@@ -90,4 +90,27 @@ class UserController extends Controller
         toast('Data Akun berhasil ditambah','success');
         return back();
     }
+
+    public function edit($id)
+    {
+        # code...
+    }
+
+    public function update(Request $request)
+    {
+        # code...
+    }
+
+    public function destroy($id)
+    {
+        $user = User::where('id', $id)->first();
+        $user_name = $user->name;
+        if($user->id == Auth::user()->id){
+            toast('Anda tidak dapat menghapus akun anda sendiri!', 'error');
+            return back();
+        }
+        $user->delete();
+        toast('Data akun '.$user_name.' dihapus', 'success');
+        return back();
+    }
 }

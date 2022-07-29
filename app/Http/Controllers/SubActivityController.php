@@ -16,6 +16,14 @@ class SubActivityController extends Controller
         }
     }
 
+    public function create(){
+
+    }
+
+    public function store(){
+        
+    }
+
     public function approval(){
         return view('headOfDivision.approval.index');
     }

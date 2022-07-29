@@ -55,6 +55,7 @@ class ActivityController extends Controller
     }
 
     public function detailActivity($id){
-        return view('headOfDivision.activity.detail');
+        $activity = Activity::with('getSubActivity')->where('id',$id)->first();
+        return view('headOfDivision.activity.detail',compact('activity'));
     }
 }

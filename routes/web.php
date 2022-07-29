@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/sub-kegiatan',[SubActivityController::class,'index']);
     Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan',[SubActivityController::class,'detailSubActivity']);
-    Route::post('/sub-kegiatan',[SubActivityController::class,'store'])
+    Route::post('/sub-kegiatan',[SubActivityController::class,'store']);
 });
 
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {

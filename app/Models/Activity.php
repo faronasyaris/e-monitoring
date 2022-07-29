@@ -10,4 +10,8 @@ class Activity extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function getSubActivity(){
+       return $this->hasMany(SubActivity::class,'activity_id');
+    }
 }

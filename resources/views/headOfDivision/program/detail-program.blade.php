@@ -19,9 +19,7 @@ Data Program
                     <div class="x_panel">
                         <div class="x_content">
                             <div class="col-md-3 col-sm-3  ">
-
                                 <section class="panel">
-
                                     <div class="x_title">
                                         <h2>Deskripsi Program</h2>
                                         <div class="clearfix"></div>
@@ -41,19 +39,14 @@ Data Program
                                             <p class="title">Progress Kegiatan</p>
                                             <p>0%</p>
                                         </div>
-
                                         <br />
-
                                         <br />
-
                                         <div class="text-center mtop20">
                                             <a href="#" class="btn btn-sm btn-warning">Edit Nama</a>
                                             <a href="#" class="btn btn-sm btn-danger">Delete</a>
                                         </div>
                                     </div>
-
                                 </section>
-
                             </div>
                             <div class="col-md-9 col-sm-9  ">
                                 <h4>Manage Program (Rincian Outcome)</h4>
@@ -118,8 +111,6 @@ Data Program
                     </div>
                 </div>
             </div>
-
-
 </div>
 
 

@@ -111,7 +111,7 @@
 
 
             <!-- page content -->
-            <div class="right_col" role="main">
+            <div class="right_col" role="main" style="height: auto !important;">
                 @yield('content')
             </div>
             <!-- /page content -->

@@ -1,135 +1,44 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Matrix lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Matrix admin lite design, Matrix admin lite dashboard bootstrap 5 dashboard template" />
-  <meta name="description" content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
-  <meta name="robots" content="noindex,nofollow" />
-  <title>Matrix Admin Lite Free Versions Template by WrapPixel</title>
-  <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="template/assets/images/favicon.png" />
-  <!-- Custom CSS -->
-  <link href="template/dist/css/style.min.css" rel="stylesheet" />
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{asset('custom/style.css')}}">
 
-<body>
+  <title>Login</title>
+
+<body class="main-bg">
 @include('sweetalert::alert')
-  <div class="main-wrapper">
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-      <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-      </div>
+  <div class="login-container text-c animated flipInX">
+    <div>
+      <h1 class="logo-badge text-whitesmoke"><span><img class="img" src="{{asset('images/logo.png')}}" alt=""></span></h1>
     </div>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Login box.scss -->
-    <!-- ============================================================== -->
-    <div class="
-          auth-wrapper
-          d-flex
-          no-block
-          justify-content-center
-          align-items-center
-          bg-dark
-        ">
-      <div class="auth-box bg-dark border-top border-secondary">
-        <div id="loginform">
-          <div class="text-center pt-3 pb-3">
-            <span class="db"><img src="template/assets/images/logo.png" alt="logo" /></span>
-          </div>
-          <!-- Form -->
-          <form class="form-horizontal mt-3" action="/login" method="POST">
-            @csrf
-            <div class="row pb-4">
-              <div class="col-12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-success text-white h-100" id="basic-addon1"><i class="mdi mdi-account fs-4"></i></span>
-                  </div>
-                  <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" name="email" required />
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-warning text-white h-100" id="basic-addon2"><i class="mdi mdi-lock fs-4"></i></span>
-                  </div>
-                  <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" name="password" required />
-                </div>
-              </div>
-            </div>
-            <div class="row border-top border-secondary">
-              <div class="col-12">
-                <div class="form-group">
-                  <div class="pt-3">
-                    <button class="btn btn-info" id="to-recover" type="button">
-                      <i class="mdi mdi-lock fs-4 me-1"></i> Lost password?
-                    </button>
-                    <button class="btn btn-success float-end text-white" type="submit">
-                      <i class="mdi mdi-sign-in fs-4 me-1"></i>Login
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
+    <h4 class="text-whitesmoke">Selamat Datang Di Sistem Informasi Monitoring</h4>
+    <div class="container-content">
+      <form class="margin-t" action="/login" method="post">
+        @csrf
+        <div class="form-group">
+          <input type="text" name="email" class="form-control" placeholder="email@example.com" required="">
         </div>
-
-      </div>
+        <div class="form-group">
+          <input type="password" name="password" class="form-control" placeholder="*****" required="">
+        </div>
+        <button type="submit" class="form-button button-l margin-b">Login</button>
+      </form>
+      <p class="margin-t text-whitesmoke"><small> Sistem Informasi Monitoring &copy; 2022</small> </p>
     </div>
-    <!-- ============================================================== -->
-    <!-- Login box.scss -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Page wrapper scss in scafholding.scss -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Page wrapper scss in scafholding.scss -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Right Sidebar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- Right Sidebar -->
-    <!-- ============================================================== -->
   </div>
-  <!-- ============================================================== -->
-  <!-- All Required js -->
-  <!-- ============================================================== -->
-  <script src="template/assets/libs/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap tether Core JavaScript -->
-  <script src="template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- ============================================================== -->
-  <!-- This page plugin js -->
-  <!-- ============================================================== -->
-  <script>
-    $(".preloader").fadeOut();
-    // ==============================================================
-    // Login and Recover Password
-    // ==============================================================
-    $("#to-recover").on("click", function() {
-      $("#loginform").slideUp();
-      $("#recoverform").fadeIn();
-    });
-    $("#to-login").click(function() {
-      $("#recoverform").hide();
-      $("#loginform").fadeIn();
-    });
-  </script>
 </body>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </html>

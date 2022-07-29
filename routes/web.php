@@ -32,15 +32,22 @@ Route::group(['mddileware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [UserController::class, 'logout']);
+
     Route::get('/dashboard',[UserController::class,'dashboard']);
+
     Route::get('/program',[ProgramController::class,'index']);
     Route::get('/program/{id}/manage-program',[ProgramController::class,'detailProgram']);
     Route::get('/program/{id}/tambah-kegiatan',[ActivityController::class,'create']);
     Route::post('/program/{id}/tambah-kegiatan',[ActivityController::class,'store']);
    
     Route::get('/kegiatan',[ActivityController::class,'index']);
+    Route::get('/kegiatan/{id}/manage-kegiatan',[ActivityController::class,'detailActivity']);
     Route::post('/kegiatan',[ActivityController::class,'store']);
+    Route::get('/kegiatan/tambah-sub-kegiatan',[SubActivityController::class,'create']);
+
     Route::get('/sub-kegiatan',[SubActivityController::class,'index']);
+    Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan',[SubActivityController::class,'detailSubActivity']);
+    Route::post('/sub-kegiatan',[SubActivityController::class,'store'])
 });
 
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {

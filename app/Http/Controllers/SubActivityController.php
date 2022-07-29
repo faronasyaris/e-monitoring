@@ -19,4 +19,8 @@ class SubActivityController extends Controller
     public function approval(){
         return view('headOfDivision.approval.index');
     }
+
+    public function detailSubActivity($id){
+
+    }
 }

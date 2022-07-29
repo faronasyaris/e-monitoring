@@ -53,4 +53,8 @@ class ActivityController extends Controller
     public function delete(){
 
     }
+
+    public function detailActivity($id){
+        return view('headOfDivision.activity.detail');
+    }
 }

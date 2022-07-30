@@ -47,7 +47,7 @@ class UserController extends Controller
             return view('secretary.dashboard');
         }
 
-        if ($user->role == 'employee') {
+        if ($user->role == 'Employee') {
             return view('employee.dashboard');
         }
 

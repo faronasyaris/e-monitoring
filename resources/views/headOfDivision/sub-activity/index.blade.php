@@ -33,7 +33,6 @@ Data Sub Kegiatan
             </tbody>
         </table>
         <hr>
-        <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-user-plus"></i> Tambah Periode</button>
     </div>
 </div>
 @endsection

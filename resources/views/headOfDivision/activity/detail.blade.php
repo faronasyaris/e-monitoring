@@ -65,27 +65,25 @@ Data Kegiatan
                     </tr>
                   </thead>
                   <tbody>
-                  @foreach($activity->getSubActivity as $SubActivity)
+                  @foreach($activity->getSubActivity as $subActivity)
                     <tr>
                       <td>#</td>
                       <td>
-                        <a>Pesamakini Backend UI</a>
+                        <p>{{$subActivity->name}}</p>
                         <br />
                       </td>
                       <td>
-                        <a href="javascript:void(0)">6 Orang</a>
+                        <a href="javascript:void(0)">{{$subActivity->unit_target}}</a>
                       </td>
-                      <td>0</td>
-                      <td>0</td>
+                      <td>{{$subActivity->target}} {{$subActivity->unit_target}}</td>
                       <td class="project_progress">
-                        5 Dok
+                        0
                       </td>
                       <td>
-                        <button type="button" class="btn btn-success btn-xs">Success</button>
+                        <button type="button" class="btn btn-success btn-xs">{{$subActivity->status}}</button>
                       </td>
                       <td>
-                        <a href="#" class="btn btn-success btn-sm"> Manage </a>
-
+                        <a href="/sub-kegiatan/{{$subActivity->id}}/manage-sub-kegiatan" class="btn btn-success btn-sm"> Manage </a>
                       </td>
                     </tr>
                     @endforeach

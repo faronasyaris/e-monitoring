@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Activity;
+use App\Models\SubActivity;
+use App\Models\SubActivityOutput;
+use App\Models\SubActivityWorker;
 use Illuminate\Http\Request;
 
 class SubActivityController extends Controller
@@ -24,8 +27,42 @@ class SubActivityController extends Controller
         return view('headOfDivision.sub-activity.create',compact('activity','workers'));
     }
 
-    public function store(){
-        
+    public function store(Request $request){
+        $request->validate([
+            'activity_id'=>'required',
+            'name'=>'required',
+            'unit'=>'required',
+            'target'=>'required',
+            'indicator'=>'required',
+            'output'=>'required',
+            'pelaksana'=>'required'
+        ]);
+
+        $subActivity = SubActivity::create([
+            'name'=>$request->name,
+            'indicator'=>$request->indicator,
+            'unit_target'=>$request->unit,
+            'target'=>$request->target,
+            'activity_id'=>$request->activity_id,
+            'status'=>"On Progress",
+        ]);
+
+        foreach($request->output as $output){
+            SubActivityOutput::create([
+                'description'=>$output,
+                'sub_activity_id'=>$subActivity->id
+            ]);
+        }
+
+        foreach($request->pelaksana as $pelaksana){
+            SubActivityWorker::create([
+                'sub_activity_id'=>$subActivity->id,
+                'worker_id'=> $pelaksana,
+            ]);
+        }
+
+        toast('Sub Activity berhasil dibuat','success');
+        return redirect("/kegiatan/$request->activity_id/manage-kegiatan");
     }
 
     public function approval(){
@@ -33,6 +70,7 @@ class SubActivityController extends Controller
     }
 
     public function detailSubActivity($id){
-
+        $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker')->where('id',$id)->first();
+        return view('headOfDivision.sub-activity.detail',compact('sub'));
     }
 }

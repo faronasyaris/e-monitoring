@@ -30,6 +30,15 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'name'=>'employee',
+            'email'=>'employee@gmail.com',
+            'password'=>bcrypt('password'),
+            'NIP'=>'123456',
+            'role'=>'Employee',
+            'field_id'=>1
+        ]);
+
+        User::create([
             'name'=>'kepala bidang 1',
             'email'=>'kepalabidang1@gmail.com',
             'password'=>bcrypt('password'),

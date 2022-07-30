@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/kegiatan',[ActivityController::class,'index']);
     Route::get('/kegiatan/{id}/manage-kegiatan',[ActivityController::class,'detailActivity']);
     Route::post('/kegiatan',[ActivityController::class,'store']);
-    Route::get('/kegiatan/tambah-sub-kegiatan',[SubActivityController::class,'create']);
+    Route::get('/kegiatan/{id}/tambah-sub-kegiatan',[SubActivityController::class,'create']);
 
     Route::get('/sub-kegiatan',[SubActivityController::class,'index']);
     Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan',[SubActivityController::class,'detailSubActivity']);

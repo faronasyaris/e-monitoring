@@ -25,12 +25,14 @@ Data Kegiatan
                     <div class="clearfix"></div>
                   </div>
                   <div class="panel-body">
-                    <h3 class="green"><i class="fa fa-clipboard"></i> Kegiatan</h3>
+                    <h3 class="green"><i class="fa fa-list-alt"></i> Kegiatan</h3>
                     <p>{{$activity->name}}</p>
-                    <br />
+                    <br>
                     <div class="project_detail">
+                    <p class="title">Indikator</p>
+                      <p>{{$activity->activity_goal_indicator}}</p>
                     <p class="title">Satuan</p>
-                      <p>Satuan</p>
+                      <p>{{$activity->activity_unit_target}}</p>
                       <p class="title">Jumlah Sub Kegiatan</p>
                       <p>0</p>
                       <p class="title">Progress Kegiatan</p>
@@ -39,7 +41,7 @@ Data Kegiatan
                     <br />
                     <br />
                     <div class="text-center mtop20">
-                      <a href="#" class="btn btn-sm btn-warning">Edit Nama</a>
+                      <a href="#" class="btn btn-sm btn-warning">Edit</a>
                       <a href="#" class="btn btn-sm btn-danger">Delete</a>
                     </div>
                   </div>
@@ -47,7 +49,7 @@ Data Kegiatan
               </div>
               <div class="col-md-9 col-sm-9  ">
                 <h4> Manage Sub Kegiatan</h4>
-                <a href="" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> Tambah Sub Kegiatan</a>
+                <a href="/kegiatan/{{$activity->id}}/tambah-sub-kegiatan" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> Tambah Sub Kegiatan</a>
 
                 <table class="table table-striped projects " id="tableProgram2" style="margin-top:10px">
                   <thead>

@@ -13,9 +13,9 @@
 
 <ul class="nav side-menu">
     <li class="{{(\Request::is('dashboard*')) ? 'current-page' : '' }}"><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-    <li class="{{(\Request::is('program*')) ? 'current-page' : '' }}"><a href="/program"><i class="fa fa-home"></i> Data Program</a></li>
-    <li class="{{(\Request::is('kegiatan*')) ? 'current-page' : '' }}"><a href="/kegiatan"><i class="fa fa-building"></i> Data Kegiatan</a></li>
-    <li class="{{(\Request::is('sub-kegiatan*')) ? 'current-page' : '' }}"><a href="/sub-kegiatan"><i class="fa fa-user"></i> Data Sub Kegiatan</a></li>
+    <li class="{{(\Request::is('program*')) ? 'current-page' : '' }}"><a href="/program"><i class="fa fa-clipboard "></i> Data Program</a></li>
+    <li class="{{(\Request::is('kegiatan*')) ? 'current-page' : '' }}"><a href="/kegiatan"><i class="fa fa-list-alt"></i> Data Kegiatan</a></li>
+    <li class="{{(\Request::is('sub-kegiatan*')) ? 'current-page' : '' }}"><a href="/sub-kegiatan"><i class="fa fa-tasks"></i> Data Sub Kegiatan</a></li>
     <li class="{{(\Request::is('approval*')) ? 'current-page' : '' }}"><a href="/approval"><i class="fa fa-user"></i> Approval Pelaksana </a></li>
     <li class="{{(\Request::is('laporann*')) ? 'current-page' : '' }}"><a href="/laporan"><i class="fa fa-user"></i> Laporan </a></li>
 </ul>

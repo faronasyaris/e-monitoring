@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class SubActivityController extends Controller
@@ -16,8 +18,10 @@ class SubActivityController extends Controller
         }
     }
 
-    public function create(){
-
+    public function create($id){
+        $workers = User::where('field_id',auth()->user()->field_id)->where('id','!=',auth()->user()->id)->get();
+        $activity = Activity::findOrFail($id);
+        return view('headOfDivision.sub-activity.create',compact('activity','workers'));
     }
 
     public function store(){

@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::get('/approval',[SubActivityController::class,'approval']);
     Route::post('/program',[ProgramController::class,'store']);
+    Route::post('/program/{id}',[ProgramController::class,'update']);
+    Route::delete('/program/{id}',[ProgramController::class,'destroy']);
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {

@@ -34,9 +34,9 @@ Data Kegiatan
                     <p class="title">Satuan</p>
                       <p>{{$activity->activity_unit_target}}</p>
                       <p class="title">Jumlah Sub Kegiatan</p>
-                      <p>0</p>
+                      <p>{{$activity->getSubActivity->count()}}</p>
                       <p class="title">Progress Kegiatan</p>
-                      <p>0%</p>
+                      <p></p>
                     </div>
                     <br />
                     <br />

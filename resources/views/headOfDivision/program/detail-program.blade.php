@@ -35,7 +35,7 @@ Data Program
                                             <p class="title">Kinerja Indikator</p>
                                             <p>0%</p>
                                             <p class="title">Jumlah Kegiatan</p>
-                                            <p>0</p>
+                                            <p>{{$program->getActivity->count()}}</p>
                                             <p class="title">Progress Kegiatan</p>
                                             <p>0%</p>
                                         </div>
@@ -97,7 +97,7 @@ Data Program
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$activity->name}}</td>
                                             <td>{{$activity->activity_unit_target}}</td>
-                                            <td></td>
+                                            <td>{{$activity->activity_unit_target == 'persen' ? '100%' : $activity->getSubActivity->sum('target').' dokumen' }}</td>
                                             <td class="text-center">0</td>
 
                                             <td class="text-center"><a href="/kegiatan/{{$activity->id}}/manage-kegiatan" class="btn btn-sm btn-success">Manage</a></td>

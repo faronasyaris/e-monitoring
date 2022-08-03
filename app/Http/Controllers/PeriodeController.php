@@ -41,7 +41,7 @@ class PeriodeController extends Controller
         $period = Periode::where('id', $id)->first();
         $period->year = $request->year;
         $period->update();
-        toast('Data periode berhasil diubah', 'success');
+        toast('Periode berhasil diubah', 'success');
         return back();
     }
 
@@ -49,7 +49,7 @@ class PeriodeController extends Controller
     {
         $period = Periode::where('id', $id)->first();
         $period->delete();
-        toast('Data periode berhasil dihapus', 'success');
+        toast('Periode berhasil dihapus', 'success');
         return back();
     }
 }

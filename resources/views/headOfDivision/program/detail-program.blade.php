@@ -42,8 +42,8 @@ Data Program
                                         <br />
                                         <br />
                                         <div class="text-center mtop20">
-                                            <a href="#" class="btn btn-sm btn-warning">Edit Nama</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="#" id="editProgramButton" data-id='{{$program->id}}' data-name='{{$program->program_name}}' class="btn btn-sm btn-warning">Edit Nama</a>
+                                            <a href="#" id="deleteProgramButton" data-id='{{$program->id}}' class="btn btn-sm btn-danger">Delete</a>
                                         </div>
                                     </div>
                                 </section>
@@ -111,6 +111,54 @@ Data Program
                     </div>
                 </div>
             </div>
+            {{-- modal edit program --}}
+            <div class="modal fade" id="editProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Edit Program</h4>
+                        </div>
+                        <form method="post" id="editProgramForm">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="" class="form-label">Nama Program</label>
+                                    <input type="text" id="program_name" name="program_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- modal confirm delete program --}}
+            <div class="modal fade" id="deleteProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Apakah Anda Yakin ?</h4>
+                        </div>
+                        <div class="modal-body">
+                            Data yang dihapus tidak dapat dikembalikan!!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" style="display: inline" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <form style="display: inline" id="deleteProgramForm" method="POST">
+                                @method('delete')
+                                @csrf
+                                <button style="display: inline" button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </div>
 
 
@@ -134,5 +182,20 @@ Data Program
     $('#btnTambahPeriode').on('click', function() {
         $('#addProgramModel').modal('show');
     })
+
+    $(document).on('click', '#editProgramButton', function(){
+        $('#editProgramModal').modal('show');
+        $('#program_name').val($(this).attr('data-name'));
+        var data_id = $(this).attr('data-id');
+        var url = '/program/' + data_id;
+        $('#editProgramForm').attr('action', url);
+    });
+
+    $(document).on('click', '#deleteProgramButton', function(){
+        $('#deleteProgramModal').modal('show');
+        var data_id = $(this).attr('data-id');
+        var url = '/program/' + data_id;
+        $('#deleteProgramForm').attr('action', url);
+    });
 </script>
 @endsection

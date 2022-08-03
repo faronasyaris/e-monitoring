@@ -40,6 +40,24 @@ class ProgramController extends Controller
     public function detailProgram($id){
         $program = Program::with('getProgramIndicator','getActivity')->where('id',$id)->first();
         return view('headOfDivision.program.detail-program',compact('program'));
+    }
 
+    public function update(Request $request, $id)
+    {
+        $program = Program::where('id', $id)->first();
+
+        $program->update([
+            'program_name'=>$request->program_name,
+        ]);
+        toast('Program berhasil diubah', 'success');
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $period = Program::where('id', $id)->first();
+        $period->delete();
+        toast('Program berhasil dihapus', 'success');
+        return redirect('/program');
     }
 }

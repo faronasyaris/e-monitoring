@@ -18,14 +18,14 @@ Data Kegiatan
             <h6>{{\App\Models\Field::getField(auth()->user()->field_id)}}</h6>
             <div class="clearfix"></div>
         </div>
-        <table id="tableProgram2" class="table table-striped table-bordered">
+        <table id="tableProgram2" class="table jambo_table table-bordered ">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Nama Kegiatan</th>
-                    <th>Indikator</th>
                     <th>Satuan Target</th>
-                    <th>Capaian</th>
+                    <th>Jumlah Target</th>
+                    <th class="text-center">Capaian</th>
                     <th>
                         <center>Action
                     </th>
@@ -34,18 +34,18 @@ Data Kegiatan
             <tbody>
                 @foreach($programs as $program)
                 <tr>
-                    <td colspan='6'>
+                    <th colspan='6' style="background-color: rgba(0,0,0,.05)">
                         <h5>{{$program->program_name}}</h5>
-                    </td>
+                    </th>
                 </tr>
                 @foreach($program->getActivity as $activity)
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$activity->name}}</td>
-                    <td>{{$activity->activity_goal_indicator}}</td>
                     <td>{{$activity->activity_unit_target}}</td>
+                    <td class="">{{$activity->activity_unit_target == 'persen' ? '100%' : $activity->getSubActivity->sum('target').' dokumen' }}</td>
                     <td class="text-center">0</td>
-                    <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
+                    <td class="text-center"><a href="/kegiatan/{{$activity->id}}/manage-kegiatan" class="btn btn-sm btn-success">Manage</a></td>
                 </tr>
                 @endforeach
                 @endforeach

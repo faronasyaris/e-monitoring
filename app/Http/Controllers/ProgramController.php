@@ -16,7 +16,7 @@ class ProgramController extends Controller
         }
 
         else if(auth()->user()->role =='Kepala Bidang'){
-            $programs = Program::with('getProgramIndicator','getActivity')->where('field_id',auth()->user()->field_id)->get();
+            $programs = Program::with('getProgramIndicator','getActivity')->where('year',$this->currentYear())->where('field_id',auth()->user()->field_id)->get();
             return view('headOfDivision.program.index',compact('programs'));
         }
     }

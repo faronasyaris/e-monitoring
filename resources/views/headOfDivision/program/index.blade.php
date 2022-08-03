@@ -19,7 +19,7 @@ Data Program
             <h6>{{\App\Models\Field::getField(auth()->user()->field_id)}}</h6>
             <div class="clearfix"></div>
         </div>
-        <table id="tableProgram" class="table table-striped table-bordered">
+        <table id="tableProgram" class="table table-striped jambo_table table-bordered ">
             <thead>
                 <tr>
                     <th>No</th>

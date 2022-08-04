@@ -24,7 +24,8 @@ Data Program
                 <tr>
                     <th>No</th>
                     <th>Nama Program</th>
-                    <th>Jumlah Kegiatan</th>
+                    <th>Kegiatan</th>
+                    <th>Progress Kegiatan</th>
                     <th>Jumlah Indikator</th>
                     <th>Kinerja Indikator (%)</th>
                     <th>
@@ -38,6 +39,7 @@ Data Program
                     <td>{{$loop->iteration}}</td>
                     <td>{{$program->program_name}}</td>
                     <td class="text-center">{{count($program->getActivity)}}</td>
+                    <td>0%</td>
                     <td class="text-center">{{count($program->getProgramIndicator)}}</td>
                     <td class="text-center">0.0</td>
                     <td class="text-center">

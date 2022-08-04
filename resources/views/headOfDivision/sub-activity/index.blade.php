@@ -44,7 +44,7 @@ Data Sub Kegiatan
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>2</td>
+                    <td>Sub Kegiatan 1</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
@@ -52,8 +52,8 @@ Data Sub Kegiatan
 
                 </tr>
                 <tr>
-                    <td>1</td>
                     <td>2</td>
+                    <td>Sub Kegiatan 2</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
@@ -67,15 +67,15 @@ Data Sub Kegiatan
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>2</td>
+                    <td>Sub Kegiatan 1</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
                     <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
                 </tr>
                 <tr>
-                    <td>1</td>
-                    <td>2</td>
+                    <td> 1 </td>
+                    <td>Sub Kegiatan 2</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
@@ -113,7 +113,7 @@ Data Sub Kegiatan
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>2</td>
+                    <td>Sub Kegiatan 1</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
@@ -121,8 +121,8 @@ Data Sub Kegiatan
 
                 </tr>
                 <tr>
-                    <td>1</td>
                     <td>2</td>
+                    <td>Sub Kegiatan 2</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
@@ -137,7 +137,7 @@ Data Sub Kegiatan
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>2</td>
+                    <td>Sub Kegiatan 1</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>
@@ -145,8 +145,8 @@ Data Sub Kegiatan
 
                 </tr>
                 <tr>
-                    <td>1</td>
                     <td>2</td>
+                    <td>Sub Kegiatan 2</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td>

@@ -73,4 +73,8 @@ class SubActivityController extends Controller
         $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker')->where('id',$id)->first();
         return view('headOfDivision.sub-activity.detail',compact('sub'));
     }
+
+    public function getSubActivityByWorker(){
+        return view('employee.subKegiatan');
+    }
 }

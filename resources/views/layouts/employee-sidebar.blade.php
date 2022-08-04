@@ -10,5 +10,5 @@
 
 <ul class="nav side-menu">
     <li class="{{(\Request::is('dashboard*')) ? 'current-page' : '' }}"><a href="/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-    <li class="{{(\Request::is('sub-kegiatan*')) ? 'current-page' : '' }}"><a href="/sub-kegiatan"><i class="fa fa-user"></i> Data Sub Kegiatan</a></li>
+    <li class="{{(\Request::is('sub-kegiatan*')) ? 'current-page' : '' }}"><a href="/sub-kegiatan"><i class="fa fa-tasks"></i> Data Tugas</a></li>
 </ul>

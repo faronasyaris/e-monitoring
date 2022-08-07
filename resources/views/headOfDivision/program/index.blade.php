@@ -11,8 +11,7 @@ Data Program
 @section("content")
 @include('sweetalert::alert')
 <div class="col-md-12 col-sm-12 col-xs-12">
-@include('layouts.notif')
-    
+    @include('layouts.notif')
     <div class="x_panel">
         <div class="x_title">
             <h4 class="card-title">Kelola Program {{date('Y')}}</h4>
@@ -43,7 +42,7 @@ Data Program
                     <td class="text-center">{{count($program->getProgramIndicator)}}</td>
                     <td class="text-center">0.0</td>
                     <td class="text-center">
-                    <a href="/program/{{$program->id}}/manage-program" class="btn btn-sm btn-success">Manage</a>
+                        <a href="/program/{{$program->id}}/manage-program" class="btn btn-sm btn-success">Manage</a>
                     </td>
                 </tr>
                 @endforeach
@@ -83,13 +82,13 @@ Data Program
 
 @section('js')
 <script>
-      $("#tableProgram").dataTable({
+    $("#tableProgram").dataTable({
         "autoWidth": false,
         info: false,
         lengthChange: false
     });
-    
-    $('#btnTambahPeriode').on('click',function(){
+
+    $('#btnTambahPeriode').on('click', function() {
         $('#addProgramModel').modal('show');
     })
 </script>

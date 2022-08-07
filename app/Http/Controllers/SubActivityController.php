@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Activity;
 use App\Models\SubActivity;
+use Illuminate\Http\Request;
 use App\Models\SubActivityOutput;
 use App\Models\SubActivityWorker;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubActivityController extends Controller
 {
@@ -70,11 +71,19 @@ class SubActivityController extends Controller
     }
 
     public function detailSubActivity($id){
-        $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker')->where('id',$id)->first();
-        return view('headOfDivision.sub-activity.detail',compact('sub'));
+        if(Auth::User()->role == 'Kepala Bidang'){
+            $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker')->where('id',$id)->first();
+            return view('headOfDivision.sub-activity.detail',compact('sub'));
+        }
+        else if(Auth::User()->role == 'Employee'){
+            $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker')->where('id',$id)->first();
+            return view('employee.detailSubKegiatan',compact('sub'));
+        }
+  
     }
 
     public function getSubActivityByWorker(){
-        return view('employee.subKegiatan');
+        $subActivities = SubActivityWorker::with('getActivity')->where('worker_id',auth()->user()->id)->get();
+        return view('employee.subKegiatan',compact('subActivities'));
     }
 }

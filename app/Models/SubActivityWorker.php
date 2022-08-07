@@ -14,4 +14,8 @@ class SubActivityWorker extends Model
         return $this->belongsTo(User::class,'worker_id','id');
     }
 
+    public function getActivity(){
+        return $this->belongsTo(SubActivity::class,'sub_activity_id');
+    }
+
 }

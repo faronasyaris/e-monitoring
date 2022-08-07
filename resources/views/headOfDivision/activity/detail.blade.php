@@ -70,7 +70,6 @@ Data Kegiatan
                       <td>#</td>
                       <td>
                         <p>{{$subActivity->name}}</p>
-                        <br />
                       </td>
                       <td>
                         <a href="javascript:void(0)">{{$subActivity->unit_target}}</a>

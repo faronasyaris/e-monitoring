@@ -81,10 +81,10 @@ Data Program
                                 <table id="tableProgram2" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th>Satuan Target</th>
-                                            <th>Jumlah Target</th>
+                                            <th style="width: 1%">No</th>
+                                            <th style="width: 40%">Nama Kegiatan</th>
+                                            <th>Satuan</th>
+                                            <th>Target</th>
                                             <th>Capaian</th>
                                             <th>
                                                 <center>Action

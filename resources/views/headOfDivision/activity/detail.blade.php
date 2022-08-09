@@ -36,7 +36,9 @@ Data Kegiatan
                       <p class="title">Jumlah Sub Kegiatan</p>
                       <p>{{$activity->getSubActivity->count()}}</p>
                       <p class="title">Progress Kegiatan</p>
-                      <p></p>
+                      <p>0</p>
+                      <p class="title">Status Kegiatan</p>
+                      <p>On Progress</p>
                     </div>
                     <br />
                     <br />
@@ -51,17 +53,16 @@ Data Kegiatan
                 <h4> Manage Sub Kegiatan</h4>
                 <a href="/kegiatan/{{$activity->id}}/tambah-sub-kegiatan" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> Tambah Sub Kegiatan</a>
 
-                <table class="table table-striped projects " id="tableProgram2" style="margin-top:10px">
+                <table class="table table-striped projects table-bordered" id="tableProgram2" style="margin-top:10px">
                   <thead>
                    
                     <tr>
                       <th style="width: 1%">#</th>
-                      <th style="width: 20%">Sub Kegiatan</th>
+                      <th style="width: 40%">Sub Kegiatan</th>
                       <th>Satuan</th>
                       <th>Target</th>
-                      <th>Progress</th>
-                      <th>Status</th>
-                      <th style="width: 20%">Action</th>
+                      <th>Capaian</th>
+                      <th style="width: 5%">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -77,9 +78,6 @@ Data Kegiatan
                       <td>{{$subActivity->target}} {{$subActivity->unit_target}}</td>
                       <td class="project_progress">
                         0
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-success btn-xs">{{$subActivity->status}}</button>
                       </td>
                       <td>
                         <a href="/sub-kegiatan/{{$subActivity->id}}/manage-sub-kegiatan" class="btn btn-success btn-sm"> Manage </a>

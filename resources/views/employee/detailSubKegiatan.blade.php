@@ -60,7 +60,19 @@ Sub Kegiatan
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        @foreach($sub->getSubActivitySubmission as $submission)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$submission->title}}</td>
+                                                <td>{{$submission->getWorker->name}}</td>
+                                                <td>{{date('d F Y',strtotime($submission->created_at))}}</td>
+                                                <td>{{\App\Models\SubActivitySubmission::getStatusLabel($submission->status)}}</td>
+                                                <td>
+                                                   @if($submission->status == 0)<button class="btn btn-sm btn-danger">Batalkan</button> @endif
+                                                    <button class="btn btn-sm btn-success">Lihat File</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 <br>
@@ -84,16 +96,16 @@ Sub Kegiatan
                                 </table>
                                 <br>
                                 <h4>Submit Progress</h4>
-                                <form  method="post" action="/sub-kegiatan/submit-progress">
+                                <form  method="post" action="/sub-kegiatan/submit-progress" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" value="{{$sub->id}}" name="id">
+                                    <input type="hidden" value="{{$sub->id}}" name="id" required>
                                 <div class="form-group">
                                     <label for="">Judul</label>
-                                    <input type="text" name="title" class="form-control">
+                                    <input type="text" name="title" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="">File</label>
-                                    <input type="file" name="file" class="form-control">
+                                    <input type="file" name="file" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit" style="float:right">Submit</button>

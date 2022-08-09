@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Activity;
 use App\Models\SubActivity;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SubActivityOutput;
+use App\Models\SubActivitySubmission;
 use App\Models\SubActivityWorker;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,7 +78,7 @@ class SubActivityController extends Controller
             return view('headOfDivision.sub-activity.detail',compact('sub'));
         }
         else if(Auth::User()->role == 'Employee'){
-            $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker')->where('id',$id)->first();
+            $sub = SubActivity::with('getSubActivityOutput','getSubActivitySubmission','getSubActivityWorker','getSubActivitySubmission','getSubActivitySubmission.getWorker')->where('id',$id)->first();
             return view('employee.detailSubKegiatan',compact('sub'));
         }
   
@@ -93,5 +95,22 @@ class SubActivityController extends Controller
             'title'=>'required',
             'file'=>'required'
         ]);
+
+        $filename = '';
+        if($request->hasFile('file')){
+            $file = $request->file;
+            $dest = 'submission_file';
+            $filename = Str::slug($request->title).'-'.date('YmdHis'). "." . $file->getClientOriginalExtension();
+            $file->move($dest, $filename);
+        }
+
+        SubActivitySubmission::create([
+            'title'=>$request->title,
+            'worker_id'=>auth()->user()->id,
+            'sub_activity_id'=>$request->id,
+            'submission_file' => $filename,
+        ]);
+
+        return back()->with('success','data berhasil di submit');
     }
 }

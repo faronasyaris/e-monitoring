@@ -37,6 +37,8 @@ Data Kegiatan
                       <p>{{$sub->target}} {{$sub->unit_target}}</p>
                       <p class="title">Progress</p>
                       <p>0%</p>
+                      <p class="title">Status</p>
+                      <p>On Progress</p>
                     </div>
                     <br />
                     <br />

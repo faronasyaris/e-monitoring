@@ -15,11 +15,12 @@ class CreateSubActivitySubmissionsTable extends Migration
     {
         Schema::create('sub_activity_submissions', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->foreignId('worker_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('sub_activity_id')->references('id')->on('sub_activities')->cascadeOnDelete();
             $table->string('submission_file')->nullable();
-            $table->tinyInteger('status');
-            $table->dateTime('approved_at');
+            $table->tinyInteger('status')->default(0);
+            $table->dateTime('approved_at')->nullable();
             $table->timestamps();
         });
     }

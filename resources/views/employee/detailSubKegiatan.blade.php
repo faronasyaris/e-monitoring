@@ -11,7 +11,6 @@ Sub Kegiatan
 @section("content")
 @include('sweetalert::alert')
 <div class="col-md-12 col-sm-12 col-xs-12">
-    @include('layouts.notif')
     <a href="javascript:void(0)" onclick="history.back()">
         < Kembali</a>
             <div class="row">
@@ -47,6 +46,7 @@ Sub Kegiatan
                                 </section>
                             </div>
                             <div class="col-md-9 col-sm-9  ">
+                                @include('layouts.notif')
                                 <h4>Submission File</h4>
                                 <table class="table table-striped projects tableProgram2" id="tableProgram2" style="margin-top:10px">
                                     <thead>
@@ -83,19 +83,20 @@ Sub Kegiatan
                                     </tbody>
                                 </table>
                                 <br>
-                                <h4>Submit File</h4>
-                                <form action="" methd="post">
+                                <h4>Submit Progress</h4>
+                                <form  method="post" action="/sub-kegiatan/submit-progress">
                                     @csrf
+                                    <input type="hidden" value="{{$sub->id}}" name="id">
                                 <div class="form-group">
                                     <label for="">Judul</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="title" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="">File</label>
-                                    <input type="file" class="form-control">
+                                    <input type="file" name="file" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" style="float:right">Submit</button>
+                                    <button class="btn btn-primary" type="submit" style="float:right">Submit</button>
                                 </div>
                                 </form>
                             </div>

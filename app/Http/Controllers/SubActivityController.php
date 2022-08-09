@@ -86,4 +86,12 @@ class SubActivityController extends Controller
         $subActivities = SubActivityWorker::with('getActivity')->where('worker_id',auth()->user()->id)->get();
         return view('employee.subKegiatan',compact('subActivities'));
     }
+
+    public function submitProgress(Request $request){
+        $request->validate([
+            'id'=>'required',
+            'title'=>'required',
+            'file'=>'required'
+        ]);
+    }
 }

@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'isSecretary']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'isEmployee']], function () {
-   
+    Route::post('/sub-kegiatan/submit-progress',[SubActivityController::class,'submitProgress']);
 });
 
 

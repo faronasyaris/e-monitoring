@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubActivityOutputsTable extends Migration
+class CreatePlottingActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSubActivityOutputsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_activity_outputs', function (Blueprint $table) {
+        Schema::create('plotting_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('activity_id')->references('id')->on('activities')->cascadeOnDelete();
-            $table->string('unit');
+            $table->foreignId('activity_id')->references('id')->on('activities');
+            $table->tinyInteger('month');
+            $table->tinyInteger('is_exists');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateSubActivityOutputsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_activity_outputs');
+        Schema::dropIfExists('plotting_activities');
     }
 }

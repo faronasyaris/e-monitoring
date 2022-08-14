@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgramIndicatorsTable extends Migration
+class CreateProgramOutcomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateProgramIndicatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('program_indicators', function (Blueprint $table) {
+        Schema::create('program_outcomes', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->foreignId('program_id')->references('id')->on('programs');
             $table->string('unit');
-            $table->double('target')->default(0);
-            $table->double('progress')->default(0);
-            $table->foreignId('program_id')->references('id')->on('programs')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateProgramIndicatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('program_indicators');
+        Schema::dropIfExists('program_outcomes');
     }
 }

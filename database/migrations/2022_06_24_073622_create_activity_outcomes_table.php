@@ -15,7 +15,7 @@ class CreateActivityOutcomesTable extends Migration
     {
         Schema::create('activity_outcomes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('activity_id')->references('id')->on('activities');
+            $table->foreignId('program_id')->references('id')->on('programs');
             $table->string('unit');
             $table->timestamps();
         });

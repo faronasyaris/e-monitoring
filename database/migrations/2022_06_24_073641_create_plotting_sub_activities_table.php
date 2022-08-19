@@ -15,12 +15,12 @@ class CreatePlottingSubActivitiesTable extends Migration
     {
         Schema::create('plotting_sub_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sub_activity_id')->references('id')->on('sub_activities');
+            $table->foreignId('sub_activity_id')->references('id')->on('sub_activities')->cascadeOnDelete();
             $table->tinyInteger('month');
             $table->tinyInteger('budget');
             $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
-            $table->tinyInteger('is_exists');
+            // $table->tinyInteger('is_exists');
             $table->timestamps();
         });
     }

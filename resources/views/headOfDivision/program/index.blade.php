@@ -1,95 +1,133 @@
-@extends("layouts.main")
+@extends('layouts.main')
 
 @section('title')
-Data Program
+    Data Program
 @endsection
 
 @section('sidebar')
-@include('layouts.headOfDivision-sidebar')
+    @include('layouts.headOfDivision-sidebar')
 @endsection
 
-@section("content")
-@include('sweetalert::alert')
-<div class="col-md-12 col-sm-12 col-xs-12">
-    @include('layouts.notif')
-    <div class="x_panel">
-        <div class="x_title">
-            <h4 class="card-title">Kelola Program {{date('Y')}}</h4>
-            <h6>{{\App\Models\Field::getField(auth()->user()->field_id)}}</h6>
-            <div class="clearfix"></div>
-        </div>
-        <table id="tableProgram" class="table table-striped jambo_table table-bordered ">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama Program</th>
-                    <th>Kegiatan</th>
-                    <th>Progress Kegiatan</th>
-                    <th>Jumlah Indikator</th>
-                    <th>Kinerja Indikator (%)</th>
-                    <th>
-                        <center>Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($programs as $program)
-                <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$program->program_name}}</td>
-                    <td class="text-center">{{count($program->getActivity)}}</td>
-                    <td>0%</td>
-                    <td class="text-center">{{count($program->getProgramIndicator)}}</td>
-                    <td class="text-center">0.0</td>
-                    <td class="text-center">
-                        <a href="/program/{{$program->id}}/manage-program" class="btn btn-sm btn-success">Manage</a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <hr>
-        <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-user-plus"></i> Tambah Program</button>
-    </div>
-</div>
-
-
-<div class="modal fade" id="addProgramModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Tambah Program</h4>
+@section('content')
+    @include('sweetalert::alert')
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        @include('layouts.notif')
+        <div class="x_panel">
+            <div class="x_title">
+                <h4 class="card-title">Kelola Program {{ session('monthName') }} {{ session('yearName') }}</h4>
+                <h6>{{ \App\Models\Field::getField(auth()->user()->field_id) }}</h6>
+                <div class="clearfix"></div>
             </div>
-            <form action="/program" method="post">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="" class="form-label">Nama Program</label>
-                        <input type="text" name="program_name" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Tambah</button>
-                </div>
-            </form>
+            <table id="tableProgram" class="table table-striped jambo_table table-bordered ">
+                <thead>
+                    <tr>
+                        <th widht="10%">Kode Program</th>
+                        <th widht="20%">Nama Program</th>
+                        <th widht="15%">Kinerja Fisik</th>
+                        <th widht="15%">Kinerja Indikator</th>
+                        <th widht="15%">Kinerja Keuangan</th>
+                        <th widht="15%  ">
+                            <center>Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($programs as $program)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $program->program_name }}</td>
+                            <td class="text-center"></td>
+                            <td>{{ \App\Models\PlottingProgramOutcome::countIndicatorPerformance($program->getPlotting->where('month', session('month'))->first()->id) }}
+                            </td>
+                            <td class="text-center"></td>
+                            <td class="text-center">
+                                <a href="/program/{{ $program->getPlotting->where('month', session('month'))->first()->id }}/manage-program"
+                                    class="btn btn-sm btn-success">Manage</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <hr>
+            {{-- @if (session('month') >= date('m')) --}}
+            <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-plus"></i>
+                Tambah Program</button>
+            {{-- @endif --}}
         </div>
     </div>
-</div>
+
+
+    <div class="modal fade" id="addProgramModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tambah Program</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Program</label>
+                            <input type="text" name="program_name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addAchievmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tambah Capaian</h4>
+                </div>
+                <form action="/achievment" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Outcome</label>
+                            <input type="text" name="program_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Jumlah Capaian</label>
+                            <input type="number" name="achievment" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Bukti (Optional)</label>
+                            <input type="number" name="evidence" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
-<script>
-    $("#tableProgram").dataTable({
-        "autoWidth": false,
-        info: false,
-        lengthChange: false
-    });
+    <script>
+        $("#tableProgram").dataTable({
+            "autoWidth": false,
+            info: false,
+            lengthChange: false
+        });
 
-    $('#btnTambahPeriode').on('click', function() {
-        $('#addProgramModel').modal('show');
-    })
-</script>
+        $('#btnTambahPeriode').on('click', function() {
+            $('#addProgramModel').modal('show');
+        })
+    </script>
 @endsection

@@ -15,9 +15,9 @@ class CreatePlottingActivitiesTable extends Migration
     {
         Schema::create('plotting_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('activity_id')->references('id')->on('activities');
+            $table->foreignId('activity_id')->references('id')->on('activities')->cascadeOnDelete();
             $table->tinyInteger('month');
-            $table->tinyInteger('is_exists');
+            // $table->tinyInteger('is_exists');
             $table->timestamps();
         });
     }

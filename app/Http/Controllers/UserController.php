@@ -23,7 +23,11 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/dashboard');
+            if (auth()->user()->role == 'Sekretaris') {
+                return redirect('/dashboard');
+            }
+
+            return redirect('/selectPeriod');
         }
         toast('Email atau Password Salah', 'error');
         return back()->withInput();
@@ -62,32 +66,32 @@ class UserController extends Controller
 
     public function listAccount()
     {
-        $kepalaDinas = User::where('role','Kepala Dinas')->first();
+        $kepalaDinas = User::where('role', 'Kepala Dinas')->first();
         $masters = User::where('role', 'Sekretaris')->orWhere('role', 'Kepala Dinas')->get();
         $fields = Field::with('getUser')->get();
-        return view('secretary.account.index', compact('fields','masters','kepalaDinas'));
+        return view('secretary.account.index', compact('fields', 'masters', 'kepalaDinas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'email'=>'required',
-            'nip'=>'required',
-            'role'=>'required'
+            'name' => 'required',
+            'email' => 'required',
+            'nip' => 'required',
+            'role' => 'required'
         ]);
 
         $password = bcrypt($request->nip);
         User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>$password,
-            'nip'=>$request->nip,
-            'role'=>$request->role,
-            'field_id'=>$request->field
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $password,
+            'nip' => $request->nip,
+            'role' => $request->role,
+            'field_id' => $request->field
         ]);
 
-        toast('Data Akun berhasil ditambah','success');
+        toast('Data Akun berhasil ditambah', 'success');
         return back();
     }
 
@@ -105,12 +109,12 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         $user_name = $user->name;
-        if($user->id == Auth::user()->id){
+        if ($user->id == Auth::user()->id) {
             toast('Anda tidak dapat menghapus akun anda sendiri!', 'error');
             return back();
         }
         $user->delete();
-        toast('Data akun '.$user_name.' dihapus', 'success');
+        toast('Data akun ' . $user_name . ' dihapus', 'success');
         return back();
     }
 }

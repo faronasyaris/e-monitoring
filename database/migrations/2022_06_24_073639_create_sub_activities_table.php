@@ -15,13 +15,13 @@ class CreateSubActivitiesTable extends Migration
     {
         Schema::create('sub_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('indicator');
-            $table->string('unit_target');
-            $table->tinyInteger('target')->default(0);
-            $table->foreignId('activity_id')->references('id')->on('sub_activities')->cascadeOnDelete();
-            $table->string('status')->default(0);
-            $table->dateTime('finished_at')->nullable();
+            $table->string('sub_activity_name');
+            $table->foreignId('year')->references('id')->on('periodes')->cascadeOnDelete();
+            $table->foreignId('field_id')->nullable();
+            $table->foreign('field_id')->references('id')->on('fields')->nullOnDelete();
+            $table->foreignId('activity_id')->references('id')->on('activities')->cascadeOnDelete();
+            $table->foreignId('created_id')->nullable();
+            $table->foreign('created_id')->references('id')->on('users')->nullOnDelete();
             $table->timestamps();
         });
     }

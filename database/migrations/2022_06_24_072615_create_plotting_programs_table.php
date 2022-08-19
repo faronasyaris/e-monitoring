@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgramIndicatorsTable extends Migration
+class CreatePlottingProgramsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateProgramIndicatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('program_indicators', function (Blueprint $table) {
+        Schema::create('plotting_programs', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->string('unit');
-            $table->double('target')->default(0);
-            $table->double('progress')->default(0);
             $table->foreignId('program_id')->references('id')->on('programs')->cascadeOnDelete();
+            $table->tinyInteger('month');
+            // $table->tinyInteger('is_exists')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateProgramIndicatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('program_indicators');
+        Schema::dropIfExists('plotting_programs');
     }
 }

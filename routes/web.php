@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::post('/programOutcome', [ProgramOutcomeController::class, 'store']);
 
     Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
+    Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
 
     Route::get('/approval', [SubActivityController::class, 'approval']);
     Route::post('/program', [ProgramController::class, 'store']);

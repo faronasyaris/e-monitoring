@@ -18,12 +18,14 @@
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-plus-square"></i> Jumlah Indikator</span>
-            <div class="count">{{ $program_plot->getOutcome->count() }}</div>
+            <div class="count">{{ $program->getOutcome->count() }}</div>
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Indikator</span>
-            <div class="count">{{ \App\Models\PlottingProgramOutcome::countIndicatorPerformance($program_plot->id) }}</div>
+            <div class="count">
+                {{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%
+            </div>
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -43,7 +45,18 @@
         </div>
     </div>
     @include('layouts.notif')
-
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Nama Program</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x-content">
+                <div>{{ $program->program_name }}</d>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -67,16 +80,21 @@
                         @foreach ($program_outcomes as $outcome)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $outcome->description }}</td>
-                                <td>{{ $outcome->unit }}</td>
-                                <td>{{ $outcome->target }}</td>
-                                <td>{{ $outcome->achievment }}</td>
-                                <td>{{ \App\Models\PlottingProgramOutcome::countOutcomePerformance($outcome->id) }}%</td>
-                                <td><button class="btn btn-sm btn-success btnTambahCapaian" data-id="{{ $outcome->id }}"
-                                        data-deskripsi="{{ $outcome->description }}">Tambah
+                                <td>{{ $outcome->program_outcome_name }}</td>
+                                <td>{{ $outcome->getPlotting->where('month', session('month'))->first()->unit }}</td>
+                                <td>{{ $outcome->getPlotting->where('month', session('month'))->first()->target }}</td>
+                                <td>{{ $outcome->getPlotting->where('month', session('month'))->first()->achievment }}
+                                </td>
+                                <td>
+                                    {{ \App\Models\PlottingProgramOutcome::countOutcomePerformance($outcome->getPlotting->where('month', session('month'))->first()->id) }}%
+                                </td>
+                                <td><button class="btn btn-sm btn-success btnTambahCapaian"
+                                        data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
+                                        data-deskripsi="{{ $outcome->program_outcome_name }}">Tambah
                                         Capaian</button><button class="btn btn-sm btn-warning">Edit</button><button
                                         class="btn btn-sm btn-danger">Delete</button></td>
-                            </tr @endforeach
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <hr>
@@ -101,14 +119,30 @@
                     <thead>
                         <tr>
                             <th width="14%">Tanggal Input</th>
-                            <th width="19%">Outcome</th>
+                            <th width="19%">Nama Outcome</th>
                             <th width="15%">Jumlah Capaian</th>
                             <th width="15%">File Bukti</th>
                             <th width="12%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        @foreach ($histories as $history)
+                            <tr>
+                                <td>{{ date('d F Y', strtotime($history->date)) }}</td>
+                                <td>{{ $history->getOutcomeProgram->program_outcome_name }}</td>
+                                <td>{{ $history->achievment }}</td>
+                                <td>
+                                    @if (empty($history->file))
+                                        -
+                                    @else
+                                        <a href="{{ asset('/evidence/' . $history->file) }}"><i class="fa fa-download"></i>
+                                            Donwload File</a>
+                                    @endif
+                                </td>
+                                <td><button class="btn btn-sm btn-danger btnCancelAchievment"
+                                        data-id="{{ $history->id }}">Batalkan</button></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -166,6 +200,7 @@
             </div>
         </div>
     </div>
+    {{-- modal tambah outcome --}}
     <div class="modal fade" id="addProgramOutcomeModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -177,11 +212,12 @@
                 </div>
                 <form action="/programOutcome" method="post">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $program_plot->program_id }}">
+                    <input type="hidden" name="id" value="{{ $program->id }}">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="" class="form-label">Deskripsi</label>
-                            <textarea name="description" class="form-control" required placeholder="Deskripsi"></textarea>
+                            <label for="" class="form-label">Nama Outcome</label>
+                            <input type="text" name="description" class="form-control" required
+                                placeholder="Nama Outcome">
                         </div>
 
                         <div class="form-group">
@@ -203,7 +239,7 @@
             </div>
         </div>
     </div>
-
+    {{-- modal tambah capaian --}}
     <div class="modal fade" id="addAchievmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -227,7 +263,7 @@
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Bukti (Optional)</label>
-                            <input type="file" id="evidence" name="evidence" class="form-control" required>
+                            <input type="file" id="evidence" name="evidence" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -235,6 +271,31 @@
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    {{-- modal batalkan capaian (delete history) --}}
+    <div class="modal fade" id="cancelAchievmentModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Batalkan Capaian</h4>
+                </div>
+                <div class="modal-body">
+                    Dengan ini, maka Capaian yang diinput akan ditarik kembali, Lanjutkan?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline" class="btn btn-secondary"
+                        data-dismiss="modal">Batal</button>
+                    <form style="display: inline" id="cancelAchievmentForm" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -275,9 +336,15 @@
         });
 
         $(document).on('click', '.btnTambahCapaian', function() {
+            console.log($(this).attr('data-deskripsi'));
             $('#outcome_name').val($(this).attr('data-deskripsi'));
             $('#formAchievment').prop('action', `/achievment/${$(this).attr('data-id')}/add`);
             $('#addAchievmentModal').modal('show');
+        })
+
+        $(document).on('click', '.btnCancelAchievment', function() {
+            $('#cancelAchievmentForm').prop('action', `/achievment/${$(this).attr('data-id')}/cancel`);
+            $('#cancelAchievmentModal').modal('show');
         })
     </script>
 @endsection

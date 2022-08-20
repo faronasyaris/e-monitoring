@@ -11,12 +11,14 @@ class Program extends Model
 
     protected $guarded = ['id'];
 
+    public function getOutcome()
+    {
+        return $this->hasMany(ProgramOutcome::class, 'program_id');
+    }
     public function getPlotting()
     {
         return $this->hasMany(PlottingProgram::class, 'program_id');
     }
-
- 
 
     public function scopeWithAndWhereHas($query, $relation, $constraint)
     {

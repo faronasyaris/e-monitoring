@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Program;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\ProgramOutcome;
 use App\Models\PlottingProgram;
-use App\Models\PlottingProgramOutcome;
 use App\Models\ProgramOutcomeHistory;
+use App\Models\PlottingProgramOutcome;
 
 class ProgramOutcomeController extends Controller
 {
@@ -18,15 +21,19 @@ class ProgramOutcomeController extends Controller
             'id' => 'required',
         ]);
 
+        $outcome = ProgramOutcome::create([
+            'program_outcome_name' => $request->description,
+            'program_id' => $request->id,
+        ]);
+
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
-                $program_plot = PlottingProgram::with('getOutcome')->where('month', $i)->where('program_id', $request->id)->first();
                 PlottingProgramOutcome::create([
-                    'description' => $request->description,
                     'unit' => $request->unit,
                     'target' => $request->target,
                     'achievment' => 0,
-                    'plotting_program_id' => $program_plot->id,
+                    'outcome_id' => $outcome->id,
+                    'month' => $i
                 ]);
             }
         }
@@ -37,38 +44,59 @@ class ProgramOutcomeController extends Controller
 
     public function addAchievment(PlottingProgramOutcome $id, Request $request)
     {
-        // $request->validate([
-        //     'achievment' => 'required'
-        // ]);
+        $request->validate([
+            'achievment' => 'required'
+        ]);
+        $new_achievment = $id->achievment + $request->achievment;
 
-        // $new_achievment = $id->achievment + $request->achievment;
-        // $id->update([
-        //     'achievment' => $new_achievment
-        // ]);
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
+                $outcome_plot->update([
+                    'achievment' => $new_achievment,
+                ]);
+            }
+        }
 
-        // for ($i = 1; $i <= 12; $i++) {
-        //     if ($i >= session('month')) {
-        //         $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('program_id', $request->id)->first();
-        //         PlottingProgramOutcome::create([
-        //             'description' => $request->description,
-        //             'unit' => $request->unit,
-        //             'target' => $request->target,
-        //             'achievment' => 0,
-        //             'plotting_program_id' => $program_plot->id,
-        //         ]);
-        //     }
-        // }
+        $id->load('getOutcomeProgram', 'getOutcomeProgram.getProgram');
 
-        // $id->load('getPlottingProgram', 'getPlottingProgram.getProgram');
+        $filename = null;
+        if ($request->hasFile('evidence')) {
+            $file = $request->evidence;
+            $dest = 'evidence';
+            $filename = Str::random(6) . date('YmdHis') . $file->getClientOriginalExtension();
+            $file->move($dest, $filename);
+        }
+        ProgramOutcomeHistory::create([
+            'date' => date('Y-m-d'),
+            'program_id' => $id->getOutcomeProgram->getProgram->id,
+            'outcome_id' => $id->outcome_id,
+            'achievment' => $request->achievment,
+            'file' => $filename,
+            'user_id' => auth()->user()->id
+        ]);
 
-        // ProgramOutcomeHistory::create([
-        //     'date' => date('Y-m-d'),
-        //     'program_id' => $id->getPlottingProgram->getProgram->id,
-        //     'achievment' => $request->achievment,
-        //     'user_id' => auth()->user()->id
-        // ]);
+        toast('Capaian Berhasil Ditambahkan', 'success');
+        return back();
+    }
 
-        // toast('Capaian Berhasil Ditambahkan', true);
-        // return back();
+    public function cancelAchievment(ProgramOutcomeHistory $id, Request $request)
+    {
+        $id->load('getOutcomeProgram', 'getOutcomeProgram.getPlotting');
+        $new_achievment = $id->getOutcomeProgram->getPlotting->where('month', session('month'))->first()->achievment - $id->achievment;
+
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
+                $outcome_plot->update([
+                    'achievment' => $new_achievment,
+                ]);
+            }
+        }
+
+        $id->delete();
+
+        toast('Capaian Berhasil Dibatalkan', 'success');
+        return back();
     }
 }

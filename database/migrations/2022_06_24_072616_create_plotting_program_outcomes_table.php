@@ -15,12 +15,12 @@ class CreatePlottingProgramOutcomesTable extends Migration
     {
         Schema::create('plotting_program_outcomes', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
             $table->string('unit');
-            $table->tinyInteger('target');
-            $table->tinyInteger('achievment')->default(0);
-            // $table->tinyInteger('month');
-            $table->foreignId('plotting_program_id')->references('id')->on('plotting_programs')->cascadeOnDelete();
+            $table->integer('target');
+            $table->integer('achievment')->default(0);
+            $table->tinyInteger('month');
+            $table->foreignId('outcome_id')->references('id')->on('program_outcomes')->cascadeOnDelete();
+            // $table->foreignId('plotting_program_id')->references('id')->on('plotting_programs')->cascadeOnDelete();
             $table->timestamps();
         });
     }

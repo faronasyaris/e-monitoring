@@ -6,6 +6,8 @@ use App\Models\Activity;
 use App\Models\PlottingProgram;
 use App\Models\PlottingProgramOutcome;
 use App\Models\Program;
+use App\Models\ProgramOutcome;
+use App\Models\ProgramOutcomeHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,9 +54,12 @@ class ProgramController extends Controller
 
     public function detailProgram($id)
     {
-        $program_plot = PlottingProgram::where('id', $id)->first();
-        $program_outcomes = PlottingProgramOutcome::where('plotting_program_id', $program_plot->id)->get();
-        return view('headOfDivision.program.detail-program', compact('program_plot', 'program_outcomes'));
+        $program = Program::where('id', $id)->first();
+        $program_outcomes = ProgramOutcome::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('program_id', $id)->get();
+        $histories = ProgramOutcomeHistory::where('program_id', $program->id)->whereMonth('date', session('month'))->get();
+        return view('headOfDivision.program.detail-program', compact('program', 'program_outcomes', 'histories'));
     }
 
     public function update(Request $request, $id)

@@ -37,11 +37,12 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $program->program_name }}</td>
                             <td class="text-center"></td>
-                            <td>{{ \App\Models\PlottingProgramOutcome::countIndicatorPerformance($program->getPlotting->where('month', session('month'))->first()->id) }}
+                            <td>
+                                {{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%
                             </td>
                             <td class="text-center"></td>
                             <td class="text-center">
-                                <a href="/program/{{ $program->getPlotting->where('month', session('month'))->first()->id }}/manage-program"
+                                <a href="/program/{{ $program->id }}/manage-program"
                                     class="btn btn-sm btn-success">Manage</a>
                             </td>
                         </tr>
@@ -72,40 +73,6 @@
                         <div class="form-group">
                             <label for="" class="form-label">Nama Program</label>
                             <input type="text" name="program_name" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="addAchievmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Tambah Capaian</h4>
-                </div>
-                <form action="/achievment" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="" class="form-label">Nama Outcome</label>
-                            <input type="text" name="program_name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="form-label">Jumlah Capaian</label>
-                            <input type="number" name="achievment" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="form-label">Bukti (Optional)</label>
-                            <input type="number" name="evidence" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">

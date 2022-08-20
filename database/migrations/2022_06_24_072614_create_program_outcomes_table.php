@@ -15,6 +15,7 @@ class CreateProgramOutcomesTable extends Migration
     {
         Schema::create('program_outcomes', function (Blueprint $table) {
             $table->id();
+            $table->string('program_outcome_name');
             $table->foreignId('program_id')->references('id')->on('programs');
             $table->timestamps();
         });

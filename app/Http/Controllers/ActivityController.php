@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
 use App\Models\Program;
+use App\Models\Activity;
+use App\Models\ActivityOutcome;
+use App\Models\ActivityOutcomeHistory;
 use Illuminate\Http\Request;
+use App\Models\PlottingActivity;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
@@ -13,8 +17,13 @@ class ActivityController extends Controller
         if (auth()->user()->role == 'Kepala Dinas') {
             return view('headOfDepartement.activity.index');
         } else if (auth()->user()->role == 'Kepala Bidang') {
-            $programs = Program::where('field_id', auth()->user()->field_id)->get();
-            return view('headOfDivision.activity.index', compact('programs'));
+            $programs = Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->get();
+            $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->whereIn('program_id', $programs->pluck('id'))->get();
+            return view('headOfDivision.activity.index', compact('programs', 'activities'));
         }
     }
 
@@ -26,21 +35,29 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'unit' => 'required',
-            'indicator' => 'required',
+            'activity_name' => 'required',
             'program_id' => 'required'
         ]);
 
-        Activity::create([
-            'name' => $request->name,
-            'activity_unit_target' => $request->unit,
-            'activity_goal_indicator' => $request->indicator,
+        $activity = Activity::create([
+            'activity_name' => $request->activity_name,
+            'created_id' => Auth::id(),
+            'field_id' => auth()->user()->field_id,
+            'year' => $this->currentYear(),
             'program_id' => $request->program_id,
         ]);
 
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                PlottingActivity::create([
+                    'activity_id' => $activity->id,
+                    'month' => $i,
+                ]);
+            }
+        }
+
         toast("Kegiatan Berhasil ditambahkan", 'success');
-        return redirect("/program/$request->program_id/manage-program");
+        return back();
     }
 
     public function edit($id)
@@ -57,7 +74,11 @@ class ActivityController extends Controller
 
     public function detailActivity($id)
     {
-        $activity = Activity::with('getSubActivity')->where('id', $id)->first();
-        return view('headOfDivision.activity.detail', compact('activity'));
+        $activity = Activity::where('id', $id)->first();
+        $activity_outcomes = ActivityOutcome::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('activity_id', $id)->get();
+        $histories = ActivityOutcomeHistory::where('activity_id', $activity->id)->whereMonth('date', session('month'))->get();
+        return view('headOfDivision.activity.detail', compact('activity', 'activity_outcomes', 'histories'));
     }
 }

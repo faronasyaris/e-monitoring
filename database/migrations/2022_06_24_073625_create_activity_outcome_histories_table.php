@@ -16,8 +16,9 @@ class CreateActivityOutcomeHistoriesTable extends Migration
         Schema::create('activity_outcome_histories', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->foreignId('activity_id')->references('id')->on('activities');
-            $table->tinyInteger('achievment');
+            $table->foreignId('outcome_id')->references('id')->on('activity_outcomes')->cascadeOnDelete();
+            $table->foreignId('activity_id')->references('id')->on('activities')->cascadeOnDelete();
+            $table->integer('achievment');
             $table->string('file')->nullable();
             $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();

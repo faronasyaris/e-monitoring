@@ -11,7 +11,19 @@ class Activity extends Model
 
     protected $guarded = ['id'];
 
-    public function getSubActivity(){
-       return $this->hasMany(SubActivity::class,'activity_id');
+    public function getOutcome()
+    {
+        return $this->hasMany(ActivityOutcome::class, 'activity_id');
+    }
+
+    public function getPlotting()
+    {
+        return $this->hasMany(PlottingActivity::class, 'activity_id');
+    }
+
+    public function scopeWithAndWhereHas($query, $relation, $constraint)
+    {
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
     }
 }

@@ -17,11 +17,6 @@
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-plus-square"></i> Jumlah Indikator</span>
-            <div class="count">{{ $program->getOutcome->count() }}</div>
-
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Indikator</span>
             <div class="count">
                 {{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%
@@ -29,20 +24,31 @@
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-money"></i> Dana Program</span>
-            <div class="count">0</div>
-
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-money"></i> Realisasi Keuangan</span>
-            <div class="count">0</div>
-
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Keuangan</span>
             <div class="count">0</div>
 
         </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-plus-square"></i> Jumlah Indikator</span>
+            <div class="count">{{ $program->getOutcome->count() }}</div>
+
+        </div>
+       
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-money"></i> Dana Program</span>
+            <div class="count green">
+                <h4>Rp9.000.000.000</h4>
+            </div>
+
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-money"></i> Realisasi Keuangan</span>
+            <div class="count green">
+                <h4>Rp9.000.000.000</h4>
+            </div>
+
+        </div>
+       
     </div>
     @include('layouts.notif')
     <div class="col-md-12 col-sm-12 col-xs-12">

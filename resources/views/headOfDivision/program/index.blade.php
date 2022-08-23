@@ -18,15 +18,15 @@
                 <h6>{{ \App\Models\Field::getField(auth()->user()->field_id) }}</h6>
                 <div class="clearfix"></div>
             </div>
-            <table id="tableProgram" class="table table-striped jambo_table table-bordered ">
+            <table id="tableProgram" class="table table-striped jambo_table table-bordered d-flex">
                 <thead>
                     <tr>
-                        <th widht="10%">Kode Program</th>
-                        <th widht="20%">Nama Program</th>
-                        <th widht="15%">Kinerja Fisik</th>
-                        <th widht="15%">Kinerja Indikator</th>
-                        <th widht="15%">Kinerja Keuangan</th>
-                        <th widht="15%  ">
+                        <th max-widht="5%" class="text-center">No</th>
+                        <th max-widht="5%" class="text-center">Nama Program</th>
+                        <th widht="15%" class="text-center">Kinerja Fisik</th>
+                        <th widht="15%" class="text-center">Kinerja Indikator</th>
+                        <th widht="15%" class="text-center">Kinerja Keuangan</th>
+                        <th widht="25%" colspan=3>
                             <center>Action
                         </th>
                     </tr>
@@ -44,6 +44,15 @@
                             <td class="text-center">
                                 <a href="/program/{{ $program->id }}/manage-program"
                                     class="btn btn-sm btn-success">Manage</a>
+
+                            </td>
+                            <td class="text-center">
+                                <a href="/program/{{ $program->id }}/manage-program"
+                                    class="btn btn-sm btn-warning">Edit</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/program/{{ $program->id }}/manage-program"
+                                    class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -88,7 +97,7 @@
 @section('js')
     <script>
         $("#tableProgram").dataTable({
-            "autoWidth": false,
+            autoWidth: false,
             info: false,
             lengthChange: false
         });

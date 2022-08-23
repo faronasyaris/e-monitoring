@@ -9,4 +9,19 @@ class PlottingActivity extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function getPlotting()
+    {
+        return $this->hasMany(PlottingActivityOutcome::class, 'outcome_id');
+    }
+
+    public function getOutcome()
+    {
+        return $this->hasMany(PlottingActivityOutcome::class, 'plotting_activity_id');
+    }
+
+    public function getActivity()
+    {
+        return $this->belongsTo(Activity::class, 'activity_id');
+    }
 }

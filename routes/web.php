@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ActivityOutcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
@@ -36,20 +37,22 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', [UserController::class, 'dashboard']);
 
-    Route::get('/program', [ProgramController::class, 'index']);
-    Route::get('/program/{id}/manage-program', [ProgramController::class, 'detailProgram']);
-    Route::get('/program/{id}/tambah-kegiatan', [ActivityController::class, 'create']);
-    Route::post('/program/{id}/tambah-kegiatan', [ActivityController::class, 'store']);
-
     Route::get('/kegiatan', [ActivityController::class, 'index']);
     Route::get('/kegiatan/{id}/manage-kegiatan', [ActivityController::class, 'detailActivity']);
-    Route::post('/kegiatan', [ActivityController::class, 'store']);
-    Route::get('/kegiatan/{id}/tambah-sub-kegiatan', [SubActivityController::class, 'create']);
 
-    Route::get('/sub-kegiatan', [SubActivityController::class, 'index']);
-    Route::get('/my-sub-kegiatan', [SubActivityController::class, 'getSubActivityByWorker']);
-    Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan', [SubActivityController::class, 'detailSubActivity']);
-    Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
+
+    Route::get('/program', [ProgramController::class, 'index']);
+    Route::get('/program/{id}/manage-program', [ProgramController::class, 'detailProgram']);
+    // Route::get('/program/{id}/tambah-kegiatan', [ActivityController::class, 'create']);
+    // Route::post('/program/{id}/tambah-kegiatan', [ActivityController::class, 'store']);
+
+    // Route::post('/kegiatan', [ActivityController::class, 'store']);
+    // Route::get('/kegiatan/{id}/tambah-sub-kegiatan', [SubActivityController::class, 'create']);
+
+    // Route::get('/sub-kegiatan', [SubActivityController::class, 'index']);
+    // Route::get('/my-sub-kegiatan', [SubActivityController::class, 'getSubActivityByWorker']);
+    // Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan', [SubActivityController::class, 'detailSubActivity']);
+    // Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
 
     Route::get('/selectPeriod', [PeriodeController::class, 'selectPeriod']);
     Route::post('/selectPeriod', [PeriodeController::class, 'submitSelectPeriod']);
@@ -58,13 +61,20 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::post('/programOutcome', [ProgramOutcomeController::class, 'store']);
 
-    Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
-    Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
-
     Route::get('/approval', [SubActivityController::class, 'approval']);
     Route::post('/program', [ProgramController::class, 'store']);
     Route::post('/program/{id}', [ProgramController::class, 'update']);
     Route::delete('/program/{id}', [ProgramController::class, 'destroy']);
+
+    Route::post('/kegiatan', [ActivityController::class, 'store']);
+    Route::post('/kegiatanOutcome', [ActivityOutcomeController::class, 'store']);
+
+
+    Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
+    Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
+
+    Route::post('/kegiatan-achievment/{id}/add', [ActivityOutcomeController::class, 'addAchievment']);
+    Route::delete('/kegiatan-achievment/{id}/cancel', [ActivityOutcomeController::class, 'cancelAchievment']);
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {

@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('/kegiatan', [ActivityController::class, 'store']);
     // Route::get('/kegiatan/{id}/tambah-sub-kegiatan', [SubActivityController::class, 'create']);
 
-    // Route::get('/sub-kegiatan', [SubActivityController::class, 'index']);
+    Route::get('/sub-kegiatan', [SubActivityController::class, 'index']);
     // Route::get('/my-sub-kegiatan', [SubActivityController::class, 'getSubActivityByWorker']);
     // Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan', [SubActivityController::class, 'detailSubActivity']);
     // Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);

@@ -17,7 +17,8 @@ class CreatePlottingSubActivitiesTable extends Migration
             $table->id();
             $table->foreignId('sub_activity_id')->references('id')->on('sub_activities')->cascadeOnDelete();
             $table->tinyInteger('month');
-            $table->tinyInteger('budget');
+            $table->integer('budget');
+            $table->integer('finance_realization')->default(0);
             $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             // $table->tinyInteger('is_exists');

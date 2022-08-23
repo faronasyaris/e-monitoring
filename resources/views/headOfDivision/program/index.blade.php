@@ -96,13 +96,14 @@
 
 @section('js')
     <script>
-        $("#tableProgram").dataTable({
-            autoWidth: false,
-            info: false,
-            lengthChange: false
-        });
+        // $("#tableProgram").dataTable({
+        //     autoWidth: false,
+        //     info: false,
+        //     lengthChange: false
+        // });
 
-        $('#btnTambahPeriode').on('click', function() {
+        $(document).on('click', '#btnTambahPeriode', function() {
+            console.log('aa');
             $('#addProgramModel').modal('show');
         })
     </script>

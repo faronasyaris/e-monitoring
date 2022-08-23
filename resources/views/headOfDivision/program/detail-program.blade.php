@@ -33,7 +33,7 @@
             <div class="count">{{ $program->getOutcome->count() }}</div>
 
         </div>
-       
+
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-money"></i> Dana Program</span>
             <div class="count green">
@@ -48,7 +48,7 @@
             </div>
 
         </div>
-       
+
     </div>
     @include('layouts.notif')
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -79,7 +79,9 @@
                             <th width="8%">Target</th>
                             <th width="8%">Capian</th>
                             <th width="8%">Kinerja</th>
-                            <th width="22%">Action</th>
+                            @if (auth()->user()->role != 'Kepala Dinas')
+                                <th width="22%">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -94,20 +96,27 @@
                                 <td>
                                     {{ \App\Models\PlottingProgramOutcome::countOutcomePerformance($outcome->getPlotting->where('month', session('month'))->first()->id) }}%
                                 </td>
-                                <td><button class="btn btn-sm btn-success btnTambahCapaian"
-                                        data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
-                                        data-deskripsi="{{ $outcome->program_outcome_name }}">Tambah
-                                        Capaian</button><button class="btn btn-sm btn-warning">Edit</button><button
-                                        class="btn btn-sm btn-danger">Delete</button></td>
+                                @if (auth()->user()->role != 'Kepala Dinas')
+                                    <td>
+                                        <button class="btn btn-sm btn-success btnTambahCapaian"
+                                            data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
+                                            data-deskripsi="{{ $outcome->program_outcome_name }}">Tambah
+                                            Capaian</button><button class="btn btn-sm btn-warning">Edit</button><button
+                                            class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                @endif
+
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <hr>
                 {{-- @if (session('month') >= date('m')) --}}
-                <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
-                    data-target="#addProgramOutcomeModal"> <i class="fa fa-plus"></i>
-                    Tambah Outcome</button>
+                @if (auth()->user()->role != 'Kepala Dinas')
+                    <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
+                        data-target="#addProgramOutcomeModal"> <i class="fa fa-plus"></i>
+                        Tambah Outcome</button>
+                @endif
                 {{-- @endif --}}
 
             </div>
@@ -128,7 +137,9 @@
                             <th width="19%">Nama Outcome</th>
                             <th width="15%">Jumlah Capaian</th>
                             <th width="15%">File Bukti</th>
-                            <th width="12%">Action</th>
+                            @if (auth()->user()->role != 'Kepala Dinas')
+                                <th width="12%">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -145,8 +156,13 @@
                                             Donwload File</a>
                                     @endif
                                 </td>
-                                <td><button class="btn btn-sm btn-danger btnCancelAchievment"
-                                        data-id="{{ $history->id }}">Batalkan</button></td>
+                                @if (auth()->user()->role != 'Kepala Dinas')
+                                    <td>
+                                        <button class="btn btn-sm btn-danger btnCancelAchievment"
+                                            data-id="{{ $history->id }}">Batalkan</button>
+                                    </td>
+                                @endif
+
                             </tr>
                         @endforeach
                     </tbody>

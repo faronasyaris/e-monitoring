@@ -35,7 +35,7 @@
                     @foreach ($programs as $program)
                         <tr style="background-color: #9abcc3; color:white ">
                             <td colspan="8">
-                                <label>{{ $program->program_name }}</label>
+                                <label> Program : {{ $program->program_name }}</label>
                             </td>
                         </tr>
                         @if ($activities->count() > 0)
@@ -44,7 +44,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $activity->activity_name }}</td>
                                     <td>0</td>
-                                    <td>aa</td>
+                                    <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
                                     <td>0</td>
                                     <td class="text-center">
                                         <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"

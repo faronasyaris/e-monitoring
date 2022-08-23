@@ -16,7 +16,9 @@ class ProgramController extends Controller
     public function index()
     {
         if (auth()->user()->role == 'Kepala Dinas') {
-            $programs = Program::where('year', $this->currentYear())->get();
+            $programs = Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
             return view('headOfDepartement.program.index', compact('programs'));
         } else if (auth()->user()->role == 'Kepala Bidang') {
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {

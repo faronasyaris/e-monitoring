@@ -11,152 +11,75 @@
 @section('content')
     @include('sweetalert::alert')
     <div class="col-md-12 col-sm-12 col-xs-12">
+        @include('layouts.notif')
         <div class="x_panel">
             <div class="x_title">
                 <h4 class="card-title">Kelola Sub Kegiatan {{ session('monthName') }} {{ session('yearName') }}</h4>
                 <h6>{{ \App\Models\Field::getField(auth()->user()->field_id) }}</h6>
                 <div class="clearfix"></div>
             </div>
-            <table id="tableProgram2" class="table table-bordered ">
+            <table id="tableProgram2" class="table table-bordered  ">
                 <thead>
                     <tr>
-                        <th colspan='6' class="" style="background-color: rgba(52, 73, 94, 0.94)">
-                            <h5 class="text-center" style="color:white">Nama Program 1</h5>
-                        </th>
-                    </tr>
-                    <tr>
                         <th>No</th>
-                        <th>Sub Kegiatan</th>
-                        <th>Satuan</th>
-                        <th>Target</th>
-                        <th class="text-center">Progress</th>
-                        <th>
+                        <th>Nama Kegiatan</th>
+                        <th>Kinerja Fisik</th>
+                        <th>Kinerja Indikator</th>
+                        <th>Kinerja Keuangan</th>
+                        <th colspan=3>
                             <center>Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($programs as $program)
+                        <tr style="background-color: #9abcc3; color:white ">
+                            <td colspan="8">
+                                <label> Program : {{ $program->program_name }}</label>
+                            </td>
+                        </tr>
+                        @foreach ($activities as $activity)
+                            <tr style="background-color: #8fc7db; color:white ">
+                                <td colspan="8">
+                                    <label> Kegiatan : {{ $activity->activity_name }}</label>
+                                </td>
+                            </tr>
+                            @if ($activities->count() > 0)
+                                @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $activity->activity_name }}</td>
+                                        <td>0</td>
+                                        <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%
+                                        </td>
+                                        <td>0</td>
+                                        <td class="text-center">
+                                            <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
+                                                class="btn btn-sm btn-success">Manage</a>
 
-                    <tr>
-                        <th colspan='6' style="background-color: rgba(0,0,0,.05)">
-                            <h5 class="">Kegiatan 1</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sub Kegiatan 1</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sub Kegiatan 2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-                    </tr>
-
-                    <tr>
-                        <th colspan='6' style="background-color: rgba(0,0,0,.05)">
-                            <h5>Kegiatan 2</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sub Kegiatan 1</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-                    </tr>
-                    <tr>
-                        <td> 1 </td>
-                        <td>Sub Kegiatan 2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-                    </tr>
-
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
+                                                class="btn btn-sm btn-warning">Edit</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
+                                                class="btn btn-sm btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @endforeach
 
                 </tbody>
             </table>
-
-            <table id="tableProgram2" class="table table-bordered ">
-                <thead>
-                    <tr>
-                        <th colspan='6' class="" style="background-color: rgba(52, 73, 94, 0.94)">
-                            <h5 class="text-center" style="color:white">Nama Program 2</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>No</th>
-                        <th>Sub Kegiatan</th>
-                        <th>Satuan</th>
-                        <th>Target</th>
-                        <th class="text-center">Progress</th>
-                        <th>
-                            <center>Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr>
-                        <th colspan='6' style="background-color: rgba(0,0,0,.05)">
-                            <h5 class="">Kegiatan 1</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sub Kegiatan 1</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sub Kegiatan 2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-
-                    </tr>
-
-                    <tr>
-                        <th colspan='6' style="background-color: rgba(0,0,0,.05)">
-                            <h5>Kegiatan 2</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Sub Kegiatan 1</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sub Kegiatan 2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td class="text-center"><a href="#" class="btn btn-sm btn-success">Manage</a></td>
-
-                    </tr>
-
-
-                </tbody>
-            </table>
+            <hr>
+            {{-- @if (session('month') >= date('m')) --}}
+            <button class="btn btn-primary " style="float:right" id="btnTambahPeriode" data-toggle="modal"
+                data-target="#addActivityModal"> <i class="fa fa-plus"></i>
+                Tambah Sub Kegiatan</button>
+            {{-- @endif --}}
             <hr>
         </div>
     </div>

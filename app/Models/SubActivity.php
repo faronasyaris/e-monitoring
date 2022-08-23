@@ -11,15 +11,19 @@ class SubActivity extends Model
 
     protected $guarded = ['id'];
 
-    public function getSubActivityOutput(){
-        return $this->hasMany(SubActivityOutput::class,'sub_activity_id');
+    public function getSubActivityOutput()
+    {
+        return $this->hasMany(SubActivityOutput::class, 'sub_activity_id');
     }
 
-    public function getSubActivitySubmission(){
-        return $this->hasMany(SubActivitySubmission::class,'sub_activity_id');
+    public function getPlotting()
+    {
+        return $this->hasMany(PlottingSubActivity::class, 'sub_activity_id');
     }
 
-    public function getSubActivityWorker(){
-        return $this->hasMany(SubActivityWorker::class,'sub_activity_id');
+    public function scopeWithAndWhereHas($query, $relation, $constraint)
+    {
+        return $query->whereHas($relation, $constraint)
+            ->with([$relation => $constraint]);
     }
 }

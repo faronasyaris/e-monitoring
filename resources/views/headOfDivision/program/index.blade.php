@@ -59,10 +59,10 @@
                 </tbody>
             </table>
             <hr>
-            {{-- @if (session('month') >= date('m')) --}}
-            <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-plus"></i>
-                Tambah Program</button>
-            {{-- @endif --}}
+            @if (auth()->user()->role != 'Kepala Dinas')
+                <button class="btn btn-primary " style="float:right" id="btnTambahPeriode"> <i class="fa fa-plus"></i>
+                    Tambah Program</button>
+            @endif
         </div>
     </div>
 

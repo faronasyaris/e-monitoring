@@ -9,4 +9,14 @@ class SubActivityOutputHistory extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function getSubActivity()
+    {
+        return $this->belongsTo(SubActivity::class, 'sub_activity_id');
+    }
+
+    public function getOutputActivity()
+    {
+        return $this->belongsTo(SubActivityOutput::class, 'outcome_id');
+    }
 }

@@ -45,7 +45,7 @@
                                 </td>
                             </tr>
                             @if ($activities->count() > 0)
-                                @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
+                                @foreach ($sub_activities->toQuery()->where('program_id', $program->id)->get() as $activity)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $activity->activity_name }}</td>

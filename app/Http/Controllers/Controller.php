@@ -12,8 +12,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function currentYear(){
-        return Periode::where('year',date('Y'))->first()->id;
+    // public function currentYear(){
+    //     return Periode::where('year',date('Y'))->first()->id;
 
-    }
+    // }
 }

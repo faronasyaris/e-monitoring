@@ -17,6 +17,7 @@ class CreateSubActivityOutputHistoriesTable extends Migration
             $table->id();
             $table->date('date');
             $table->foreignId('sub_activity_id')->references('id')->on('sub_activities');
+            $table->foreignId('outcome_id')->references('id')->on('sub_activity_outputs')->cascadeOnDelete();
             $table->integer('achievment');
             $table->string('file')->nullable();
             $table->foreignId('user_id')->nullable();

@@ -32,49 +32,44 @@ class SubActivityController extends Controller
             return view('headOfDivision.sub-activity.index', compact('programs', 'activities', 'sub_activities'));
         }
     }
-    // public function create($id){
-    //     $workers = User::where('field_id',auth()->user()->field_id)->where('id','!=',auth()->user()->id)->get();
-    //     $activity = Activity::findOrFail($id);
-    //     return view('headOfDivision.sub-activity.create',compact('activity','workers'));
-    // }
 
-    // public function store(Request $request){
-    //     $request->validate([
-    //         'activity_id'=>'required',
-    //         'name'=>'required',
-    //         'unit'=>'required',
-    //         'target'=>'required',
-    //         'indicator'=>'required',
-    //         'output'=>'required',
-    //         'pelaksana'=>'required'
-    //     ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'activity_id' => 'required',
+            'name' => 'required',
+            'unit' => 'required',
+            'target' => 'required',
+            'indicator' => 'required',
+            'output' => 'required',
+            'pelaksana' => 'required'
+        ]);
 
-    //     $subActivity = SubActivity::create([
-    //         'name'=>$request->name,
-    //         'indicator'=>$request->indicator,
-    //         'unit_target'=>$request->unit,
-    //         'target'=>$request->target,
-    //         'activity_id'=>$request->activity_id,
-    //         'status'=>"On Progress",
-    //     ]);
+        $subActivity = SubActivity::create([
+            'name' => $request->name,
+            'indicator' => $request->indicator,
+            'unit_target' => $request->unit,
+            'target' => $request->target,
+            'activity_id' => $request->activity_id,
+            'status' => "On Progress",
+        ]);
 
-    //     foreach($request->output as $output){
-    //         SubActivityOutput::create([
-    //             'description'=>$output,
-    //             'sub_activity_id'=>$subActivity->id
-    //         ]);
-    //     }
 
-    //     foreach($request->pelaksana as $pelaksana){
-    //         SubActivityWorker::create([
-    //             'sub_activity_id'=>$subActivity->id,
-    //             'worker_id'=> $pelaksana,
-    //         ]);
-    //     }
+        toast('Sub Activity berhasil dibuat', 'success');
+        return redirect("/kegiatan/$request->activity_id/manage-kegiatan");
+    }
 
-    //     toast('Sub Activity berhasil dibuat','success');
-    //     return redirect("/kegiatan/$request->activity_id/manage-kegiatan");
-    // }
+    public function update()
+    {
+    }
+
+    public function destroy()
+    {
+    }
+
+    public function export()
+    {
+    }
 
     // public function approval(){
     //     return view('headOfDivision.approval.index');

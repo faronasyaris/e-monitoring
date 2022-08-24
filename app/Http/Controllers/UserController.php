@@ -95,11 +95,6 @@ class UserController extends Controller
         return back();
     }
 
-    public function edit($id)
-    {
-        # code...
-    }
-
     public function update(Request $request)
     {
         # code...

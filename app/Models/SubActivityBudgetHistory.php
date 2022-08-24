@@ -9,4 +9,14 @@ class SubActivityBudgetHistory extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function getSubActivity()
+    {
+        return $this->belongsTo(SubActivity::class, 'sub_activity_id');
+    }
+
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

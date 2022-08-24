@@ -74,7 +74,7 @@ class ActivityController extends Controller
     {
     }
 
-    public function delete()
+    public function destroy()
     {
     }
 

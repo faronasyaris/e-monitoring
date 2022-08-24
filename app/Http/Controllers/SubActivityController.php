@@ -59,6 +59,10 @@ class SubActivityController extends Controller
         return redirect("/kegiatan/$request->activity_id/manage-kegiatan");
     }
 
+    public function detail()
+    {
+    }
+
     public function update()
     {
     }

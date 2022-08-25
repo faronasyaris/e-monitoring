@@ -99,4 +99,12 @@ class ProgramOutcomeController extends Controller
         toast('Capaian Berhasil Dibatalkan', 'success');
         return back();
     }
+
+    public function update(){
+
+    }
+
+    public function delete(){
+        
+    }
 }

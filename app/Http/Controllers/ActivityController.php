@@ -49,7 +49,7 @@ class ActivityController extends Controller
             'activity_name' => $request->activity_name,
             'created_id' => Auth::id(),
             'field_id' => auth()->user()->field_id,
-            'year' => $this->currentYear(),
+            'year' => session('year'),
             'program_id' => $request->program_id,
         ]);
 
@@ -86,5 +86,14 @@ class ActivityController extends Controller
         })->where('activity_id', $id)->get();
         $histories = ActivityOutcomeHistory::where('activity_id', $activity->id)->whereMonth('date', session('month'))->get();
         return view('headOfDivision.activity.detail', compact('activity', 'activity_outcomes', 'histories'));
+    }
+
+    public function getActivityByProgram($id)
+    {
+        $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('year', session('year'))->where('program_id', $id)->get();
+
+        return response()->json(['data' => $activities]);
     }
 }

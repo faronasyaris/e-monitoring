@@ -38,7 +38,7 @@ class ProgramController extends Controller
             'program_name' => $request->program_name,
             'created_id' => Auth::id(),
             'field_id' => auth()->user()->field_id,
-            'year' => $this->currentYear()
+            'year' => session('year')
         ]);
 
         for ($i = 1; $i <= 12; $i++) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Program;
 use App\Models\Activity;
+use App\Models\PlottingSubActivity;
 use App\Models\SubActivity;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -37,26 +38,30 @@ class SubActivityController extends Controller
     {
         $request->validate([
             'activity_id' => 'required',
-            'name' => 'required',
-            'unit' => 'required',
-            'target' => 'required',
-            'indicator' => 'required',
-            'output' => 'required',
-            'pelaksana' => 'required'
+            'activity_name' => 'required',
+            'budget' => 'required'
         ]);
 
         $subActivity = SubActivity::create([
-            'name' => $request->name,
-            'indicator' => $request->indicator,
-            'unit_target' => $request->unit,
-            'target' => $request->target,
+            'sub_activity_name' => $request->activity_name,
+            'year' => session('year'),
+            'field_id' => auth()->user()->field_id,
             'activity_id' => $request->activity_id,
-            'status' => "On Progress",
+            'created_id' => Auth::id(),
         ]);
 
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                PlottingSubActivity::create([
+                    'sub_activity_id' => $subActivity->id,
+                    'month' => $i,
+                    'budget' => $request->budget,
+                ]);
+            }
+        }
 
-        toast('Sub Activity berhasil dibuat', 'success');
-        return redirect("/kegiatan/$request->activity_id/manage-kegiatan");
+        toast('Sub Kegiatan berhasil dibuat', 'success');
+        return back();
     }
 
     public function detail()

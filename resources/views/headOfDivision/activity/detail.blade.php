@@ -100,8 +100,10 @@
                                     <td><button class="btn btn-sm btn-success btnTambahCapaian"
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->activity_outcome_name }}">Tambah
-                                            Capaian</button><button class="btn btn-sm btn-warning">Edit</button><button
-                                            class="btn btn-sm btn-danger">Delete</button></td>
+                                            Capaian</button><button class="btn btn-sm btn-warning" data-toggle="modal"
+                                            data-target="#editActivityOutcomeModal">Edit</button><button
+                                            class="btn btn-sm btn-danger" data-toggle="modal"
+                                            data-target="#deleteActivityOutcomeModal">Delete</button></td>
                                 @endif
                             </tr>
                         @endforeach
@@ -250,6 +252,67 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editActivityOutcomeModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Outcome Kegiatan</h4>
+                </div>
+                <form action="/kegiatanOutcome" method="post">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $activity->id }}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Outcome</label>
+                            <input type="text" name="description" class="form-control" required
+                                placeholder="Nama Outcome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Satuan</label>
+                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Target</label>
+                            <input type="number" min=0 name="target" class="form-control" required
+                                placeholder="Target">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteActivityOutcomeModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Outcome Kegiatan</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <p>Anda yakin akan menghapus Outcome Kegiatan yang dipilih?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya</button>
                     </div>
                 </form>
             </div>

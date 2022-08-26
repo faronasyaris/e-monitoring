@@ -52,11 +52,11 @@
 
                                     </td>
                                     <td class="text-center">
-                                        <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#editActivityModal"
                                             class="btn btn-sm btn-warning">Edit</a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteActivityModal"
                                             class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
@@ -109,6 +109,55 @@
                 </form>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="editActivityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Kegiatan</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/kegiatan" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Kegiatan</label>
+                            <input type="text" name="activity_name" class="form-control" required>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteActivityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Kegiatan</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <p>Anda yakin akan menghapus kegiatan yang dipilih?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
 @endsection
 

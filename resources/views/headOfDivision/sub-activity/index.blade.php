@@ -61,11 +61,12 @@
 
                                         </td>
                                         <td class="text-center">
-                                            <a href="/sub-kegiatan/{{ $activity->id }}/manage-sub-kegiatan"
-                                                class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#editSubActivityModal" class="btn btn-sm btn-warning">Edit</a>
                                         </td>
                                         <td class="text-center">
-                                            <a href="/sub-kegiatan/{{ $activity->id }}/manage-sub-kegiatan"
+                                            <a href="javascript:void(0)" data-toggle="modal"
+                                                data-target="#deleteSubActivityModal"
                                                 class="btn btn-sm btn-danger">Delete</a>
                                         </td>
                                     </tr>
@@ -122,6 +123,87 @@
                         <div class="form-group">
                             <label for="" class="form-label">Dana Sub Kegiatan</label>
                             <input type="number" min="0" name="budget" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="editSubActivityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Sub Kegiatan</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/sub-kegiatan" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Sub Kegiatan</label>
+                            <input type="text" name="activity_name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Dana Sub Kegiatan</label>
+                            <input type="number" min="0" name="budget" class="form-control" required>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteSubActivityModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Sub Kegiatan</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <p>Anda yakin akan menghapus Sub Kegiatan yang dipilih?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addProgramModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tambah Program</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Program</label>
+                            <input type="text" name="program_name" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">

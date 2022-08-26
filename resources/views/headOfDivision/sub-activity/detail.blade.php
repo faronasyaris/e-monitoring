@@ -1,137 +1,468 @@
-@extends("layouts.main")
+@extends('layouts.main')
 
 @section('title')
-Data Kegiatan
+    Data Kegiatan
 @endsection
 
 @section('sidebar')
-@include('layouts.headOfDivision-sidebar')
+    @include('layouts.headOfDivision-sidebar')
 @endsection
 
-@section("content")
-@include('sweetalert::alert')
-<div class="col-md-12 col-sm-12 col-xs-12">
-  @include('layouts.notif')
-  <a href="javascript:void(0)" onclick="history.back()">
-    < Kembali</a>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="x_panel">
-            <div class="x_content">
-              <div class="col-md-3 col-sm-3  ">
-                <section class="panel">
-                  <div class="x_title">
-                    <h2>Deskripsi Sub Kegiatan</h2>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="panel-body">
-                    <h3 class="green"><i class="fa fa-list-alt"></i> Sub Kegiatan</h3>
-                    <p>{{$sub->name}}</p>
-                    <br>
-                    <div class="project_detail">
-                    <p class="title">Indikator</p>
-                      <p>{{$sub->indicator}}</p>
-                    <p class="title">Satuan</p>
-                      <p>{{$sub->unit_target}}</p>
-                      <p class="title">Target</p>
-                      <p>{{$sub->target}} {{$sub->unit_target}}</p>
-                      <p class="title">Progress</p>
-                      <p>0%</p>
-                      <p class="title">Status</p>
-                      <p>On Progress</p>
-                    </div>
-                    <br />
-                    <br />
-                    <div class="text-center mtop20">
-                      <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                      <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                    </div>
-                  </div>
-                </section>
-              </div>
-              <div class="col-md-9 col-sm-9  ">
+@section('content')
+@section('content')
+    @include('sweetalert::alert')
+    <div class="row tile_count">
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-percent"></i> Kinerja Fisik</span>
+            <div class="count">0%</div>
 
-                <h4>Submission File</h4>
-                <table class="table table-striped projects tableProgram2" id="tableProgram2" style="margin-top:10px">
-                  <thead>
-                    <tr>
-                      <th style="width: 1%">#</th>
-                      <th style="width: 20%">Judul</th>
-                      <th>Pelaksana</th>
-                      <th>Tanggal Upload</th>
-                      <th>Status</th>
-                      <th style="width: 20%">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  
-                  </tbody>
-                </table>
-                <h4>Rincian Output</h4>
-                <a href="" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> Tambah Output</a>
-                <table class="table table-striped projects tableProgram2" id="" style="margin-top:10px">
-                  <thead>
-                    <tr>
-                      <th style="width: 1%">#</th>
-                      <th style="width: 20%">Deskripsi</th>
-                      <th style="width: 20%">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($sub->getSubActivityOutput as $activity)
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-percent"></i> Kinerja Indikator</span>
+            <div class="count">
+                0%
+            </div>
+
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-percent"></i> Kinerja Keuangan</span>
+            <div class="count">0</div>
+
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-plus-square"></i> Jumlah Indikator</span>
+            <div class="count">0</div>
+
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-money"></i> Dana Sub Kegiatan</span>
+            <div class="count green">
+                <h4>Rp9.000.000.000</h4>
+            </div>
+
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-money"></i> Realisasi Keuangan</span>
+            <div class="count green">
+                <h4>Rp9.000.000.000</h4>
+            </div>
+
+        </div>
+
+    </div>
+    @include('layouts.notif')
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Nama Sub Kegiatan</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x-content">
+                <div>Membangun rumah di desa</d>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Realisasi Anggaran</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x-content">
+                <table id="tableTahapan" class="table table-striped table-bordered tableProgram">
+                    <thead>
                         <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$activity->description}}</td>
+                            <th width="4%">No</th>
+                            <th width="20%">Jumlah Anggaran</th>
+                            <th width="10%">Tanggal Input</th>
+                            <th width="8%">User</th>
+                            @if (auth()->user()->role != 'Kepala Dinas')
+                                <th width="22%">Action</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <hr>
+                {{-- @if (session('month') >= date('m')) --}}
+                @if (auth()->user()->role != 'Kepala Dinas')
+                    <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
+                        data-target="#addFinance"> <i class="fa fa-plus"></i>
+                        Tambah Realisasi Anggaran</button>
+                @endif
+                {{-- @endif --}}
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Output Sub Kegiatan</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x-content">
+                <table id="tableTahapan" class="table table-striped table-bordered tableProgram">
+                    <thead>
+                        <tr>
+                            <th width="4%">No</th>
+                            <th width="20%">Deskripsi</th>
+                            <th width="10%">Satuan</th>
+                            <th width="8%">Target</th>
+                            <th width="8%">Capian</th>
+                            <th width="8%">Kinerja</th>
+                            @if (auth()->user()->role != 'Kepala Dinas')
+                                <th width="22%">Action</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>sub kegiatan 1</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>100%
+                            </td>
                             <td>
-                    <a href="" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="" class="btn btn-sm btn-danger">Delete</a>
 
                             </td>
+                            @if (auth()->user()->role != 'Kepala Dinas')
+                                <td><button class="btn btn-sm btn-success btnTambahCapaian" data-toggle="modal"
+                                        data-target="#addAchievmentModal">Tambah
+                                        Capaian</button><button class="btn btn-sm btn-warning" data-toggle="modal"
+                                        data-target="#editActivityOutputModal">Edit</button><button
+                                        class="btn btn-sm btn-danger" data-toggle="modal"
+                                        data-target="#deleteActivityOutputModal">Delete</button></td>
+                            @endif
                         </tr>
-                    @endforeach
-                  </tbody>
+                    </tbody>
                 </table>
+                <hr>
+                {{-- @if (session('month') >= date('m')) --}}
+                @if (auth()->user()->role != 'Kepala Dinas')
+                    <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
+                        data-target="#addProgramOutputModal"> <i class="fa fa-plus"></i>
+                        Tambah Output</button>
+                @endif
+                {{-- @endif --}}
 
-                <h4>Pelaksana</h4>
-                <a href="" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> Tambah Pelaksana</a>
-                <table class="table table-striped projects tableProgram2" id="tableProgram2" style="margin-top:10px">
-                  <thead>
-                    <tr>
-                      <th style="width: 1%">#</th>
-                      <th style="width: 20%">Pelaksana</th>
-                      <th style="width: 20%">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($sub->getSubActivityWorker as $worker)
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$worker->getUser->name}}</td>
-                        <td>
-                    <a href="" class="btn btn-sm btn-danger">Delete</a>
-                        </td>
-                    @endforeach
-                  </tbody>
-                </table>
-
-                
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-      @endsection
+    </div>
 
-      @section('js')
-      <script>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Histori Penambahan Capaian</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x-content">
+                <table id="tableHistoriTahapan" class="table table-striped table-bordered tableProgram">
+                    <thead>
+                        <tr>
+                            <th width="14%">Tanggal Input</th>
+                            <th width="19%">Nama Output</th>
+                            <th width="15%">Jumlah Capaian</th>
+                            <th width="15%">File Bukti</th>
+                            @if (auth()->user()->role != 'Kepala Dinas')
+                                <th width="12%">Action</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    {{-- modal edit program --}}
+    <div class="modal fade" id="editProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Program</h4>
+                </div>
+                <form method="post" id="editProgramForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Program</label>
+                            <input type="text" id="program_name" name="program_name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{-- modal confirm delete program --}}
+    <div class="modal fade" id="deleteProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Apakah Anda Yakin ?</h4>
+                </div>
+                <div class="modal-body">
+                    Data yang dihapus tidak dapat dikembalikan!!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                    <form style="display: inline" id="deleteProgramForm" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button style="display: inline" button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- modal tambah Output --}}
+    <div class="modal fade" id="addProgramOutputModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tambah Output Sub Kegiatan</h4>
+                </div>
+                <form action="/programOutput" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Output</label>
+                            <input type="text" name="description" class="form-control" required
+                                placeholder="Nama Output">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Satuan</label>
+                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Target</label>
+                            <input type="number" min=0 name="target" class="form-control" required
+                                placeholder="Target">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addFinance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tambah Realisasi Anggaran</h4>
+                </div>
+                <form action="/programOutput" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Jumlah Anggaran</label>
+                            <input type="text" name="description" class="form-control" required
+                                placeholder="Nama Output">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- modal tambah capaian --}}
+    <div class="modal fade" id="addAchievmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tambah Capaian</h4>
+                </div>
+                <form id="formAchievment" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Output</label>
+                            <input type="text" id="Output_name" name="program_name" class="form-control" required
+                                readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Jumlah Capaian</label>
+                            <input type="number" id="achievment" name="achievment" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Bukti (Optional)</label>
+                            <input type="file" id="evidence" name="evidence" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteProgramOutputModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Hapus Output</h4>
+                </div>
+                <div class="modal-body">
+                    Anda Yakin akan menghapus Output Program yang dipilih?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline" class="btn btn-secondary"
+                        data-dismiss="modal">Batal</button>
+                    <form style="display: inline" id="cancelAchievmentForm" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- modal batalkan capaian (delete history) --}}
+    <div class="modal fade" id="cancelAchievmentModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Batalkan Capaian</h4>
+                </div>
+                <div class="modal-body">
+                    Dengan ini, maka Capaian yang diinput akan ditarik kembali, Lanjutkan?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline" class="btn btn-secondary"
+                        data-dismiss="modal">Batal</button>
+                    <form style="display: inline" id="cancelAchievmentForm" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editActivityOutputModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Output Sub Kegiatan</h4>
+                </div>
+                <form action="/kegiatanOutput" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Output</label>
+                            <input type="text" name="description" class="form-control" required
+                                placeholder="Nama Output">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Satuan</label>
+                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Target</label>
+                            <input type="number" min=0 name="target" class="form-control" required
+                                placeholder="Target">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteActivityOutputModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Output Sub Kegiatan</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <p>Anda yakin akan menghapus Output Kegiatan yang dipilih?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+@endsection
+
+@section('js')
+    <script>
         $(".tableProgram2").dataTable({
-          "autoWidth": false,
-          info: false,
-          lengthChange: false,
-          searching : false,
+            "autoWidth": false,
+            info: false,
+            lengthChange: false,
+            searching: false,
         });
 
         $('#btnTambahPeriode').on('click', function() {
-          $('#addProgramModel').modal('show');
+            $('#addProgramModel').modal('show');
         })
-      </script>
-      @endsection
+    </script>
+@endsection

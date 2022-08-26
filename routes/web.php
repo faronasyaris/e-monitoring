@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/sub-kegiatan', [SubActivityController::class, 'index']);
     Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
-    Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan', [SubActivityController::class, 'detailSubActivity']);
+    Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan', [SubActivityController::class, 'detail']);
 
     // Route::get('/my-sub-kegiatan', [SubActivityController::class, 'getSubActivityByWorker']);
 

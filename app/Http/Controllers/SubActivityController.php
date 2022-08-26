@@ -66,6 +66,7 @@ class SubActivityController extends Controller
 
     public function detail()
     {
+        return view('headOfDivision.sub-activity.detail');
     }
 
     public function update()

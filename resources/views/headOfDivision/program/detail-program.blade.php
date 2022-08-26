@@ -101,8 +101,10 @@
                                         <button class="btn btn-sm btn-success btnTambahCapaian"
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->program_outcome_name }}">Tambah
-                                            Capaian</button><button class="btn btn-sm btn-warning">Edit</button><button
-                                            class="btn btn-sm btn-danger">Delete</button>
+                                            Capaian</button><button class="btn btn-sm btn-warning"
+                                            data-target="#editProgramOutcomeModal" data-toggle="modal">Edit</button><button
+                                            class="btn btn-sm btn-danger" data-target="#deleteProgramOutcomeModal"
+                                            data-toggle="modal">Delete</button>
                                     </td>
                                 @endif
 
@@ -261,6 +263,43 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editProgramOutcomeModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Outcome Program</h4>
+                </div>
+                <form action="/programOutcome" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Outcome</label>
+                            <input type="text" name="description" class="form-control" required
+                                placeholder="Nama Outcome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Satuan</label>
+                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Target</label>
+                            <input type="number" min=0 name="target" class="form-control" required
+                                placeholder="Target">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- modal tambah capaian --}}
     <div class="modal fade" id="addAchievmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -293,6 +332,31 @@
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteProgramOutcomeModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Hapus Outcome</h4>
+                </div>
+                <div class="modal-body">
+                    Anda Yakin akan menghapus Outcome Program yang dipilih?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline" class="btn btn-secondary"
+                        data-dismiss="modal">Batal</button>
+                    <form style="display: inline" id="cancelAchievmentForm" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

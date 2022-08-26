@@ -47,11 +47,11 @@
 
                             </td>
                             <td class="text-center">
-                                <a href="/program/{{ $program->id }}/manage-program"
+                                <a href="javascript:void(0)" data-target="#editProgramModal" data-toggle="modal"
                                     class="btn btn-sm btn-warning">Edit</a>
                             </td>
                             <td class="text-center">
-                                <a href="/program/{{ $program->id }}/manage-program"
+                                <a href="javascript:void(0)" data-target="#deleteProgramModal" data-toggle="modal"
                                     class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
@@ -87,6 +87,53 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Program</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Nama Program</label>
+                            <input type="text" name="program_name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Program</h4>
+                </div>
+                <form action="/program" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <p>Anda yakin akan menghapus program yang dipilih?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ya</button>
                     </div>
                 </form>
             </div>

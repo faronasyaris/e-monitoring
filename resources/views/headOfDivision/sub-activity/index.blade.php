@@ -49,9 +49,9 @@
                                 @foreach ($sub_activities->toQuery()->where('activity_id', $activity->id)->get() as $sub_activity)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $activity->activity_name }}</td>
+                                        <td>{{ $sub_activity->sub_activity_name }}</td>
                                         <td>0</td>
-                                        <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%
+                                        <td> 0%
                                         </td>
                                         <td>0</td>
                                         <td>0</td>
@@ -183,32 +183,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Ya</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="addProgramModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Tambah Program</h4>
-                </div>
-                <form action="/program" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="" class="form-label">Nama Program</label>
-                            <input type="text" name="program_name" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
             </div>

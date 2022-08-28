@@ -101,15 +101,18 @@
                                         <button class="btn btn-sm btn-success btnTambahCapaian"
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->program_outcome_name }}">Tambah
-                                            Capaian</button><button class="btn btn-sm btn-warning"
-                                            data-target="#editProgramOutcomeModal" data-toggle="modal">Edit</button><button
+                                            Capaian</button>
+                                        {{-- <button class="btn btn-sm btn-warning"
+                                            data-target="#editProgramOutcomeModal" data-toggle="modal">Edit</button>
+                                            <button
                                             class="btn btn-sm btn-danger" data-target="#deleteProgramOutcomeModal"
-                                            data-toggle="modal">Delete</button>
+                                            data-toggle="modal">Delete</button> --}}
                                     </td>
                                 @endif
 
                             </tr>
                         @endforeach
+
                     </tbody>
                 </table>
                 <hr>

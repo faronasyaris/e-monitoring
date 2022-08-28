@@ -53,22 +53,27 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <select name="year" id="" class="form-control pull-right">
+                                    <select name="year" class="form-control pull-right" id="year">
                                         @foreach ($years as $year)
                                             <option value="{{ $year->id }}"
                                                 @if (empty(Request::get('year'))) @if ($year->year == date('Y'))
                                                 selected @endif
                                             @else @if (Request::get('year') == $year->year) selected @endif @endif
 
-                                                >Periode
+                                                data-year = {{ $year->year }}>Periode
                                                 {{ $year->year }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
-
-                            @if ($years->count() == 0)
+                            @php
+                                $checkPeriodByRequest = \App\Models\Periode::where('year', Request::get('year'))->first();
+                                $checkPeridByYear = \App\Models\Periode::where('year', date('Y'))->first();
+                            @endphp
+                            @if ($years->count() == 0 ||
+                                (!empty(Request::get('year')) && empty($checkPeriodByRequest)) ||
+                                (empty(Request::get('year')) && empty($checkPeridByYear)))
                                 <h4 class="text-center" style="margin-top:50px !important">Periode Belum Dibuat</h4>
                                 <center> <a class="btn btn-success btn-sm" href="/logout">Logout</a></center>
                             @else
@@ -84,7 +89,7 @@
                                                         data-month="{{ $periode['code'] }}"
                                                         data-monthName="{{ $periode['month'] }}"
                                                         onclick="{{ $periode['code'] > date('m') || Request::get('year') > date('Y') ? 'return false;' : '' }}"
-                                                        {{ $periode['code'] > date('m') || Request::get('year') > date('Y') ? 'disabled' : '' }}>Pilih
+                                                        {{ ($periode['code'] > date('m') && Request::get('year') == date('Y')) || Request::get('year') > date('Y') ? 'disabled' : '' }}>Pilih
                                                         Bulan</button>
                                                 </center>
 
@@ -164,6 +169,11 @@
         $('#month').val($(this).attr('data-month'));
         $('#monthName').val($(this).attr('data-monthName'));
         $('#formPilihPeriod').submit();
+    })
+
+    $(document).on('change', '#year', function() {
+        console.log('aa');
+        window.location.replace("/selectPeriod?year=" + $('option:selected', this).attr('data-year'));
     })
 </script>
 

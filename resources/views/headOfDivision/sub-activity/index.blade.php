@@ -60,7 +60,7 @@
                                                 class="btn btn-sm btn-success">Manage</a>
 
                                         </td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <a href="javascript:void(0)" data-toggle="modal"
                                                 data-target="#editSubActivityModal" class="btn btn-sm btn-warning">Edit</a>
                                         </td>
@@ -68,7 +68,7 @@
                                             <a href="javascript:void(0)" data-toggle="modal"
                                                 data-target="#deleteSubActivityModal"
                                                 class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             @endif

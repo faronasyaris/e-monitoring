@@ -26,7 +26,7 @@
                         <th>Kinerja Fisik</th>
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
-                        <th colspan=3>
+                        <th colspan=1>
                             <center>Action
                         </th>
                     </tr>
@@ -53,14 +53,14 @@
                                             class="btn btn-sm btn-success">Manage</a>
 
                                     </td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#editActivityModal"
                                             class="btn btn-sm btn-warning">Edit</a>
                                     </td>
                                     <td class="text-center">
                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteActivityModal"
                                             class="btn btn-sm btn-danger">Delete</a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         @endif

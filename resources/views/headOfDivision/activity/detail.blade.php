@@ -101,10 +101,12 @@
                                     <td><button class="btn btn-sm btn-success btnTambahCapaian"
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->activity_outcome_name }}">Tambah
-                                            Capaian</button><button class="btn btn-sm btn-warning" data-toggle="modal"
+                                            Capaian</button>
+                                        {{-- <button class="btn btn-sm btn-warning" data-toggle="modal"
                                             data-target="#editActivityOutcomeModal">Edit</button><button
                                             class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#deleteActivityOutcomeModal">Delete</button></td>
+                                            data-target="#deleteActivityOutcomeModal">Delete</button> --}}
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach

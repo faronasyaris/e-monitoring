@@ -136,10 +136,12 @@
                                             data-target="#addAchievmentModal"
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->activity_output_name }}">Tambah
-                                            Capaian</button><button class="btn btn-sm btn-warning" data-toggle="modal"
+                                            Capaian</button>
+                                        {{-- <button class="btn btn-sm btn-warning" data-toggle="modal"
                                             data-target="#editActivityOutputModal">Edit</button><button
                                             class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#deleteActivityOutputModal">Delete</button></td>
+                                            data-target="#deleteActivityOutputModal">Delete</button> --}}
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach

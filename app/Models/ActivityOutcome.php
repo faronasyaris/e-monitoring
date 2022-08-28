@@ -36,6 +36,25 @@ class ActivityOutcome extends Model
         return $performance;
     }
 
+    public static  function countPhysicalPerformance($activity)
+    {
+        $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->where('activity_id', $activity)->get();
+        if ($subActivities->count() == 0) {
+            return 0;
+        }
+        $totalPerformane = 0;
+        $countSubActivity = 0;
+        foreach ($subActivities as $subActivity) {
+            $plotOutcome = SubActivityOutput::countIndicatorPerformance($subActivity->id);
+            $totalPerformane += $plotOutcome;
+            $countSubActivity++;
+        }
+        $performance = round(($totalPerformane / $countSubActivity), 2);
+        return $performance;
+    }
+
     public function getPlotting()
     {
         return $this->hasMany(PlottingActivityOutcome::class, 'outcome_id');

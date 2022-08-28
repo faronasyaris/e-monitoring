@@ -36,8 +36,10 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $program->program_name }}</td>
-                            <td class="text-center"></td>
-                            <td>
+                            <td class="text-center">
+                                {{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%
+                            </td>
+                            <td class="text-center">
                                 {{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%
                             </td>
                             <td class="text-center"></td>

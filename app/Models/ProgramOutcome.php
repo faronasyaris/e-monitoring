@@ -45,4 +45,23 @@ class ProgramOutcome extends Model
         $performance = round(($totalPerformane / $countOutcome), 2);
         return $performance;
     }
+
+    public static function countPhysicalPerformance($program)
+    {
+        $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->where('program_id', $program)->get();
+        if ($activities->count() == 0) {
+            return 0;
+        }
+        $totalPerformane = 0;
+        $countActivity = 0;
+        foreach ($activities as $activity) {
+            $plotOutcome = ActivityOutcome::countPhysicalPerformance($activity->id);
+            $totalPerformane += $plotOutcome;
+            $countActivity++;
+        }
+        $performance = round(($totalPerformane / $countActivity), 2);
+        return $performance;
+    }
 }

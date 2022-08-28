@@ -10,6 +10,7 @@ use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProgramOutcomeController;
 use App\Http\Controllers\SubActivityController;
+use App\Http\Controllers\SubActivityOutputController;
 use App\Models\SubActivity;
 
 /*
@@ -50,7 +51,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/kegiatan/{id}/tambah-sub-kegiatan', [SubActivityController::class, 'create']);
 
     Route::get('/sub-kegiatan', [SubActivityController::class, 'index']);
-    Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
     Route::get('/sub-kegiatan/{id}/manage-sub-kegiatan', [SubActivityController::class, 'detail']);
 
     // Route::get('/my-sub-kegiatan', [SubActivityController::class, 'getSubActivityByWorker']);
@@ -60,20 +60,22 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
-    Route::post('/programOutcome', [ProgramOutcomeController::class, 'store']);
-
     Route::get('/approval', [SubActivityController::class, 'approval']);
     Route::post('/program', [ProgramController::class, 'store']);
     Route::post('/program/{id}', [ProgramController::class, 'update']);
     Route::delete('/program/{id}', [ProgramController::class, 'destroy']);
     Route::get('/program/{id}/getActivity', [ActivityController::class, 'getActivityByProgram']);
+    Route::post('/programOutcome', [ProgramOutcomeController::class, 'store']);
 
     Route::post('/kegiatan', [ActivityController::class, 'store']);
     Route::post('/kegiatanOutcome', [ActivityOutcomeController::class, 'store']);
 
-
     Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
     Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
+
+    Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
+    Route::post('/subKegiatanOutcome', [SubActivityOutputController::class, 'store']);
+    Route::post('/subKegiatan-achievment/{id}/add', [SubActivityOutputController::class, 'addAchievment']);
 
     Route::post('/kegiatan-achievment/{id}/add', [ActivityOutcomeController::class, 'addAchievment']);
     Route::delete('/kegiatan-achievment/{id}/cancel', [ActivityOutcomeController::class, 'cancelAchievment']);

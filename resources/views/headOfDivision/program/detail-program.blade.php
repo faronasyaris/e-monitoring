@@ -13,7 +13,7 @@
     <div class="row tile_count">
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Fisik</span>
-            <div class="count">0</div>
+            <div class="count"> {{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%</div>
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">

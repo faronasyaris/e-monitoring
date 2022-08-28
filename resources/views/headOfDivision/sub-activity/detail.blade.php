@@ -20,7 +20,7 @@
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Indikator</span>
             <div class="count">
-                0%
+                {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%
             </div>
 
         </div>
@@ -59,7 +59,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x-content">
-                <div>Membangun rumah di desa</d>
+                <div>{{ $subActivity->sub_activity_name }}</d>
                 </div>
             </div>
         </div>
@@ -121,25 +121,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>sub kegiatan 1</td>
-                            <td>10</td>
-                            <td>10</td>
-                            <td>100%
-                            </td>
-                            <td>
-
-                            </td>
-                            @if (auth()->user()->role != 'Kepala Dinas')
-                                <td><button class="btn btn-sm btn-success btnTambahCapaian" data-toggle="modal"
-                                        data-target="#addAchievmentModal">Tambah
-                                        Capaian</button><button class="btn btn-sm btn-warning" data-toggle="modal"
-                                        data-target="#editActivityOutputModal">Edit</button><button
-                                        class="btn btn-sm btn-danger" data-toggle="modal"
-                                        data-target="#deleteActivityOutputModal">Delete</button></td>
-                            @endif
-                        </tr>
+                        @foreach ($sub_activity_output as $outcome)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $outcome->activity_output_name }}</td>
+                                <td>{{ $outcome->getPlotting->where('month', session('month'))->first()->unit }}</td>
+                                <td>{{ $outcome->getPlotting->where('month', session('month'))->first()->target }}</td>
+                                <td>{{ $outcome->getPlotting->where('month', session('month'))->first()->achievment }}
+                                <td>
+                                    {{ \App\Models\PlottingSubActivityOutput::countOutcomePerformance($outcome->getPlotting->where('month', session('month'))->first()->id) }}%
+                                </td>
+                                @if (auth()->user()->role != 'Kepala Dinas')
+                                    <td><button class="btn btn-sm btn-success btnTambahCapaian" data-toggle="modal"
+                                            data-target="#addAchievmentModal"
+                                            data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
+                                            data-deskripsi="{{ $outcome->activity_output_name }}">Tambah
+                                            Capaian</button><button class="btn btn-sm btn-warning" data-toggle="modal"
+                                            data-target="#editActivityOutputModal">Edit</button><button
+                                            class="btn btn-sm btn-danger" data-toggle="modal"
+                                            data-target="#deleteActivityOutputModal">Delete</button></td>
+                                @endif
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <hr>
@@ -246,8 +249,9 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Tambah Output Sub Kegiatan</h4>
                 </div>
-                <form action="/programOutput" method="post">
+                <form action="/subKegiatanOutcome" method="post">
                     @csrf
+                    <input type="hidden" name="id" value="{{ $subActivity->id }}">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Output</label>
@@ -317,8 +321,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Output</label>
-                            <input type="text" id="Output_name" name="program_name" class="form-control" required
-                                readonly>
+                            <input id="outcome_name" type="text" id="Output_name" name="sub_activity_name"
+                                class="form-control" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Jumlah Capaian</label>
@@ -463,6 +467,12 @@
 
         $('#btnTambahPeriode').on('click', function() {
             $('#addProgramModel').modal('show');
+        })
+
+        $(document).on('click', '.btnTambahCapaian', function() {
+            $('#outcome_name').val($(this).attr('data-deskripsi'));
+            $('#formAchievment').prop('action', `/subKegiatan-achievment/${$(this).attr('data-id')}/add`);
+            $('#addAchievmentModal').modal('show');
         })
     </script>
 @endsection

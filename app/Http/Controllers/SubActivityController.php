@@ -10,6 +10,7 @@ use App\Models\SubActivity;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SubActivityOutput;
+use App\Models\SubActivityOutputHistory;
 use App\Models\SubActivityWorker;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SubActivitySubmission;
@@ -64,9 +65,14 @@ class SubActivityController extends Controller
         return back();
     }
 
-    public function detail()
+    public function detail($id)
     {
-        return view('headOfDivision.sub-activity.detail');
+        $subActivity = SubActivity::where('id', $id)->first();
+        $sub_activity_output = SubActivityOutput::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('sub_activity_id', $id)->get();
+        $histories = SubActivityOutputHistory::where('sub_activity_id', $subActivity->id)->whereMonth('date', session('month'))->get();
+        return view('headOfDivision.sub-activity.detail', compact('subActivity', 'sub_activity_output', 'histories'));
     }
 
     public function update()

@@ -12,7 +12,7 @@ class PlottingSubActivityOutput extends Model
 
     public static function countOutcomePerformance($id)
     {
-        $outcome = PlottingActivityOutcome::find($id);
+        $outcome = PlottingSubActivityOutput::find($id);
         if ($outcome->target == 0) {
             return 0;
         }

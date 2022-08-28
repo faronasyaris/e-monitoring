@@ -18,16 +18,16 @@ class SubActivityOutput extends Model
 
     public static function countIndicatorPerformance($id)
     {
-        $outcomes = ActivityOutcome::withAndWhereHas('getPlotting', function ($query) {
+        $outcomes = SubActivityOutput::withAndWhereHas('getPlotting', function ($query) {
             $query->where('month', session('month'));
-        })->where('activity_id', $id)->get();
+        })->where('sub_activity_id', $id)->get();
         if ($outcomes->count() == 0) {
             return 0;
         }
         $totalPerformane = 0;
         $countOutcome = 0;
         foreach ($outcomes as $outcome) {
-            $plotOutcome = PlottingActivityOutcome::countOutcomePerformance($outcome->getPlotting->where('month', session('month'))->first()->id);
+            $plotOutcome = PlottingSubActivityOutput::countOutcomePerformance($outcome->getPlotting->where('month', session('month'))->first()->id);
             $totalPerformane += $plotOutcome;
             $countOutcome++;
         }

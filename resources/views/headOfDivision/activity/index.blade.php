@@ -43,9 +43,11 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $activity->activity_name }}</td>
-                                    <td>0</td>
-                                    <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
-                                    <td>0</td>
+                                    <td class="text-center">
+                                        {{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
+                                    <td class="text-center">
+                                        {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
+                                    <td class="text-center">0</td>
                                     <td class="text-center">
                                         <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
                                             class="btn btn-sm btn-success">Manage</a>

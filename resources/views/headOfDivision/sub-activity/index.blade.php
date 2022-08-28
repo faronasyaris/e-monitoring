@@ -23,10 +23,9 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Sub Kegiatan</th>
-                        <th>Kinerja Fisik</th>
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
-                        <th>Jumlah Dana</th>
+                        <th>Total Anggaran</th>
                         <th colspan=3>
                             <center>Action
                         </th>
@@ -50,13 +49,14 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $sub_activity->sub_activity_name }}</td>
-                                        <td>0</td>
-                                        <td> 0%
-                                        </td>
-                                        <td>0</td>
-                                        <td>0</td>
                                         <td class="text-center">
-                                            <a href="/sub-kegiatan/{{ $activity->id }}/manage-sub-kegiatan"
+                                            {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">0</td>
+                                        <td class="text-center">
+                                            <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
                                                 class="btn btn-sm btn-success">Manage</a>
 
                                         </td>

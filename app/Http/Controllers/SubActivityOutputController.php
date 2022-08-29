@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PlottingProgram;
 use App\Models\PlottingSubActivityOutput;
 use App\Models\SubActivityOutput;
 use App\Models\SubActivityOutputHistory;
@@ -77,8 +78,24 @@ class SubActivityOutputController extends Controller
         return back();
     }
 
-    public function cancelAchievment()
+    public function cancelAchievment(SubActivityOutputHistory $id, Request $request)
     {
+        $id->load('getOutputActivity', 'getOutputActivity.getSubActivity');
+        $new_achievment = $id->getOutputActivity->getPlotting->where('month', session('month'))->first()->achievment - $id->achievment;
+
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingSubActivityOutput::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
+                $outcome_plot->update([
+                    'achievment' => $new_achievment,
+                ]);
+            }
+        }
+
+        $id->delete();
+
+        toast('Capaian Berhasil Dibatalkan', 'success');
+        return back();
     }
 
     public function update()

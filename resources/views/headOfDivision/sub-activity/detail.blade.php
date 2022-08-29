@@ -13,11 +13,6 @@
     @include('sweetalert::alert')
     <div class="row tile_count">
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-percent"></i> Kinerja Fisik</span>
-            <div class="count">0%</div>
-
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Indikator</span>
             <div class="count">
                 {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%
@@ -35,21 +30,20 @@
 
         </div>
 
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-money"></i> Dana Sub Kegiatan</span>
             <div class="count green">
                 <h4>Rp9.000.000.000</h4>
             </div>
 
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-money"></i> Realisasi Keuangan</span>
             <div class="count green">
                 <h4>Rp9.000.000.000</h4>
             </div>
 
         </div>
-
     </div>
     @include('layouts.notif')
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -67,7 +61,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Realisasi Anggaran</h2>
+                <h2>Realisasi Keuangan</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x-content">
@@ -75,6 +69,7 @@
                     <thead>
                         <tr>
                             <th width="4%">No</th>
+                            <th width="20%">Deskripsi</th>
                             <th width="20%">Jumlah Anggaran</th>
                             <th width="10%">Tanggal Input</th>
                             <th width="8%">User</th>
@@ -84,7 +79,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
 
+                        </tr>
                     </tbody>
                 </table>
                 <hr>
@@ -174,13 +177,33 @@
                             <th width="19%">Nama Output</th>
                             <th width="15%">Jumlah Capaian</th>
                             <th width="15%">File Bukti</th>
+                            <th>User</th>
                             @if (auth()->user()->role != 'Kepala Dinas')
                                 <th width="12%">Action</th>
                             @endif
                         </tr>
                     </thead>
                     <tbody>
-
+                        @foreach ($histories as $history)
+                            <tr>
+                                <td>{{ date('d F Y', strtotime($history->date)) }}</td>
+                                <td>{{ $history->getOutputActivity->activity_output_name }}</td>
+                                <td>{{ $history->achievment }}</td>
+                                <td>
+                                    @if (empty($history->file))
+                                        -
+                                    @else
+                                        <a href="{{ asset('/evidence/' . $history->file) }}"><i class="fa fa-download"></i>
+                                            Donwload File</a>
+                                    @endif
+                                </td>
+                                <td></td>
+                                @if (auth()->user()->role != 'Kepala Dinas')
+                                    <td><button class="btn btn-sm btn-danger btnCancelAchievment"
+                                            data-id="{{ $history->id }}">Batalkan</button></td>
+                                @endif
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -359,7 +382,7 @@
                 <div class="modal-footer">
                     <button type="button" style="display: inline" class="btn btn-secondary"
                         data-dismiss="modal">Batal</button>
-                    <form style="display: inline" id="cancelAchievmentForm" method="POST">
+                    <form style="display: inline" method="POST">
                         @method('delete')
                         @csrf
                         <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
@@ -475,6 +498,11 @@
             $('#outcome_name').val($(this).attr('data-deskripsi'));
             $('#formAchievment').prop('action', `/subKegiatan-achievment/${$(this).attr('data-id')}/add`);
             $('#addAchievmentModal').modal('show');
+        })
+
+        $(document).on('click', '.btnCancelAchievment', function() {
+            $('#cancelAchievmentForm').prop('action', `/subKegiatan-achievment/${$(this).attr('data-id')}/cancel`);
+            $('#cancelAchievmentModal').modal('show');
         })
     </script>
 @endsection

@@ -54,8 +54,8 @@
                             </td>
                             <td class="text-center">
                                 <a href="javascript:void(0)" data-target="#deleteProgramModal" data-toggle="modal"
-                                    class="btn btn-sm btn-danger">Delete</a>
-                            </td> --}}
+                                    class="btn btn-sm btn-danger">Delete</a> --}}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

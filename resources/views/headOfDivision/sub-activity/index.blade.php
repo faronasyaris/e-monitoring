@@ -26,6 +26,7 @@
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
                         <th>Total Anggaran</th>
+                        <th>Penanggung Jawab</th>
                         <th colspan=3>
                             <center>Action
                         </th>
@@ -33,13 +34,13 @@
                 </thead>
                 <tbody>
                     @foreach ($programs as $program)
-                        <tr style="background-color: #9abcc3; color:white ">
+                        <tr style="background-color: #3f5367; color:white ">
                             <td colspan="9">
                                 <label> Program : {{ $program->program_name }}</label>
                             </td>
                         </tr>
                         @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
-                            <tr style="background-color: #8fc7db; color:white ">
+                            <tr style="background-color: #ededed; ">
                                 <td colspan="9">
                                     <label> Kegiatan : {{ $activity->activity_name }}</label>
                                 </td>
@@ -53,8 +54,10 @@
                                             {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
                                         </td>
                                         <td class="text-center">
+                                            0
                                         </td>
                                         <td class="text-center">0</td>
+                                        <td></td>
                                         <td class="text-center">
                                             <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
                                                 class="btn btn-sm btn-success">Manage</a>
@@ -203,6 +206,7 @@
         })
 
         $(document).on('change', '#program', function() {
+            $('#activity').empty()
             $.get(`/program/${$(this).val()}/getActivity`, function(data) {
                 $('#activity').removeAttr('disabled');
                 $.each(data.data, function(index) {
@@ -213,7 +217,8 @@
         });
 
         $(document).on('hidden.bs.modal', '#addSubActivityModal', function() {
-
+            $('#activity').empty()
+            $('#activity').prop('disabled', 'disabled');
         })
     </script>
 @endsection

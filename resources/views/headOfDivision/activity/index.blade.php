@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     @foreach ($programs as $program)
-                        <tr style="background-color: #9abcc3; color:white ">
+                        <tr style="background-color: #ededed; ">
                             <td colspan="8">
                                 <label> Program : {{ $program->program_name }}</label>
                             </td>

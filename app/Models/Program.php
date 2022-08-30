@@ -25,4 +25,34 @@ class Program extends Model
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
     }
+
+    public static function countProgramFinance($id)
+    {
+        $program = Program::where('id', $id)->first();
+        $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('program_id', $program->id)->get();
+        $performance = 0;
+        $totalBudget = 0;
+        $totalFinanceRealization = 0;
+        foreach ($activities as $activity) {
+            $activityFinance = Activity::countActivityFinance($activity->id);
+            $totalBudget += $activityFinance['totalBudget'];
+            $totalFinanceRealization += $activityFinance['totalFinance'];
+        }
+
+        if ($totalBudget == 0 || $totalFinanceRealization == 0) {
+            $performance = 0;
+        } else {
+            $performance = round(($totalFinanceRealization / $totalBudget) * 100, 2);
+        }
+
+        $data = [
+            'performance' => $performance,
+            'totalBudget' => $totalBudget,
+            'totalFinance' => $totalFinanceRealization,
+        ];
+
+        return $data;
+    }
 }

@@ -42,7 +42,9 @@
                             <td class="text-center">
                                 {{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%
                             </td>
-                            <td class="text-center"></td>
+                            <td class="text-center">
+                                {{ \App\Models\Program::countProgramFinance($program->id)['performance'] }}%
+                            </td>
                             <td class="text-center">
                                 <a href="/program/{{ $program->id }}/manage-program"
                                     class="btn btn-sm btn-success">Manage</a>

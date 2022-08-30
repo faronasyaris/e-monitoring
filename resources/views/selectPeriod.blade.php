@@ -89,7 +89,7 @@
                                                         data-month="{{ $periode['code'] }}"
                                                         data-monthName="{{ $periode['month'] }}"
                                                         onclick="{{ $periode['code'] > date('m') || Request::get('year') > date('Y') ? 'return false;' : '' }}"
-                                                        {{ ($periode['code'] > date('m') && Request::get('year') == date('Y')) || Request::get('year') > date('Y') ? 'disabled' : '' }}>Pilih
+                                                        {{ ($periode['code'] > date('m') && (Request::get('year') == date('Y') || empty(Request::get('year')))) || Request::get('year') > date('Y') ? 'disabled' : '' }}>Pilih
                                                         Bulan</button>
                                                 </center>
 

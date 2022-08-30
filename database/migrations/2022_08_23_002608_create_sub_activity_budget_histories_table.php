@@ -15,7 +15,8 @@ class CreateSubActivityBudgetHistoriesTable extends Migration
     {
         Schema::create('sub_activity_budget_histories', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->datetime('date');
+            $table->string('description');
             $table->foreignId('sub_activity_id')->references('id')->on('sub_activities');
             $table->integer('budget');
             $table->string('file')->nullable();

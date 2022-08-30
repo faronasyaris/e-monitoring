@@ -47,6 +47,9 @@
                             </tr>
                             @if ($sub_activities->where('activity_id', $activity->id)->count() >= 1)
                                 @foreach ($sub_activities->toQuery()->where('activity_id', $activity->id)->get() as $sub_activity)
+                                    @php
+                                        $plotSubActivity = $sub_activity->getPlotting->where('month', session('month'))->first();
+                                    @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $sub_activity->sub_activity_name }}</td>
@@ -54,10 +57,11 @@
                                             {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
                                         </td>
                                         <td class="text-center">
-                                            0
+                                            {{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%
                                         </td>
-                                        <td class="text-center">0</td>
-                                        <td></td>
+                                        <td class=""> Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
+                                        </td>
+                                        <td>{{ empty($plotSubActivity->user_id) ? '-' : '' }}</td>
                                         <td class="text-center">
                                             <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
                                                 class="btn btn-sm btn-success">Manage</a>

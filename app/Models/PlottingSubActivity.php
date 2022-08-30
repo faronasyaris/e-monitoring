@@ -20,7 +20,13 @@ class PlottingSubActivity extends Model
         return $this->belongsTo(SubActivity::class, 'sub_activity_id');
     }
 
-    public static function countFinancePerformance()
+    public static function countFinancePerformance($plot)
     {
+        if ($plot->finance_realization == 0) {
+            return 0;
+        }
+
+        $performance = round(($plot->finance_realization / $plot->budget) * 100, 2);
+        return $performance;
     }
 }

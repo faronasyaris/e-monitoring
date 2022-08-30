@@ -7,6 +7,7 @@ use App\Models\Program;
 use App\Models\Activity;
 use App\Models\PlottingSubActivity;
 use App\Models\SubActivity;
+use App\Models\SubActivityBudgetHistory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SubActivityOutput;
@@ -67,12 +68,16 @@ class SubActivityController extends Controller
 
     public function detail($id)
     {
-        $subActivity = SubActivity::where('id', $id)->first();
+        $subActivity = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('id', $id)->first();
+        $plotSubActivity = $subActivity->getPlotting->first();
         $sub_activity_output = SubActivityOutput::withAndWhereHas('getPlotting', function ($query) {
             $query->where('month', session('month'));
         })->where('sub_activity_id', $id)->get();
         $histories = SubActivityOutputHistory::where('sub_activity_id', $subActivity->id)->whereMonth('date', session('month'))->get();
-        return view('headOfDivision.sub-activity.detail', compact('subActivity', 'sub_activity_output', 'histories'));
+        $budgetHistories = SubActivityBudgetHistory::where('sub_activity_id', $subActivity->id)->whereMonth('date', session('month'))->get();
+        return view('headOfDivision.sub-activity.detail', compact('budgetHistories', 'plotSubActivity', 'subActivity', 'sub_activity_output', 'histories'));
     }
 
     public function update()
@@ -85,6 +90,62 @@ class SubActivityController extends Controller
 
     public function export()
     {
+    }
+
+    public function storeFinanceRealization(Request $request)
+    {
+        $request->validate([
+            'description' => 'required',
+            'budget' => 'required',
+            'id' => 'required'
+        ]);
+
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plotSubActivity = PlottingSubActivity::where('month', $i)->where('sub_activity_id', $request->id)->first();
+                $newFinanceRealization = $plotSubActivity->finance_realization + $request->budget;
+                $plotSubActivity->update([
+                    'finance_realization' => $newFinanceRealization
+                ]);
+            }
+        }
+
+        $filename = null;
+        if ($request->hasFile('evidence')) {
+            $file = $request->evidence;
+            $dest = 'evidence';
+            $filename = Str::random(6) . date('YmdHis') . $file->getClientOriginalExtension();
+            $file->move($dest, $filename);
+        }
+
+        SubActivityBudgetHistory::create([
+            'date' => now(),
+            'description' => $request->description,
+            'sub_activity_id' => $request->id,
+            'budget' => $request->budget,
+            'file' => $filename,
+            'user_id' => auth()->user()->id,
+        ]);
+        toast('Realisasi Keuangan berhasil ditambahkan', 'success');
+        return back();
+    }
+
+    public function cancelFinanceRealization(SubActivityBudgetHistory $id)
+    {
+        $id->load('getSubActivity');
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plotSubActivity = PlottingSubActivity::where('month', $i)->where('sub_activity_id', $id->getSubActivity->id)->first();
+                $newFinanceRealization = $plotSubActivity->finance_realization - $id->budget;
+                $plotSubActivity->update([
+                    'finance_realization' => $newFinanceRealization
+                ]);
+            }
+        }
+
+        $id->delete();
+        toast('Realisasi Keuangan Berhasil Dibatalkan', 'success');
+        return back();
     }
 
     // public function approval(){

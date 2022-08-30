@@ -73,10 +73,13 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
     Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
 
+    Route::post('/sub-kegiatan/financeRealization', [SubActivityController::class, 'storeFinanceRealization']);
+    Route::delete('/sub-kegiatan/financeRealization/{id}/cancel', [SubActivityController::class, 'cancelFinanceRealization']);
     Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
     Route::post('/subKegiatanOutcome', [SubActivityOutputController::class, 'store']);
     Route::post('/subKegiatan-achievment/{id}/add', [SubActivityOutputController::class, 'addAchievment']);
     Route::delete('/subKegiatan-achievment/{id}/cancel', [SubActivityOutputController::class, 'cancelAchievment']);
+
 
     Route::post('/kegiatan-achievment/{id}/add', [ActivityOutcomeController::class, 'addAchievment']);
     Route::delete('/kegiatan-achievment/{id}/cancel', [ActivityOutcomeController::class, 'cancelAchievment']);

@@ -19,4 +19,9 @@ class SubActivityBudgetHistory extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -19,4 +19,9 @@ class SubActivityOutputHistory extends Model
     {
         return $this->belongsTo(SubActivityOutput::class, 'outcome_id');
     }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

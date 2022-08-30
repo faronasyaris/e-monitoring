@@ -21,26 +21,25 @@
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Keuangan</span>
-            <div class="count">0</div>
-
+            <div class="count">{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%</div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-plus-square"></i> Jumlah Indikator</span>
-            <div class="count">0</div>
+            <div class="count">{{ $subActivity->getSubActivityOutput->count() }}</div>
 
         </div>
 
         <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-money"></i> Dana Sub Kegiatan</span>
+            <span class="count_top"><i class="fa fa-money"></i> Anggaran Sub Kegiatan</span>
             <div class="count green">
-                <h4>Rp9.000.000.000</h4>
+                <h4> Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}</h4>
             </div>
 
         </div>
         <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-money"></i> Realisasi Keuangan</span>
             <div class="count green">
-                <h4>Rp9.000.000.000</h4>
+                <h4>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}</h4>
             </div>
 
         </div>
@@ -70,24 +69,38 @@
                         <tr>
                             <th width="4%">No</th>
                             <th width="20%">Deskripsi</th>
-                            <th width="20%">Jumlah Anggaran</th>
-                            <th width="10%">Tanggal Input</th>
-                            <th width="8%">User</th>
+                            <th width="17%">Jumlah Dana</th>
+                            <th width="15%">Tanggal Input</th>
+                            <th width="15%">User</th>
+                            <th>Bukti</th>
+
                             @if (auth()->user()->role != 'Kepala Dinas')
-                                <th width="22%">Action</th>
+                                <th width="15%">Action</th>
                             @endif
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-
-                        </tr>
+                        @foreach ($budgetHistories as $history)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $history->description }}</td>
+                                <td> Rp{{ number_format($history->budget, 0, '', '.') }}</td>
+                                <td>{{ date('d F Y', strtotime($history->date)) }}</td>
+                                <td>{{ @$history->User->name }}</td>
+                                <td>
+                                    @if (!empty($history->file))
+                                        <a href="{{ asset('/evidence/' . $history->file) }}"><i class="fa fa-download"></i>
+                                            Donwload File</a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                @if (auth()->user()->role != 'Kepala Dinas')
+                                    <td><button class="btn btn-sm btn-danger btnCancelFinance"
+                                            data-id="{{ $history->id }}">Batalkan</button></td>
+                                @endif
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <hr>
@@ -95,7 +108,7 @@
                 @if (auth()->user()->role != 'Kepala Dinas')
                     <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
                         data-target="#addFinance"> <i class="fa fa-plus"></i>
-                        Tambah Realisasi Anggaran</button>
+                        Tambah Realisasi Keuangan</button>
                 @endif
                 {{-- @endif --}}
 
@@ -197,7 +210,7 @@
                                             Donwload File</a>
                                     @endif
                                 </td>
-                                <td></td>
+                                <td>{{ @$history->User->name }}</td>
                                 @if (auth()->user()->role != 'Kepala Dinas')
                                     <td><button class="btn btn-sm btn-danger btnCancelAchievment"
                                             data-id="{{ $history->id }}">Batalkan</button></td>
@@ -313,13 +326,22 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Tambah Realisasi Anggaran</h4>
                 </div>
-                <form action="/programOutput" method="post">
+                <form action="/sub-kegiatan/financeRealization" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="id" value="{{ $subActivity->id }}">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="" class="form-label">Jumlah Anggaran</label>
-                            <input type="text" name="description" class="form-control" required
-                                placeholder="Nama Output">
+                            <label for="" class="form-label">Deskripsi Penggunaan</label>
+                            <input type="text"name="description" class="form-control" required
+                                placeholder="Deskripsi">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Jumlah Dana</label>
+                            <input type="number" min=0 name="budget" class="form-control" required placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Bukti (Optional)</label>
+                            <input type="file" id="evidence" name="evidence" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -351,7 +373,7 @@
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Jumlah Capaian</label>
-                            <input type="number" id="achievment" name="achievment" class="form-control" required>
+                            <input type="number" min=0 id="achievment" name="achievment" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Bukti (Optional)</label>
@@ -476,7 +498,30 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="cancelFinanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Batalkan Capaian</h4>
+                </div>
+                <div class="modal-body">
+                    Dengan ini, maka Realisasi Keuangan yang diinput akan ditarik kembali, Lanjutkan?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="display: inline" class="btn btn-secondary"
+                        data-dismiss="modal">Batal</button>
+                    <form style="display: inline" id="cancelFinanceForm" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 @endsection
@@ -503,6 +548,12 @@
         $(document).on('click', '.btnCancelAchievment', function() {
             $('#cancelAchievmentForm').prop('action', `/subKegiatan-achievment/${$(this).attr('data-id')}/cancel`);
             $('#cancelAchievmentModal').modal('show');
+        })
+
+        $(document).on('click', '.btnCancelFinance', function() {
+            $('#cancelFinanceForm').prop('action',
+                `/sub-kegiatan/financeRealization/${$(this).attr('data-id')}/cancel`);
+            $('#cancelFinanceModal').modal('show');
         })
     </script>
 @endsection

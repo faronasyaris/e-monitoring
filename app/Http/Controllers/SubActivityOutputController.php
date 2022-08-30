@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Models\PlottingProgram;
-use App\Models\PlottingSubActivityOutput;
 use App\Models\SubActivityOutput;
 use App\Models\SubActivityOutputHistory;
-use Illuminate\Http\Request;
+use App\Models\PlottingSubActivityOutput;
 
 class SubActivityOutputController extends Controller
 {
@@ -80,7 +81,7 @@ class SubActivityOutputController extends Controller
 
     public function cancelAchievment(SubActivityOutputHistory $id, Request $request)
     {
-        $id->load('getOutputActivity', 'getOutputActivity.getSubActivity');
+        $id->load('getOutputActivity', 'getOutputActivity.getPlotting');
         $new_achievment = $id->getOutputActivity->getPlotting->where('month', session('month'))->first()->achievment - $id->achievment;
 
         for ($i = 1; $i <= 12; $i++) {

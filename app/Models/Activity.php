@@ -26,4 +26,34 @@ class Activity extends Model
         return $query->whereHas($relation, $constraint)
             ->with([$relation => $constraint]);
     }
+
+    public static function countActivityFinance($id)
+    {
+        $activity = Activity::where('id', $id)->first();
+        $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+            $query->where('month', session('month'));
+        })->where('activity_id', $activity->id)->get();
+        $performance = 0;
+        $totalBudget = 0;
+        $totalFinanceRealization = 0;
+        foreach ($subActivities as $subActivity) {
+            $plot = $subActivity->getPlotting->where('month', session('month'))->first();
+            $totalBudget += $plot->budget;
+            $totalFinanceRealization += $plot->finance_realization;
+        }
+
+        if ($totalBudget == 0 || $totalFinanceRealization == 0) {
+            $performance = 0;
+        } else {
+            $performance = round(($totalFinanceRealization / $totalBudget) * 100, 2);
+        }
+
+        $data = [
+            'performance' => $performance,
+            'totalBudget' => $totalBudget,
+            'totalFinance' => $totalFinanceRealization,
+        ];
+
+        return $data;
+    }
 }

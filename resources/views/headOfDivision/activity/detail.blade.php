@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-percent"></i> Kinerja Keuangan</span>
-            <div class="count">0</div>
+            <div class="count">{{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%</div>
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -36,16 +36,18 @@
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-money"></i> Dana Kegiatan</span>
+            <span class="count_top"><i class="fa fa-money"></i> Anggaran Kegiatan</span>
             <div class="count green">
-                <h4>Rp9.000.000.000</h4>
+                <h4> Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalBudget'], 0, '', '.') }}
+                </h4>
             </div>
 
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-money"></i> Realisasi Keuangan</span>
             <div class="count green">
-                <h4>Rp9.000.000.000</h4>
+                <h4> Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalFinance'], 0, '', '.') }}
+                </h4>
             </div>
 
         </div>

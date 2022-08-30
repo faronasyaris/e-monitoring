@@ -47,7 +47,9 @@
                                         {{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
                                     <td class="text-center">
                                         {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
-                                    <td class="text-center">0</td>
+                                    <td class="text-center">
+                                        {{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%
+                                    </td>
                                     <td class="text-center">
                                         <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
                                             class="btn btn-sm btn-success">Manage</a>

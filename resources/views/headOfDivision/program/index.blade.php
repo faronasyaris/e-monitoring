@@ -26,7 +26,7 @@
                         <th widht="15%" class="text-center">Kinerja Fisik</th>
                         <th widht="15%" class="text-center">Kinerja Indikator</th>
                         <th widht="15%" class="text-center">Kinerja Keuangan</th>
-                        <th widht="25%" colspan=1>
+                        <th widht="25%" colspan=3>
                             <center>Action
                         </th>
                     </tr>
@@ -50,13 +50,14 @@
                                     class="btn btn-sm btn-success">Manage</a>
 
                             </td>
-                            {{-- <td class="text-center">
+                            <td class="text-center">
                                 <a href="javascript:void(0)" data-target="#editProgramModal" data-toggle="modal"
-                                    class="btn btn-sm btn-warning">Edit</a>
+                                    data-id="{{ $program->id }}" data-name="{{ $program->program_name }}"
+                                    class="btn btn-sm btn-warning btn-edit">Edit</a>
                             </td>
                             <td class="text-center">
                                 <a href="javascript:void(0)" data-target="#deleteProgramModal" data-toggle="modal"
-                                    class="btn btn-sm btn-danger">Delete</a> --}}
+                                    data-id="{{ $program->id }}" class="btn btn-sm btn-danger btn-delete">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -105,12 +106,13 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Edit Program</h4>
                 </div>
-                <form action="/program" method="post">
+                <form id="formEditProgram" method="post">
                     @csrf
+                    @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Program</label>
-                            <input type="text" name="program_name" class="form-control" required>
+                            <input type="text" name="program_name" id="program_name" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -130,8 +132,9 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Delete Program</h4>
                 </div>
-                <form action="/program" method="post">
+                <form id="formDeleteProgram" method="post">
                     @csrf
+                    @method('DELETE')
                     <div class="modal-body">
                         <p>Anda yakin akan menghapus program yang dipilih?</p>
                     </div>
@@ -154,8 +157,16 @@
         // });
 
         $(document).on('click', '#btnTambahPeriode', function() {
-            console.log('aa');
             $('#addProgramModel').modal('show');
+        })
+
+        $(document).on('click', '.btn-edit', function() {
+            $('#formEditProgram').prop('action', '/program/' + $(this).attr('data-id'));
+            $('#program_name').val($(this).attr('data-name'));
+        })
+
+        $(document).on('click', '.btn-delete', function() {
+            $('#formDeleteProgram').prop('action', '/program/' + $(this).attr('data-id'));
         })
     </script>
 @endsection

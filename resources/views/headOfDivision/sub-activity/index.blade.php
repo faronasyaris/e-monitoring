@@ -68,15 +68,18 @@
                                                 class="btn btn-sm btn-success">Manage</a>
 
                                         </td>
-                                        {{-- <td class="text-center">
+                                        <td class="text-center">
                                             <a href="javascript:void(0)" data-toggle="modal"
-                                                data-target="#editSubActivityModal" class="btn btn-sm btn-warning">Edit</a>
+                                                data-target="#editSubActivityModal" data-id="{{ $sub_activity->id }}"
+                                                data-name="{{ $sub_activity->sub_activity_name }}"
+                                                data-budget="{{ $plotSubActivity->budget }}"
+                                                class="btn btn-sm btn-warning btn-edit">Edit</a>
                                         </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)" data-toggle="modal"
-                                                data-target="#deleteSubActivityModal"
-                                                class="btn btn-sm btn-danger">Delete</a>
-                                        </td> --}}
+                                                data-target="#deleteSubActivityModal" data-id="{{ $sub_activity->id }}"
+                                                class="btn btn-sm btn-danger btn-delete">Delete</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -129,7 +132,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="" class="form-label">Dana Sub Kegiatan</label>
+                            <label for="" class="form-label">Anggatan Sub Kegiatan</label>
                             <input type="number" min="0" name="budget" class="form-control" required>
                         </div>
 
@@ -163,16 +166,19 @@
                     <h4 class="modal-title" id="myModalLabel">Edit Sub Kegiatan</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="/sub-kegiatan" method="post">
+                    <form id="formEditSubActivity" method="post">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="" class="form-label">Nama Sub Kegiatan</label>
-                            <input type="text" name="activity_name" class="form-control" required>
+                            <input type="text" name="sub_activity_name" id="sub_activity_name" class="form-control"
+                                required>
                         </div>
 
                         <div class="form-group">
-                            <label for="" class="form-label">Dana Sub Kegiatan</label>
-                            <input type="number" min="0" name="budget" class="form-control" required>
+                            <label for="" class="form-label">Anggaran Sub Kegiatan</label>
+                            <input type="number" min="0" name="budget" id="budget" class="form-control"
+                                required>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -193,8 +199,9 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Delete Sub Kegiatan</h4>
                 </div>
-                <form action="/program" method="post">
+                <form id="formDeleteSubActivity" method="post">
                     @csrf
+                    @method('DELETE')
                     <div class="modal-body">
                         <p>Anda yakin akan menghapus Sub Kegiatan yang dipilih?</p>
                     </div>
@@ -210,11 +217,11 @@
 
 @section('js')
     <script>
-        $("#tableKegiatan").dataTable({
-            "autoWidth": false,
-            info: false,
-            lengthChange: false
-        });
+        // $("#tableKegiatan").dataTable({
+        //     "autoWidth": false,
+        //     info: false,
+        //     lengthChange: false
+        // });
 
         $('#btnTambahPeriode').on('click', function() {
             $('#addProgramModel').modal('show');
@@ -234,6 +241,16 @@
         $(document).on('hidden.bs.modal', '#addSubActivityModal', function() {
             $('#activity').empty()
             $('#activity').prop('disabled', 'disabled');
+        })
+
+        $(document).on('click', '.btn-edit', function() {
+            $('#formEditSubActivity').prop('action', '/sub-kegiatan/' + $(this).attr('data-id'));
+            $('#sub_activity_name').val($(this).attr('data-name'));
+            $('#budget').val($(this).attr('data-budget'));
+        })
+
+        $(document).on('click', '.btn-delete', function() {
+            $('#formDeleteSubActivity').prop('action', '/sub-kegiatan/' + $(this).attr('data-id'));
         })
     </script>
 @endsection

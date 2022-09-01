@@ -52,9 +52,11 @@ class ProgramOutcomeController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
-                $outcome_plot->update([
-                    'achievment' => $new_achievment,
-                ]);
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'achievment' => $new_achievment,
+                    ]);
+                }
             }
         }
 
@@ -88,9 +90,11 @@ class ProgramOutcomeController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
-                $outcome_plot->update([
-                    'achievment' => $new_achievment,
-                ]);
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'achievment' => $new_achievment,
+                    ]);
+                }
             }
         }
 
@@ -100,11 +104,11 @@ class ProgramOutcomeController extends Controller
         return back();
     }
 
-    public function update(){
-
+    public function update()
+    {
     }
 
-    public function delete(){
-        
+    public function delete()
+    {
     }
 }

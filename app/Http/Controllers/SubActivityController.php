@@ -89,12 +89,40 @@ class SubActivityController extends Controller
         return view('headOfDivision.sub-activity.detail', compact('budgetHistories', 'plotSubActivity', 'subActivity', 'sub_activity_output', 'histories', 'employees'));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $subActivity = SubActivity::where('id', $id)->first();
+
+        $subActivity->update([
+            'sub_activity_name' => $request->sub_activity_name,
+        ]);
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plotting = PlottingSubActivity::where('sub_activity_id', $id)->where('month', $i)->first();
+                if (!empty($plotting)) {
+                    $plotting->update([
+                        'budget' => $request->budget
+                    ]);
+                }
+            }
+        }
+        toast('Sub Kegiatan berhasil diubah', 'success');
+        return back();
     }
 
-    public function destroy()
+
+    public function destroy($id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plotting = PlottingSubActivity::where('sub_activity_id', $id)->where('month', $i)->first();
+                if (!empty($plotting)) {
+                    $plotting->delete();
+                }
+            }
+        }
+        toast('Sub Kegiatan berhasil dihapus', 'success');
+        return back();
     }
 
     public function export()
@@ -112,10 +140,12 @@ class SubActivityController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $plotSubActivity = PlottingSubActivity::where('month', $i)->where('sub_activity_id', $request->id)->first();
-                $newFinanceRealization = $plotSubActivity->finance_realization + $request->budget;
-                $plotSubActivity->update([
-                    'finance_realization' => $newFinanceRealization
-                ]);
+                if (!empty($plotSubActivity)) {
+                    $newFinanceRealization = $plotSubActivity->finance_realization + $request->budget;
+                    $plotSubActivity->update([
+                        'finance_realization' => $newFinanceRealization
+                    ]);
+                }
             }
         }
 
@@ -145,10 +175,12 @@ class SubActivityController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $plotSubActivity = PlottingSubActivity::where('month', $i)->where('sub_activity_id', $id->getSubActivity->id)->first();
-                $newFinanceRealization = $plotSubActivity->finance_realization - $id->budget;
-                $plotSubActivity->update([
-                    'finance_realization' => $newFinanceRealization
-                ]);
+                if (!empty($plotSubActivity)) {
+                    $newFinanceRealization = $plotSubActivity->finance_realization - $id->budget;
+                    $plotSubActivity->update([
+                        'finance_realization' => $newFinanceRealization
+                    ]);
+                }
             }
         }
 
@@ -165,9 +197,11 @@ class SubActivityController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $plot = PlottingSubActivity::where('month', $i)->where('sub_activity_id', $id->id)->first();
-                $plot->update([
-                    'user_id' => $request->worker
-                ]);
+                if (!empty($plot)) {
+                    $plot->update([
+                        'user_id' => $request->worker
+                    ]);
+                }
             }
         }
 

@@ -70,12 +70,29 @@ class ActivityController extends Controller
     {
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $activity = Activity::where('id', $id)->first();
+
+        $activity->update([
+            'activity_name' => $request->activity_name,
+        ]);
+        toast('Kegiatan berhasil diubah', 'success');
+        return back();
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plotting = PlottingActivity::where('activity_id', $id)->where('month', $i)->first();
+                if (!empty($plotting)) {
+                    $plotting->delete();
+                }
+            }
+        }
+        toast('Kegiatan berhasil dihapus', 'success');
+        return back();
     }
 
     public function detailActivity($id)

@@ -62,22 +62,28 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::get('/approval', [SubActivityController::class, 'approval']);
     Route::post('/program', [ProgramController::class, 'store']);
-    Route::post('/program/{id}', [ProgramController::class, 'update']);
+    Route::put('/program/{id}', [ProgramController::class, 'update']);
     Route::delete('/program/{id}', [ProgramController::class, 'destroy']);
     Route::get('/program/{id}/getActivity', [ActivityController::class, 'getActivityByProgram']);
     Route::post('/programOutcome', [ProgramOutcomeController::class, 'store']);
 
     Route::post('/kegiatan', [ActivityController::class, 'store']);
+    Route::put('/kegiatan/{id}', [ActivityController::class, 'update']);
+    Route::delete('/kegiatan/{id}', [ActivityController::class, 'destroy']);
+
     Route::post('/kegiatanOutcome', [ActivityOutcomeController::class, 'store']);
 
     Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
     Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
 
+    Route::put('/sub-kegiatan/{id}', [SubActivityController::class, 'update']);
+    Route::delete('/sub-kegiatan/{id}', [SubActivityController::class, 'destroy']);
     Route::post('/sub-kegiatan/financeRealization', [SubActivityController::class, 'storeFinanceRealization']);
     Route::delete('/sub-kegiatan/financeRealization/{id}/cancel', [SubActivityController::class, 'cancelFinanceRealization']);
     Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
     Route::post('/sub-kegiatan/{id}/selectEmployee', [SubActivityController::class, 'selectEmployee']);
     Route::post('/subKegiatanOutcome', [SubActivityOutputController::class, 'store']);
+    Route::put('/subKegiatanOutcome/{id}', [SubActivityOutputController::class, 'update']);
     Route::post('/subKegiatan-achievment/{id}/add', [SubActivityOutputController::class, 'addAchievment']);
     Route::delete('/subKegiatan-achievment/{id}/cancel', [SubActivityOutputController::class, 'cancelAchievment']);
 
@@ -89,6 +95,7 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {
     Route::get('/account', [UserController::class, 'listAccount']);
     Route::post('/account', [UserController::class, 'store']);
+    Route::put('/account/{id}', [UserController::class, 'update']);
     Route::delete('/account/{id}', [UserController::class, 'destroy']);
     Route::get('/period', [PeriodeController::class, 'index']);
     Route::post('/period', [PeriodeController::class, 'store']);

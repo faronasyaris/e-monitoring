@@ -114,11 +114,13 @@
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->program_outcome_name }}">Tambah
                                             Capaian</button>
-                                        {{-- <button class="btn btn-sm btn-warning"
-                                            data-target="#editProgramOutcomeModal" data-toggle="modal">Edit</button>
-                                            <button
-                                            class="btn btn-sm btn-danger" data-target="#deleteProgramOutcomeModal"
-                                            data-toggle="modal">Delete</button> --}}
+                                        <button class="btn btn-sm btn-warning btn-edit"
+                                            data-target="#editProgramOutcomeModal" data-toggle="modal"
+                                            data-id="{{ $outcome->id }}" data-name="{{ $outcome->program_outcome_name }}"
+                                            data-unit="{{ $outcome->getPlotting->where('month', session('month'))->first()->unit }}"
+                                            data-targetOutcome="{{ $outcome->getPlotting->where('month', session('month'))->first()->target }}">Edit</button>
+                                        <button class="btn btn-sm btn-danger" data-target="#deleteProgramOutcomeModal"
+                                            data-toggle="modal">Delete</button>
                                     </td>
                                 @endif
 
@@ -187,61 +189,9 @@
             </div>
         </div>
     </div>
-    {{-- modal edit program --}}
-    <div class="modal fade" id="editProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Edit Program</h4>
-                </div>
-                <form method="post" id="editProgramForm">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="" class="form-label">Nama Program</label>
-                            <input type="text" id="program_name" name="program_name" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-    {{-- modal confirm delete program --}}
-    <div class="modal fade" id="deleteProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Apakah Anda Yakin ?</h4>
-                </div>
-                <div class="modal-body">
-                    Data yang dihapus tidak dapat dikembalikan!!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" style="display: inline" class="btn btn-secondary"
-                        data-dismiss="modal">Close</button>
-                    <form style="display: inline" id="deleteProgramForm" method="POST">
-                        @method('delete')
-                        @csrf
-                        <button style="display: inline" button type="submit" class="btn btn-danger">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     {{-- modal tambah outcome --}}
-    <div class="modal fade" id="addProgramOutcomeModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addProgramOutcomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -287,23 +237,24 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Edit Outcome Program</h4>
                 </div>
-                <form action="/programOutcome" method="post">
+                <form id="formEditOutcome" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Outcome</label>
-                            <input type="text" name="description" class="form-control" required
+                            <input type="text" id="outcome_name" name="description" class="form-control" required
                                 placeholder="Nama Outcome">
                         </div>
 
                         <div class="form-group">
                             <label for="" class="form-label">Satuan</label>
-                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                            <input type="text" id="outcome_unit" name="unit" class="form-control" required
+                                placeholder="Satuan">
                         </div>
 
                         <div class="form-group">
                             <label for="" class="form-label">Target</label>
-                            <input type="number" min=0 name="target" class="form-control" required
+                            <input type="number" id="outcome_target" min=0 name="target" class="form-control" required
                                 placeholder="Target">
                         </div>
                     </div>
@@ -443,9 +394,13 @@
             $('#addAchievmentModal').modal('show');
         })
 
-        $(document).on('click', '.btnCancelAchievment', function() {
-            $('#cancelAchievmentForm').prop('action', `/achievment/${$(this).attr('data-id')}/cancel`);
-            $('#cancelAchievmentModal').modal('show');
+        $(document).on('click', '.btn-edit', function() {
+            $('#formEditOutcome').prop('action', `/achievment/${$(this).attr('data-id')}/cancel`);
+            $('#outcome_name').val($(this).attr('data-name'));
+            $('#outcome_unit').val($(this).attr('data-unit'));
+            $('#outcome_target').val($(this).attr('data-targetOutcome'));
         })
+
+        $(document).on('click', )
     </script>
 @endsection

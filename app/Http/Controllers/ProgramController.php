@@ -77,10 +77,16 @@ class ProgramController extends Controller
 
     public function destroy($id)
     {
-        $period = Program::where('id', $id)->first();
-        $period->delete();
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plotting = PlottingProgram::where('program_id', $id)->where('month', $i)->first();
+                if (!empty($plotting)) {
+                    $plotting->delete();
+                }
+            }
+        }
         toast('Program berhasil dihapus', 'success');
-        return redirect('/program');
+        return back();
     }
 
     public function export()

@@ -98,9 +98,22 @@ class UserController extends Controller
         return back();
     }
 
-    public function update(Request $request)
+    public function update(User $id, Request $request)
     {
-        # code...
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'nip' => 'required'
+        ]);
+
+        $id->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'nip' => $request->nip
+        ]);
+
+        toast('Data Akun berhasil diupdate', 'success');
+        return back();
     }
 
     public function destroy($id)

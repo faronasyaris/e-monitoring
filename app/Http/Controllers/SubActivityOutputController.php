@@ -99,7 +99,7 @@ class SubActivityOutputController extends Controller
         return back();
     }
 
-    public function update()
+    public function update($id, Request $request)
     {
     }
 

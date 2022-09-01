@@ -26,7 +26,7 @@
                         <th>Kinerja Fisik</th>
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
-                        <th colspan=1>
+                        <th colspan=3>
                             <center>Action
                         </th>
                     </tr>
@@ -55,14 +55,16 @@
                                             class="btn btn-sm btn-success">Manage</a>
 
                                     </td>
-                                    {{-- <td class="text-center">
-                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#editActivityModal"
-                                            class="btn btn-sm btn-warning">Edit</a>
+                                    <td class="text-center">
+                                        <button data-toggle="modal" data-target="#editActivityModal"
+                                            data-name="{{ $activity->activity_name }}" data-id="{{ $activity->id }}"
+                                            class="btn btn-sm btn-warning btn-edit">Edit</button>
                                     </td>
                                     <td class="text-center">
                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteActivityModal"
-                                            class="btn btn-sm btn-danger">Delete</a>
-                                    </td> --}}
+                                            class="btn btn-sm btn-danger btn-delete"
+                                            data-id="{{ $activity->id }}">Delete</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif
@@ -125,11 +127,12 @@
                     <h4 class="modal-title" id="myModalLabel">Edit Kegiatan</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="/kegiatan" method="post">
+                    <form id="formEditActivity" method="post">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="" class="form-label">Nama Kegiatan</label>
-                            <input type="text" name="activity_name" class="form-control" required>
+                            <input type="text" name="activity_name" id="activity_name" class="form-control" required>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -149,8 +152,9 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Delete Kegiatan</h4>
                 </div>
-                <form action="/program" method="post">
+                <form id="formDeleteActivity" method="post">
                     @csrf
+                    @method('DELETE')
                     <div class="modal-body">
                         <p>Anda yakin akan menghapus kegiatan yang dipilih?</p>
                     </div>
@@ -167,14 +171,23 @@
 
 @section('js')
     <script>
-        $("#tableProgram2").dataTable({
-            "autoWidth": false,
-            info: false,
-            lengthChange: false
-        });
+        // $("#tableProgram2").dataTable({
+        //     "autoWidth": false,
+        //     info: false,
+        //     lengthChange: false
+        // });
 
         $('#btnTambahPeriode').on('click', function() {
             $('#addProgramModel').modal('show');
+        })
+
+        $(document).on('click', '.btn-edit', function() {
+            $('#formEditActivity').prop('action', '/kegiatan/' + $(this).attr('data-id'));
+            $('#activity_name').val($(this).attr('data-name'));
+        })
+
+        $(document).on('click', '.btn-delete', function() {
+            $('#formDeleteActivity').prop('action', '/kegiatan/' + $(this).attr('data-id'));
         })
     </script>
 @endsection

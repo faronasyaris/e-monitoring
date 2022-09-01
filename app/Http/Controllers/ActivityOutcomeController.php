@@ -51,9 +51,11 @@ class ActivityOutcomeController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $outcome_plot = PlottingActivityOutcome::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
-                $outcome_plot->update([
-                    'achievment' => $new_achievment,
-                ]);
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'achievment' => $new_achievment,
+                    ]);
+                }
             }
         }
 
@@ -87,9 +89,11 @@ class ActivityOutcomeController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             if ($i >= session('month')) {
                 $outcome_plot = PlottingActivityOutcome::where('month', $i)->where('outcome_id', $id->outcome_id)->first();
-                $outcome_plot->update([
-                    'achievment' => $new_achievment,
-                ]);
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'achievment' => $new_achievment,
+                    ]);
+                }
             }
         }
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\User;
 use App\Models\Field;
 use App\Models\Periode;
+use App\Models\Program;
+use App\Models\SubActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,15 +58,60 @@ class UserController extends Controller
         }
 
         if ($user->role == 'Pelaksana') {
-            return view('employee.dashboard');
+            $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'))->where('user_id', auth()->user()->id);
+            })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->get();
+            $data['totalBudget'] = 0;
+            $data['totalRealization'] = 0;
+            foreach ($subActivities as $subActivity) {
+                $countFinance = Activity::countActivityFinance($subActivity->id);
+                $data['totalBudget'] += $countFinance['totalBudget'];
+                $data['totalRealization'] += $countFinance['totalFinance'];
+            }
+            return view('employee.dashboard', compact('subActivities'))->with($data);
         }
 
         if ($user->role == 'Kepala Dinas') {
-            return view('headOfDepartement.dashboard');
+            $programs =  Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+            $activities =  Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+            $subActivities =  SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+
+            $data['totalBudget'] = 0;
+            $data['totalRealization'] = 0;
+            foreach ($programs as $program) {
+                $countFinance = Program::countProgramFinance($program->id);
+                $data['totalBudget'] += $countFinance['totalBudget'];
+                $data['totalRealization'] += $countFinance['totalFinance'];
+            }
+
+            return view('headOfDepartement.dashboard', compact('programs', 'activities', 'subActivities'))->with($data);
         }
 
         if ($user->role == 'Kepala Bidang') {
-            return view('headOfDivision.dashboard');
+            $programs =  Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            $activities =  Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            $subActivities =  SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+
+            $data['totalBudget'] = 0;
+            $data['totalRealization'] = 0;
+            foreach ($programs as $program) {
+                $countFinance = Program::countProgramFinance($program->id);
+                $data['totalBudget'] += $countFinance['totalBudget'];
+                $data['totalRealization'] += $countFinance['totalFinance'];
+            }
+            return view('headOfDivision.dashboard', compact('programs', 'activities', 'subActivities'))->with($data);
         }
     }
 

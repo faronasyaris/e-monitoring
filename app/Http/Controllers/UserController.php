@@ -64,9 +64,8 @@ class UserController extends Controller
             $data['totalBudget'] = 0;
             $data['totalRealization'] = 0;
             foreach ($subActivities as $subActivity) {
-                $countFinance = Activity::countActivityFinance($subActivity->id);
-                $data['totalBudget'] += $countFinance['totalBudget'];
-                $data['totalRealization'] += $countFinance['totalFinance'];
+                $data['totalBudget'] += $subActivity->getPlotting->where('month', session('month'))->first()->budget;
+                $data['totalRealization']  += $subActivity->getPlotting->where('month', session('month'))->first()->finance_realization;
             }
             return view('employee.dashboard', compact('subActivities'))->with($data);
         }

@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     @foreach ($programs as $program)
-                        <tr style="background-color: #9abcc3; color:white ">
+                        <tr style="background-color: #ededed; ">
                             <td colspan="8">
                                 <label> Program : {{ $program->program_name }}</label>
                             </td>
@@ -43,13 +43,18 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $activity->activity_name }}</td>
-                                    <td>0</td>
-                                    <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
-                                    <td>0</td>
+                                    <td class="text-center">
+                                        {{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
+                                    <td class="text-center">
+                                        {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
+                                    <td class="text-center">
+                                        {{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%
+                                    </td>
                                     <td class="text-center">
                                         <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
                                             class="btn btn-sm btn-success">Manage</a>
 
+                                    </td>
 
                                 </tr>
                             @endforeach
@@ -58,7 +63,7 @@
 
                 </tbody>
             </table>
-            <hr>
+
         </div>
     </div>
 @endsection

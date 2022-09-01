@@ -21,7 +21,16 @@ class SubActivityController extends Controller
     public function index()
     {
         if (auth()->user()->role == 'Kepala Dinas') {
-            return view('headOfDepartement.sub-activity.index');
+            $programs = Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+            $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->whereIn('program_id', $programs->pluck('id'))->get();
+            $sub_activities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->whereIn('activity_id', $activities->pluck('id'))->get();
+            return view('headOfDepartement.sub-activity.index', compact('programs', 'activities', 'sub_activities'));
         } else if (auth()->user()->role == 'Kepala Bidang') {
             $employees = User::where('field_id', auth()->user()->field_id)->where('role', 'Pelaksana')->get();
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
@@ -48,7 +57,6 @@ class SubActivityController extends Controller
             'activity_id' => 'required',
             'activity_name' => 'required',
             'budget' => 'required',
-            'worker' => 'required',
         ]);
 
         $subActivity = SubActivity::create([

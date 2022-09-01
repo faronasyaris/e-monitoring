@@ -76,6 +76,7 @@ class SubActivityController extends Controller
 
     public function detail($id)
     {
+        $employees = User::where('field_id', auth()->user()->field_id)->where('role', 'Pelaksana')->get();
         $subActivity = SubActivity::withAndWhereHas('getPlotting', function ($query) {
             $query->where('month', session('month'));
         })->where('id', $id)->first();
@@ -85,7 +86,7 @@ class SubActivityController extends Controller
         })->where('sub_activity_id', $id)->get();
         $histories = SubActivityOutputHistory::where('sub_activity_id', $subActivity->id)->whereMonth('date', session('month'))->get();
         $budgetHistories = SubActivityBudgetHistory::where('sub_activity_id', $subActivity->id)->whereMonth('date', session('month'))->get();
-        return view('headOfDivision.sub-activity.detail', compact('budgetHistories', 'plotSubActivity', 'subActivity', 'sub_activity_output', 'histories'));
+        return view('headOfDivision.sub-activity.detail', compact('budgetHistories', 'plotSubActivity', 'subActivity', 'sub_activity_output', 'histories', 'employees'));
     }
 
     public function update()
@@ -153,6 +154,24 @@ class SubActivityController extends Controller
 
         $id->delete();
         toast('Realisasi Keuangan Berhasil Dibatalkan', 'success');
+        return back();
+    }
+
+    public function selectEmployee(SubActivity $id, Request $request)
+    {
+        $request->validate([
+            'worker' => 'required',
+        ]);
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $plot = PlottingSubActivity::where('month', $i)->where('sub_activity_id', $id->id)->first();
+                $plot->update([
+                    'user_id' => $request->worker
+                ]);
+            }
+        }
+
+        toast('Pelaksana berhasil di update', 'success');
         return back();
     }
 

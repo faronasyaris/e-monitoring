@@ -78,7 +78,7 @@
                 <hr>
                 @if (auth()->user()->role == 'Kepala Bidang')
                     <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
-                        data-target="#addActivityOutcomeModal"> <i class="fa fa-user"></i>
+                        data-target="#chooseEmployeeMpdal"> <i class="fa fa-user"></i>
                         Pilih Pelaksana</button>
                 @endif
 
@@ -547,6 +547,39 @@
                         <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="chooseEmployeeMpdal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Pilih Pelaksana</h4>
+                </div>
+                <form action="/sub-kegiatan/{{ $subActivity->id }}/selectEmployee" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="form-label">Pelaksana</label>
+                            <select name="worker" id="" class="form-control" required>
+                                <option selected disabled>Pilih Pelaksana</option>
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->id }}"
+                                        {{ $subActivity->getPlotting->where('month', session('month'))->first()->user_id == $employee->id ? 'selected' : '' }}>
+                                        {{ $employee->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Pilih</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

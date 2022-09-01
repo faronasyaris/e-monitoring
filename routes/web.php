@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::post('/sub-kegiatan/financeRealization', [SubActivityController::class, 'storeFinanceRealization']);
     Route::delete('/sub-kegiatan/financeRealization/{id}/cancel', [SubActivityController::class, 'cancelFinanceRealization']);
     Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
+    Route::post('/sub-kegiatan/{id}/selectEmployee', [SubActivityController::class, 'selectEmployee']);
     Route::post('/subKegiatanOutcome', [SubActivityOutputController::class, 'store']);
     Route::post('/subKegiatan-achievment/{id}/add', [SubActivityOutputController::class, 'addAchievment']);
     Route::delete('/subKegiatan-achievment/{id}/cancel', [SubActivityOutputController::class, 'cancelAchievment']);

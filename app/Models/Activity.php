@@ -21,6 +21,11 @@ class Activity extends Model
         return $this->hasMany(PlottingActivity::class, 'activity_id');
     }
 
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'created_id');
+    }
+
     public function scopeWithAndWhereHas($query, $relation, $constraint)
     {
         return $query->whereHas($relation, $constraint)

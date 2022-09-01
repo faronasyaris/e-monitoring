@@ -60,8 +60,18 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x-content">
-                <div>{{ $program->program_name }}</d>
-                </div>
+                <table>
+                    <tr>
+                        <td><b>Nama Program</b></td>
+                        <td>&nbsp;:&nbsp; </td>
+                        <td>{{ $program->program_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Dibuat Oleh</b></td>
+                        <td> &nbsp;:&nbsp;</td>
+                        <td>{{ @$program->getUser->name }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'email' => 'employee@gmail.com',
             'password' => bcrypt('password'),
             'NIP' => '123456',
-            'role' => 'Employee',
+            'role' => 'Pelaksana',
             'field_id' => 1
         ]);
 

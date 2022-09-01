@@ -26,7 +26,7 @@
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
                         <th>Total Anggaran</th>
-                        <th>Penanggung Jawab</th>
+                        <th>Pelaksana</th>
                         <th colspan=3>
                             <center>Action
                         </th>
@@ -61,7 +61,8 @@
                                         </td>
                                         <td class=""> Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
                                         </td>
-                                        <td>{{ empty($plotSubActivity->user_id) ? '-' : '' }}</td>
+                                        <td>{{ empty($plotSubActivity->user_id) ? '-' : @$plotSubActivity->getUser->name }}
+                                        </td>
                                         <td class="text-center">
                                             <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
                                                 class="btn btn-sm btn-success">Manage</a>
@@ -130,6 +131,16 @@
                         <div class="form-group">
                             <label for="" class="form-label">Dana Sub Kegiatan</label>
                             <input type="number" min="0" name="budget" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-label">Pelaksana</label>
+                            <select name="worker" id="" class="form-control" required>
+                                <option selected disabled>Pilih Pelaksana</option>
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

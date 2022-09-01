@@ -20,7 +20,5 @@ class PlottingActivity extends Model
         return $this->belongsTo(Activity::class, 'activity_id');
     }
 
-    public function countActivityBudget($activity)
-    {
-    }
+ 
 }

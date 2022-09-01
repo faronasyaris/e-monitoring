@@ -23,6 +23,7 @@ class SubActivityController extends Controller
         if (auth()->user()->role == 'Kepala Dinas') {
             return view('headOfDepartement.sub-activity.index');
         } else if (auth()->user()->role == 'Kepala Bidang') {
+            $employees = User::where('field_id', auth()->user()->field_id)->where('role', 'Pelaksana')->get();
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->get();
@@ -32,7 +33,12 @@ class SubActivityController extends Controller
             $sub_activities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->whereIn('activity_id', $activities->pluck('id'))->get();
-            return view('headOfDivision.sub-activity.index', compact('programs', 'activities', 'sub_activities'));
+            return view('headOfDivision.sub-activity.index', compact('programs', 'activities', 'sub_activities', 'employees'));
+        } else if (auth()->user()->role == 'Pelaksana') {
+            $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'))->where('user_id', auth()->user()->id);
+            })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->get();
+            return view('employee.subKegiatan', compact('subActivities'));
         }
     }
 
@@ -41,7 +47,8 @@ class SubActivityController extends Controller
         $request->validate([
             'activity_id' => 'required',
             'activity_name' => 'required',
-            'budget' => 'required'
+            'budget' => 'required',
+            'worker' => 'required',
         ]);
 
         $subActivity = SubActivity::create([
@@ -58,6 +65,7 @@ class SubActivityController extends Controller
                     'sub_activity_id' => $subActivity->id,
                     'month' => $i,
                     'budget' => $request->budget,
+                    'user_id' => $request->worker,
                 ]);
             }
         }

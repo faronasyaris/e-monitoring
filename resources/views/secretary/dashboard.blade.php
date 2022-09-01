@@ -20,16 +20,16 @@
                     <span class="count_top"><i class="fa fa-calendar"></i> Tanggal Hari Ini</span>
                     <div class="count green">
                         <h4 class="mt-2">
-                            25 Agustus 2022</h4>
+                            {{ date('d F Y') }}</h4>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12 tile_stats_count text-center mt-2">
                     <span class="count_top"><i class="fa fa-user"></i> Total User</span>
-                    <div class="count">10</div>
+                    <div class="count">{{ $users->count() }}</div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12 tile_stats_count text-center mt-2">
                     <span class="count_top"><i class="fa fa-calen"></i> Total Periode</span>
-                    <div class="count">2</div>
+                    <div class="count">{{ $period->count() }}</div>
                 </div>
 
             </div>
@@ -47,18 +47,18 @@
                     <tr>
                         <td>1</td>
                         <td>Bidang Pemanfaatan dan Pengendalian Sumberdaya Perikanan</td>
-                        <td>2</td>
+                        <td>{{ $users->where('field_id', 1)->count() }}</td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Bidang Produksi, Prasarana dan Sarana Peternakan</td>
-                        <td>3</td>
+                        <td>{{ $users->where('field_id', 2)->count() }}</td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>
                             Bidang Kesehatan Hewan, Ikan, Kesmavet dan P2HP</td>
-                        <td>2</td>
+                        <td>{{ $users->where('field_id', 3)->count() }}</td>
                     </tr>
                 </tbody>
             </table>

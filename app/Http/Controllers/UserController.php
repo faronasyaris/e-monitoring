@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Field;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,10 +49,12 @@ class UserController extends Controller
     {
         $user = Auth::User();
         if ($user->role == 'Sekretaris') {
-            return view('secretary.dashboard');
+            $users = User::all();
+            $period = Periode::all();
+            return view('secretary.dashboard', compact('users', 'period'));
         }
 
-        if ($user->role == 'Employee') {
+        if ($user->role == 'Pelaksana') {
             return view('employee.dashboard');
         }
 

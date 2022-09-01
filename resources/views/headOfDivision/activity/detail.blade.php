@@ -57,13 +57,24 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Nama Kegiatan</h2>
+                <h2>Deskripsi Kegiatan</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x-content">
-                <div>{{ $activity->activity_name }}</d>
-                </div>
+                <table>
+                    <tr>
+                        <td><b>Nama Kegiatan</b></td>
+                        <td>&nbsp;:&nbsp; </td>
+                        <td>{{ $activity->activity_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Dibuat Oleh</b></td>
+                        <td> &nbsp;:&nbsp;</td>
+                        <td>{{ @$activity->getUser->name }}</td>
+                    </tr>
+                </table>
             </div>
+
         </div>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">

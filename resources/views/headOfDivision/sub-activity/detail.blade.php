@@ -5,7 +5,13 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.headOfDivision-sidebar')
+    @if (auth()->user()->role == 'Kepala Bidang')
+        @include('layouts.headOfDivision-sidebar')
+    @elseif(auth()->user()->role == 'Pelaksana')
+        @include('layouts.employee-sidebar')
+    @elseif(auth()->user()->role == 'Kepala Dinas')
+        @include('layouts.headOfDepartement-sidebar')
+    @endif
 @endsection
 
 @section('content')
@@ -48,12 +54,34 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Nama Sub Kegiatan</h2>
+                <h2>Deskripsi Sub Kegiatan</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x-content">
-                <div>{{ $subActivity->sub_activity_name }}</d>
-                </div>
+                <table>
+                    <tr>
+                        <td><b>Nama Sub Kegiatan</b></td>
+                        <td>&nbsp;:&nbsp; </td>
+                        <td>{{ $subActivity->sub_activity_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Pelaksana</b></td>
+                        <td> &nbsp;:&nbsp;</td>
+                        <td>{{ @$subActivity->getPlotting->where('month', session('month'))->first()->getUser->name }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Dibuat Oleh</b></td>
+                        <td> &nbsp;:&nbsp;</td>
+                        <td>{{ @$subActivity->getUser->name }}</td>
+                    </tr>
+                </table>
+                <hr>
+                @if (auth()->user()->role == 'Kepala Bidang')
+                    <button class="btn btn-primary btn-sm " style="float:right" data-toggle="modal"
+                        data-target="#addActivityOutcomeModal"> <i class="fa fa-user"></i>
+                        Pilih Pelaksana</button>
+                @endif
+
             </div>
         </div>
     </div>

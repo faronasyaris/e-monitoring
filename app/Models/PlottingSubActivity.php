@@ -20,6 +20,11 @@ class PlottingSubActivity extends Model
         return $this->belongsTo(SubActivity::class, 'sub_activity_id');
     }
 
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public static function countFinancePerformance($plot)
     {
         if ($plot->finance_realization == 0) {

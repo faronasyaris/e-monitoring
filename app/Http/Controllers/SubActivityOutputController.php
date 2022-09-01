@@ -99,12 +99,41 @@ class SubActivityOutputController extends Controller
         return back();
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, SubActivityOutput $id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingSubActivityOutput::where('month', $i)->where('outcome_id', $id->id)->first();
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'unit' => $request->unit,
+                        'target' => $request->target,
+                    ]);
+                }
+            }
+        }
+
+        $id->update([
+            'activity_output_name' => $request->outcome_name
+        ]);
+
+        toast('Output Sub Kegiatan berhasil diupdate', 'success');
+        return back();
     }
 
-    public function delete()
+    public function delete(SubActivityOutput $id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingSubActivityOutput::where('month', $i)->where('outcome_id', $id->id)->first();
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->delete();
+                }
+            }
+        }
+
+        toast('Output Sub Kegiatan berhasil dihapus', 'success');
+        return back();
     }
 
     public function updateBudget()

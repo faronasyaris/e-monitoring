@@ -65,16 +65,18 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::put('/program/{id}', [ProgramController::class, 'update']);
     Route::delete('/program/{id}', [ProgramController::class, 'destroy']);
     Route::get('/program/{id}/getActivity', [ActivityController::class, 'getActivityByProgram']);
+
     Route::post('/programOutcome', [ProgramOutcomeController::class, 'store']);
+    Route::put('/programOutcome/{id}', [ProgramOutcomeController::class, 'update']);
+    Route::delete('/programOutcome/{id}', [ProgramOutcomeController::class, 'delete']);
 
     Route::post('/kegiatan', [ActivityController::class, 'store']);
     Route::put('/kegiatan/{id}', [ActivityController::class, 'update']);
     Route::delete('/kegiatan/{id}', [ActivityController::class, 'destroy']);
 
     Route::post('/kegiatanOutcome', [ActivityOutcomeController::class, 'store']);
-
-    Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
-    Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
+    Route::put('/kegiatanOutcome/{id}', [ActivityOutcomeController::class, 'update']);
+    Route::delete('/kegiatanOutcome/{id}', [ActivityOutcomeController::class, 'delete']);
 
     Route::put('/sub-kegiatan/{id}', [SubActivityController::class, 'update']);
     Route::delete('/sub-kegiatan/{id}', [SubActivityController::class, 'destroy']);
@@ -82,11 +84,16 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::delete('/sub-kegiatan/financeRealization/{id}/cancel', [SubActivityController::class, 'cancelFinanceRealization']);
     Route::post('/sub-kegiatan', [SubActivityController::class, 'store']);
     Route::post('/sub-kegiatan/{id}/selectEmployee', [SubActivityController::class, 'selectEmployee']);
+
     Route::post('/subKegiatanOutcome', [SubActivityOutputController::class, 'store']);
     Route::put('/subKegiatanOutcome/{id}', [SubActivityOutputController::class, 'update']);
+    Route::delete('/subKegiatanOutcome/{id}', [SubActivityOutputController::class, 'delete']);
+
     Route::post('/subKegiatan-achievment/{id}/add', [SubActivityOutputController::class, 'addAchievment']);
     Route::delete('/subKegiatan-achievment/{id}/cancel', [SubActivityOutputController::class, 'cancelAchievment']);
 
+    Route::post('/achievment/{id}/add', [ProgramOutcomeController::class, 'addAchievment']);
+    Route::delete('/achievment/{id}/cancel', [ProgramOutcomeController::class, 'cancelAchievment']);
 
     Route::post('/kegiatan-achievment/{id}/add', [ActivityOutcomeController::class, 'addAchievment']);
     Route::delete('/kegiatan-achievment/{id}/cancel', [ActivityOutcomeController::class, 'cancelAchievment']);

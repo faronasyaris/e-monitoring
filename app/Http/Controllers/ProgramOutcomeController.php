@@ -104,11 +104,40 @@ class ProgramOutcomeController extends Controller
         return back();
     }
 
-    public function update()
+    public function update(Request $request, ProgramOutcome $id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('outcome_id', $id->id)->first();
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'unit' => $request->unit,
+                        'target' => $request->target,
+                    ]);
+                }
+            }
+        }
+
+        $id->update([
+            'program_outcome_name' => $request->outcome_name
+        ]);
+
+        toast('Outcome Program berhasil diupdate', 'success');
+        return back();
     }
 
-    public function delete()
+    public function delete(ProgramOutcome $id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingProgramOutcome::where('month', $i)->where('outcome_id', $id->id)->first();
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->delete();
+                }
+            }
+        }
+
+        toast('Outcome Program berhasil dihapus', 'success');
+        return back();
     }
 }

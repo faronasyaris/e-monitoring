@@ -119,8 +119,8 @@
                                             data-id="{{ $outcome->id }}" data-name="{{ $outcome->program_outcome_name }}"
                                             data-unit="{{ $outcome->getPlotting->where('month', session('month'))->first()->unit }}"
                                             data-targetOutcome="{{ $outcome->getPlotting->where('month', session('month'))->first()->target }}">Edit</button>
-                                        <button class="btn btn-sm btn-danger" data-target="#deleteProgramOutcomeModal"
-                                            data-toggle="modal">Delete</button>
+                                        <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $outcome->id }}"
+                                            data-target="#deleteProgramOutcomeModal" data-toggle="modal">Delete</button>
                                     </td>
                                 @endif
 
@@ -239,11 +239,12 @@
                 </div>
                 <form id="formEditOutcome" method="post">
                     @csrf
+                    @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Outcome</label>
-                            <input type="text" id="outcome_name" name="description" class="form-control" required
-                                placeholder="Nama Outcome">
+                            <input type="text" id="edit_outcome_name" name="outcome_name" class="form-control"
+                                required placeholder="Nama Outcome">
                         </div>
 
                         <div class="form-group">
@@ -317,7 +318,7 @@
                 <div class="modal-footer">
                     <button type="button" style="display: inline" class="btn btn-secondary"
                         data-dismiss="modal">Batal</button>
-                    <form style="display: inline" id="cancelAchievmentForm" method="POST">
+                    <form style="display: inline" id="formDeleteOutcome" method="POST">
                         @method('delete')
                         @csrf
                         <button style="display: inline" button type="submit" class="btn btn-danger">Ya</button>
@@ -395,12 +396,14 @@
         })
 
         $(document).on('click', '.btn-edit', function() {
-            $('#formEditOutcome').prop('action', `/achievment/${$(this).attr('data-id')}/cancel`);
-            $('#outcome_name').val($(this).attr('data-name'));
+            $('#formEditOutcome').prop('action', `/programOutcome/${$(this).attr('data-id')}`);
+            $('#edit_outcome_name').val($(this).attr('data-name'));
             $('#outcome_unit').val($(this).attr('data-unit'));
             $('#outcome_target').val($(this).attr('data-targetOutcome'));
         })
 
-        $(document).on('click', )
+        $(document).on('click', '.btn-delete', function() {
+            $('#formDeleteOutcome').prop('action', `/programOutcome/${$(this).attr('data-id')}`);
+        })
     </script>
 @endsection

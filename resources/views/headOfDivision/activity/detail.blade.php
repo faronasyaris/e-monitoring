@@ -115,10 +115,14 @@
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->activity_outcome_name }}">Tambah
                                             Capaian</button>
-                                        {{-- <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                            data-target="#editActivityOutcomeModal">Edit</button><button
-                                            class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#deleteActivityOutcomeModal">Delete</button> --}}
+                                        <button class="btn btn-sm btn-warning btn-edit" data-toggle="modal"
+                                            data-target="#editActivityOutcomeModal" data-id="{{ $outcome->id }}"
+                                            data-name="{{ $outcome->activity_outcome_name }}"
+                                            data-unit="{{ $outcome->getPlotting->where('month', session('month'))->first()->unit }}"
+                                            data-targetOutcome="{{ $outcome->getPlotting->where('month', session('month'))->first()->target }}">Edit</button><button
+                                            class="btn btn-sm btn-danger btn-delete" data-toggle="modal"
+                                            data-id="{{ $outcome->id }}"
+                                            data-target="#deleteActivityOutcomeModal">Delete</button>
                                     </td>
                                 @endif
                             </tr>
@@ -283,24 +287,25 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Edit Outcome Kegiatan</h4>
                 </div>
-                <form action="/kegiatanOutcome" method="post">
+                <form id="formEditOutcome" method="post">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $activity->id }}">
+                    @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Outcome</label>
-                            <input type="text" name="description" class="form-control" required
-                                placeholder="Nama Outcome">
+                            <input type="text" id="edit_outcome_name" name="outcome_name" class="form-control"
+                                required placeholder="Nama Outcome">
                         </div>
 
                         <div class="form-group">
                             <label for="" class="form-label">Satuan</label>
-                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                            <input type="text" id="outcome_unit" name="unit" class="form-control" required
+                                placeholder="Satuan">
                         </div>
 
                         <div class="form-group">
                             <label for="" class="form-label">Target</label>
-                            <input type="number" min=0 name="target" class="form-control" required
+                            <input type="number" id="outcome_target" min=0 name="target" class="form-control" required
                                 placeholder="Target">
                         </div>
                     </div>
@@ -321,8 +326,9 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Delete Outcome Kegiatan</h4>
                 </div>
-                <form action="/program" method="post">
+                <form id="formDeleteOutcome" method="post">
                     @csrf
+                    @method('DELETE')
                     <div class="modal-body">
                         <p>Anda yakin akan menghapus Outcome Kegiatan yang dipilih?</p>
                     </div>
@@ -436,6 +442,18 @@
         $(document).on('click', '.btnCancelAchievment', function() {
             $('#cancelAchievmentForm').prop('action', `/kegiatan-achievment/${$(this).attr('data-id')}/cancel`);
             $('#cancelAchievmentModal').modal('show');
+        })
+
+        $(document).on('click', '.btn-edit', function() {
+            $('#formEditOutcome').prop('action', `/kegiatanOutcome/${$(this).attr('data-id')}`);
+            $('#edit_outcome_name').val($(this).attr('data-name'));
+            $('#outcome_unit').val($(this).attr('data-unit'));
+            $('#outcome_target').val($(this).attr('data-targetOutcome'));
+        })
+
+        $(document).on('click', '.btn-delete', function() {
+            $('#formDeleteOutcome').prop('action', `/kegiatanOutcome/${$(this).attr('data-id')}`);
+
         })
     </script>
 @endsection

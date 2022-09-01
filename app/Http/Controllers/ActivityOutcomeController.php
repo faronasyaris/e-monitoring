@@ -103,11 +103,40 @@ class ActivityOutcomeController extends Controller
         return back();
     }
 
-    public function update()
+    public function update(Request $request, ActivityOutcome $id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingActivityOutcome::where('month', $i)->where('outcome_id', $id->id)->first();
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->update([
+                        'unit' => $request->unit,
+                        'target' => $request->target,
+                    ]);
+                }
+            }
+        }
+
+        $id->update([
+            'activity_outcome_name' => $request->outcome_name
+        ]);
+
+        toast('Outcome Kegiatan berhasil diupdate', 'success');
+        return back();
     }
 
-    public function delete()
+    public function delete(ActivityOutcome $id)
     {
+        for ($i = 1; $i <= 12; $i++) {
+            if ($i >= session('month')) {
+                $outcome_plot = PlottingActivityOutcome::where('month', $i)->where('outcome_id', $id->id)->first();
+                if (!empty($outcome_plot)) {
+                    $outcome_plot->delete();
+                }
+            }
+        }
+
+        toast('Outcome Kegiatan berhasil dihapus', 'success');
+        return back();
     }
 }

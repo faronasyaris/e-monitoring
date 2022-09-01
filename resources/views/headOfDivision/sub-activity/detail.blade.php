@@ -181,10 +181,14 @@
                                             data-id="{{ $outcome->getPlotting->where('month', session('month'))->first()->id }}"
                                             data-deskripsi="{{ $outcome->activity_output_name }}">Tambah
                                             Capaian</button>
-                                        {{-- <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                            data-target="#editActivityOutputModal">Edit</button><button
-                                            class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#deleteActivityOutputModal">Delete</button> --}}
+                                        <button class="btn btn-sm btn-warning btn-edit" data-toggle="modal"
+                                            data-target="#editActivityOutputModal" data-id="{{ $outcome->id }}"
+                                            data-name="{{ $outcome->activity_output_name }}"
+                                            data-unit="{{ $outcome->getPlotting->where('month', session('month'))->first()->unit }}"
+                                            data-targetOutcome="{{ $outcome->getPlotting->where('month', session('month'))->first()->target }}">Edit</button><button
+                                            class="btn btn-sm btn-danger btn-delete" data-toggle="modal"
+                                            data-target="#deleteActivityOutputModal"
+                                            data-id="{{ $outcome->id }}">Delete</button>
                                     </td>
                                 @endif
                             </tr>
@@ -234,7 +238,8 @@
                                     @if (empty($history->file))
                                         -
                                     @else
-                                        <a href="{{ asset('/evidence/' . $history->file) }}"><i class="fa fa-download"></i>
+                                        <a href="{{ asset('/evidence/' . $history->file) }}"><i
+                                                class="fa fa-download"></i>
                                             Donwload File</a>
                                     @endif
                                 </td>
@@ -476,24 +481,26 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Edit Output Sub Kegiatan</h4>
                 </div>
-                <form action="/kegiatanOutput" method="post">
+                <form id="formEditOutcome" method="post">
                     @csrf
+                    @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="" class="form-label">Nama Output</label>
-                            <input type="text" name="description" class="form-control" required
-                                placeholder="Nama Output">
+                            <input type="text" id="edit_outcome_name" name="outcome_name" class="form-control"
+                                required placeholder="Nama Output">
                         </div>
 
                         <div class="form-group">
                             <label for="" class="form-label">Satuan</label>
-                            <input type="text" name="unit" class="form-control" required placeholder="Satuan">
+                            <input type="text" name="unit" id="outcome_unit" class="form-control" required
+                                placeholder="Satuan">
                         </div>
 
                         <div class="form-group">
                             <label for="" class="form-label">Target</label>
-                            <input type="number" min=0 name="target" class="form-control" required
-                                placeholder="Target">
+                            <input type="number" min=0 name="target" id="outcome_target" q class="form-control"
+                                required placeholder="Target">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -513,8 +520,9 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Delete Output Sub Kegiatan</h4>
                 </div>
-                <form action="/program" method="post">
+                <form id="formDeleteOutcome" method="post">
                     @csrf
+                    @method('DELETE')
                     <div class="modal-body">
                         <p>Anda yakin akan menghapus Output Kegiatan yang dipilih?</p>
                     </div>
@@ -615,6 +623,17 @@
             $('#cancelFinanceForm').prop('action',
                 `/sub-kegiatan/financeRealization/${$(this).attr('data-id')}/cancel`);
             $('#cancelFinanceModal').modal('show');
+        })
+
+        $(document).on('click', '.btn-edit', function() {
+            $('#formEditOutcome').prop('action', `/subKegiatanOutcome/${$(this).attr('data-id')}`);
+            $('#edit_outcome_name').val($(this).attr('data-name'));
+            $('#outcome_unit').val($(this).attr('data-unit'));
+            $('#outcome_target').val($(this).attr('data-targetOutcome'));
+        })
+
+        $(document).on('click', '.btn-delete', function() {
+            $('#formDeleteOutcome').prop('action', `/subKegiatanOutcome/${$(this).attr('data-id')}`);
         })
     </script>
 @endsection

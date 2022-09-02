@@ -153,7 +153,11 @@
             @endif
             <hr>
             @if (!empty(Request::get('report')))
-                <button class="btn btn-primary" style="float: right"> <i class="fa fa-print"></i> Cetak</button>
+                <form action="/report/download" method="post">
+                    @csrf
+                    <input type="hidden" value="{{ Request::get('report') }}" name="report">
+                    <button class="btn btn-primary" style="float: right"> <i class="fa fa-print"></i> Cetak</button>
+                </form>
             @endif
         </div>
     </div>

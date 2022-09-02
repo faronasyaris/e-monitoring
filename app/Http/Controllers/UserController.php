@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
 use App\Models\User;
 use App\Models\Field;
 use App\Models\Periode;
 use App\Models\Program;
+use App\Models\Activity;
+use PDF;
 use App\Models\SubActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -200,5 +201,58 @@ class UserController extends Controller
             })->where('year', session('year'))->get();
         }
         return view('report', compact('programs', 'activities', 'subActivities'));
+    }
+
+    public function downloadReport(Request $request)
+    {
+        $request->validate([
+            'report' => 'required'
+        ]);
+
+        if ($request->report == 'program') {
+            if (auth()->user()->role == 'Kepala Bidang') {
+                $data =  Program::withAndWhereHas('getPlotting', function ($query) {
+                    $query->where('month', session('month'));
+                })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            } else if (auth()->user()->role == 'Kepala Dinas') {
+                $data =  Program::withAndWhereHas('getPlotting', function ($query) {
+                    $query->where('month', session('month'));
+                })->where('year', session('year'))->get();
+            }
+            $pdf = PDF::loadview('layouts.program_pdf', ['data' => $data]);
+            $pdf->setPaper('A4', 'landscape');
+            $file =  "report_program" . "_" .  date('Ymdhis') . ".pdf";
+            return $pdf->download($file);
+        }
+        if ($request->report == 'kegiatan') {
+            if (auth()->user()->role == 'Kepala Bidang') {
+                $data =  Activity::withAndWhereHas('getPlotting', function ($query) {
+                    $query->where('month', session('month'));
+                })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            } else if (auth()->user()->role == 'Kepala Dinas') {
+                $data =  Activity::withAndWhereHas('getPlotting', function ($query) {
+                    $query->where('month', session('month'));
+                })->where('year', session('year'))->get();
+            }
+            $pdf = PDF::loadview('layouts.activity_pdf', ['data' => $data]);
+            $pdf->setPaper('A4', 'landscape');
+            $file =  "report_kegiatan" . "_" .  date('Ymdhis') . ".pdf";
+            return $pdf->download($file);
+        }
+        if ($request->report == 'subKegiatan') {
+            if (auth()->user()->role == 'Kepala Bidang') {
+                $data =  SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                    $query->where('month', session('month'));
+                })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            } else if (auth()->user()->role == 'Kepala Dinas') {
+                $data =  SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                    $query->where('month', session('month'));
+                })->where('year', session('year'))->get();
+            }
+            $pdf = PDF::loadview('layouts.sub_activity_pdf', ['data' => $data]);
+            $pdf->setPaper('A4', 'landscape');
+            $file =  "report_subKegiatan" . "_" .  date('Ymdhis') . ".pdf";
+            return $pdf->download($file);
+        }
     }
 }

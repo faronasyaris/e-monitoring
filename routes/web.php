@@ -99,6 +99,7 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
     Route::delete('/kegiatan-achievment/{id}/cancel', [ActivityOutcomeController::class, 'cancelAchievment']);
 
     Route::get('/report', [UserController::class, 'reportView']);
+    Route::post('/report/download', [UserController::class, 'downloadReport']);
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {

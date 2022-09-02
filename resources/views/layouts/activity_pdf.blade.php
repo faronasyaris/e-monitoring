@@ -94,7 +94,27 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $totalBudget = 0;
+                $totalRealization = 0;
+                $totalFinancePerformance = 0;
+                $totalPhysical = 0;
+                $totalIndicator = 0;
+                $countFinancePerformance = 0;
+                $countActivityOutcome = 0;
+                $countIndicator = 0;
+            @endphp
             @foreach ($data as $activity)
+                @php
+                    $totalBudget += \App\Models\Activity::countActivityFinance($activity->id)['totalBudget'];
+                    $totalRealization += \App\Models\Activity::countActivityFinance($activity->id)['totalFinance'];
+                    $totalFinancePerformance += \App\Models\Activity::countActivityFinance($activity->id)['performance'];
+                    $countFinancePerformance++;
+                    $totalPhysical += \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id);
+                    $countActivityOutcome++;
+                    $totalIndicator += \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id);
+                    $countIndicator++;
+                @endphp
                 <tr>
                     <td></td>
                     <td>{{ $activity->activity_name }}</td>
@@ -107,6 +127,34 @@
                     <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
                 </tr>
             @endforeach
+            <tr>
+                <td colspan="2">
+                    <center>Jumlah</center>
+                </td>
+                <td>Rp{{ number_format($totalBudget, 0, '', '.') }}</td>
+                <td>Rp{{ number_format($totalRealization, 0, '', '.') }}
+                </td>
+                <td>{{ round($totalFinancePerformance / $countFinancePerformance, 2) }}%</td>
+                <td>{{ round($totalPhysical / $countActivityOutcome, 2) }}%</td>
+                <td>{{ round($totalIndicator / $countIndicator, 2) }}%</td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="3">
+                    <center>
+                        <p>Ciamis,...... {{ session('monthName') }} {{ session('yearName') }} <br>
+                            Kepala Dinas Peternakan dan Perikanan <br>
+                            Kabupaten Ciamis
+                        </p>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <h5>{{ @\App\Models\User::where('role', 'Kepala Dinas')->first()->name }}</h5>
+                    </center>
+                </td>
+            </tr>
         </tbody>
     </table>
 </body>

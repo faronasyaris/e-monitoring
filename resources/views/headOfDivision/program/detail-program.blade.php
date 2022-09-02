@@ -35,7 +35,7 @@
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-money"></i> Dana Program</span>
+            <span class="count_top"><i class="fa fa-money"></i> Anggaran Program</span>
             <div class="count green">
                 <h4>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalBudget'], 0, '', '.') }}
                 </h4>

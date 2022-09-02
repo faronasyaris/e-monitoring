@@ -97,6 +97,8 @@ Route::group(['middleware' => ['auth', 'isHeadDivision']], function () {
 
     Route::post('/kegiatan-achievment/{id}/add', [ActivityOutcomeController::class, 'addAchievment']);
     Route::delete('/kegiatan-achievment/{id}/cancel', [ActivityOutcomeController::class, 'cancelAchievment']);
+
+    Route::get('/report', [UserController::class, 'reportView']);
 });
 
 Route::group(['middleware' => ['auth', 'isSecretary']], function () {

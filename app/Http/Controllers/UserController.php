@@ -175,4 +175,30 @@ class UserController extends Controller
         toast('Data akun ' . $user_name . ' dihapus', 'success');
         return back();
     }
+
+    public function reportView()
+    {
+        if (auth()->user()->role == 'Kepala Bidang') {
+            $programs =  Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            $activities =  Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+            $subActivities =  SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('field_id', auth()->user()->field_id)->where('year', session('year'))->get();
+        } else if (auth()->user()->role == 'Kepala Dinas') {
+            $programs =  Program::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+            $activities =  Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+            $subActivities =  SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->get();
+        }
+        return view('report', compact('programs', 'activities', 'subActivities'));
+    }
 }

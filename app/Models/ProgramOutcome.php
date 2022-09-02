@@ -48,9 +48,15 @@ class ProgramOutcome extends Model
 
     public static function countPhysicalPerformance($program)
     {
-        $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
-            $query->where('month', session('month'));
-        })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->where('program_id', $program)->get();
+        if (auth()->user()->role == 'Kepala Bidang') {
+            $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->where('program_id', $program)->get();
+        } else if (auth()->user()->role == 'Kepala Dinas') {
+            $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->where('program_id', $program)->get();
+        }
         if ($activities->count() == 0) {
             return 0;
         }

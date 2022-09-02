@@ -38,9 +38,15 @@ class ActivityOutcome extends Model
 
     public static  function countPhysicalPerformance($activity)
     {
-        $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
-            $query->where('month', session('month'));
-        })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->where('activity_id', $activity)->get();
+        if (auth()->user()->role == 'Kepala Bidang') {
+            $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->where('field_id', auth()->user()->field_id)->where('activity_id', $activity)->get();
+        } else if (auth()->user()->role == 'Kepala Dinas') {
+            $subActivities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
+                $query->where('month', session('month'));
+            })->where('year', session('year'))->where('activity_id', $activity)->get();
+        }
         if ($subActivities->count() == 0) {
             return 0;
         }

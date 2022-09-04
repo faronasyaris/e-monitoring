@@ -18,7 +18,7 @@ class CreateProgramOutcomeHistoriesTable extends Migration
             $table->date('date');
             $table->foreignId('outcome_id')->references('id')->on('program_outcomes')->cascadeOnDelete();
             $table->foreignId('program_id')->references('id')->on('programs')->cascadeOnDelete();
-            $table->integer('achievment');
+            $table->double('achievment');
             $table->string('file')->nullable();
             $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();

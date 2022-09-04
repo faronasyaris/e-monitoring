@@ -16,8 +16,8 @@ class CreatePlottingSubActivityOutputsTable extends Migration
         Schema::create('plotting_sub_activity_outputs', function (Blueprint $table) {
             $table->id();
             $table->string('unit');
-            $table->integer('target');
-            $table->integer('achievment')->default(0);
+            $table->double('target');
+            $table->double('achievment')->default(0);
             $table->tinyInteger('month');
             $table->foreignId('outcome_id')->references('id')->on('sub_activity_outputs')->cascadeOnDelete();
             $table->timestamps();

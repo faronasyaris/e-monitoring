@@ -216,7 +216,7 @@
 
                         <div class="form-group">
                             <label for="" class="form-label">Target</label>
-                            <input type="number" min=0 name="target" class="form-control" required
+                            <input type="number" min=0 step=".01" name="target" class="form-control" required
                                 placeholder="Target">
                         </div>
                     </div>
@@ -287,7 +287,8 @@
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Jumlah Capaian</label>
-                            <input type="number" min=0 id="achievment" name="achievment" class="form-control" required>
+                            <input type="number" step=".01" min=0 id="achievment" name="achievment"
+                                class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Bukti (Optional)</label>

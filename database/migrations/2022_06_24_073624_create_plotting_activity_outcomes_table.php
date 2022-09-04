@@ -16,8 +16,8 @@ class CreatePlottingActivityOutcomesTable extends Migration
         Schema::create('plotting_activity_outcomes', function (Blueprint $table) {
             $table->id();
             $table->string('unit');
-            $table->integer('target');
-            $table->integer('achievment')->default(0);
+            $table->double('target');
+            $table->double('achievment')->default(0);
             $table->tinyInteger('month');
             $table->foreignId('outcome_id')->references('id')->on('activity_outcomes')->cascadeOnDelete();
             $table->timestamps();

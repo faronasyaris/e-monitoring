@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Field;
 use App\Models\PlottingProgram;
 use App\Models\PlottingProgramOutcome;
 use App\Models\Program;
@@ -19,7 +20,8 @@ class ProgramController extends Controller
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->get();
-            return view('headOfDepartement.program.index', compact('programs'));
+            $fields = Field::all();
+            return view('headOfDepartement.program.index', compact('programs', 'fields'));
         } else if (auth()->user()->role == 'Kepala Bidang') {
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));

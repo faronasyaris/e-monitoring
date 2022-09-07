@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Field;
 use App\Models\Program;
 use App\Models\Activity;
-use App\Models\PlottingSubActivity;
 use App\Models\SubActivity;
-use App\Models\SubActivityBudgetHistory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SubActivityOutput;
-use App\Models\SubActivityOutputHistory;
 use App\Models\SubActivityWorker;
+use App\Models\PlottingSubActivity;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SubActivitySubmission;
+use App\Models\SubActivityBudgetHistory;
+use App\Models\SubActivityOutputHistory;
 
 class SubActivityController extends Controller
 {
     public function index()
     {
         if (auth()->user()->role == 'Kepala Dinas') {
+            $fields = Field::all();
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->get();
@@ -30,7 +32,7 @@ class SubActivityController extends Controller
             $sub_activities = SubActivity::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->whereIn('activity_id', $activities->pluck('id'))->get();
-            return view('headOfDepartement.sub-activity.index', compact('programs', 'activities', 'sub_activities'));
+            return view('headOfDepartement.sub-activity.index', compact('programs', 'activities', 'sub_activities', 'fields'));
         } else if (auth()->user()->role == 'Kepala Bidang') {
             $employees = User::where('field_id', auth()->user()->field_id)->where('role', 'Pelaksana')->get();
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {

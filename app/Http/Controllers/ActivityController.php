@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
 use App\Models\Program;
 use App\Models\Activity;
-use App\Models\ActivityOutcome;
-use App\Models\ActivityOutcomeHistory;
 use Illuminate\Http\Request;
+use App\Models\ActivityOutcome;
 use App\Models\PlottingActivity;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ActivityOutcomeHistory;
 
 class ActivityController extends Controller
 {
     public function index()
     {
         if (auth()->user()->role == 'Kepala Dinas') {
+            $fields = Field::all();
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->get();
             $activities = Activity::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
             })->where('year', session('year'))->whereIn('program_id', $programs->pluck('id'))->get();
-            return view('headOfDepartement.activity.index', compact('programs', 'activities'));
+            return view('headOfDepartement.activity.index', compact('programs', 'activities', 'fields'));
         } else if (auth()->user()->role == 'Kepala Bidang') {
             $programs = Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));

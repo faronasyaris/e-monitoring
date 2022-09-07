@@ -39,52 +39,55 @@
                                 <label> Program : {{ $program->program_name }}</label>
                             </td>
                         </tr>
-                        @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
-                            <tr style="background-color: #ededed; ">
-                                <td colspan="9">
-                                    <label> Kegiatan : {{ $activity->activity_name }}</label>
-                                </td>
-                            </tr>
-                            @if ($sub_activities->where('activity_id', $activity->id)->count() >= 1)
-                                @foreach ($sub_activities->toQuery()->where('activity_id', $activity->id)->get() as $sub_activity)
-                                    @php
-                                        $plotSubActivity = $sub_activity->getPlotting->where('month', session('month'))->first();
-                                    @endphp
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $sub_activity->sub_activity_name }}</td>
-                                        <td class="text-center">
-                                            {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
-                                        </td>
-                                        <td class="text-center">
-                                            {{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%
-                                        </td>
-                                        <td class=""> Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
-                                        </td>
-                                        <td>{{ empty($plotSubActivity->user_id) ? '-' : @$plotSubActivity->getUser->name }}
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
-                                                class="btn btn-sm btn-success">Manage</a>
+                        @if ($activities->where('program_id', $program->id)->count() >= 1)
+                            @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
+                                <tr style="background-color: #ededed; ">
+                                    <td colspan="9">
+                                        <label> Kegiatan : {{ $activity->activity_name }}</label>
+                                    </td>
+                                </tr>
+                                @if ($sub_activities->where('activity_id', $activity->id)->count() >= 1)
+                                    @foreach ($sub_activities->toQuery()->where('activity_id', $activity->id)->get() as $sub_activity)
+                                        @php
+                                            $plotSubActivity = $sub_activity->getPlotting->where('month', session('month'))->first();
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $sub_activity->sub_activity_name }}</td>
+                                            <td class="text-center">
+                                                {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
+                                            </td>
+                                            <td class="text-center">
+                                                {{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%
+                                            </td>
+                                            <td class=""> Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
+                                            </td>
+                                            <td>{{ empty($plotSubActivity->user_id) ? '-' : @$plotSubActivity->getUser->name }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
+                                                    class="btn btn-sm btn-success">Manage</a>
 
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="javascript:void(0)" data-toggle="modal"
-                                                data-target="#editSubActivityModal" data-id="{{ $sub_activity->id }}"
-                                                data-name="{{ $sub_activity->sub_activity_name }}"
-                                                data-budget="{{ $plotSubActivity->budget }}"
-                                                class="btn btn-sm btn-warning btn-edit">Edit</a>
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="javascript:void(0)" data-toggle="modal"
-                                                data-target="#deleteSubActivityModal" data-id="{{ $sub_activity->id }}"
-                                                class="btn btn-sm btn-danger btn-delete">Delete</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        @endforeach
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="javascript:void(0)" data-toggle="modal"
+                                                    data-target="#editSubActivityModal" data-id="{{ $sub_activity->id }}"
+                                                    data-name="{{ $sub_activity->sub_activity_name }}"
+                                                    data-budget="{{ $plotSubActivity->budget }}"
+                                                    class="btn btn-sm btn-warning btn-edit">Edit</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="javascript:void(0)" data-toggle="modal"
+                                                    data-target="#deleteSubActivityModal" data-id="{{ $sub_activity->id }}"
+                                                    class="btn btn-sm btn-danger btn-delete">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        @endif
                     @endforeach
+
 
                 </tbody>
             </table>

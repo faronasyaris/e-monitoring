@@ -23,11 +23,12 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Sub Kegiatan</th>
+                        <th>Status</th>
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
                         <th>Total Anggaran</th>
                         <th>Pelaksana</th>
-                        <th colspan=3>
+                        <th colspan=1>
                             <center>Action
                         </th>
                     </tr>
@@ -35,14 +36,14 @@
                 <tbody>
                     @foreach ($programs as $program)
                         <tr style="background-color: #3f5367; color:white ">
-                            <td colspan="9">
+                            <td colspan="8">
                                 <label> Program : {{ $program->program_name }}</label>
                             </td>
                         </tr>
                         @if ($activities->where('program_id', $program->id)->count() >= 1)
                             @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
                                 <tr style="background-color: #ededed; ">
-                                    <td colspan="9">
+                                    <td colspan="8">
                                         <label> Kegiatan : {{ $activity->activity_name }}</label>
                                     </td>
                                 </tr>
@@ -54,6 +55,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $sub_activity->sub_activity_name }}</td>
+                                            <td>{!! App\Models\User::getStatusLabel(\App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id)) !!}</td>
                                             <td class="text-center">
                                                 {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
                                             </td>
@@ -64,19 +66,15 @@
                                             </td>
                                             <td>{{ empty($plotSubActivity->user_id) ? '-' : @$plotSubActivity->getUser->name }}
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <a href="/sub-kegiatan/{{ $sub_activity->id }}/manage-sub-kegiatan"
                                                     class="btn btn-sm btn-success">Manage</a>
-
-                                            </td>
-                                            <td class="text-center">
                                                 <a href="javascript:void(0)" data-toggle="modal"
                                                     data-target="#editSubActivityModal" data-id="{{ $sub_activity->id }}"
                                                     data-name="{{ $sub_activity->sub_activity_name }}"
                                                     data-budget="{{ $plotSubActivity->budget }}"
                                                     class="btn btn-sm btn-warning btn-edit">Edit</a>
-                                            </td>
-                                            <td class="text-center">
+
                                                 <a href="javascript:void(0)" data-toggle="modal"
                                                     data-target="#deleteSubActivityModal" data-id="{{ $sub_activity->id }}"
                                                     class="btn btn-sm btn-danger btn-delete">Delete</a>

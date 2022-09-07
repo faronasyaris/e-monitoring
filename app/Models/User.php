@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getStatusLabel($performance)
+    {
+        if ($performance < 100) {
+            return '<span class="label label-danger">Belum Selesai</span>';
+        } else {
+            return '<span class="label label-success">Selesai</span>';
+        }
+    }
 }

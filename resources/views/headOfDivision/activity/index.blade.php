@@ -23,10 +23,11 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Kegiatan</th>
+                        <th>Status</th>
                         <th>Kinerja Fisik</th>
                         <th>Kinerja Indikator</th>
                         <th>Kinerja Keuangan</th>
-                        <th colspan=3>
+                        <th colspan=1>
                             <center>Action
                         </th>
                     </tr>
@@ -38,11 +39,13 @@
                                 <label> Program : {{ $program->program_name }}</label>
                             </td>
                         </tr>
+
                         @if ($activities->count() > 0)
                             @foreach ($activities->toQuery()->where('program_id', $program->id)->get() as $activity)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $activity->activity_name }}</td>
+                                    <td>{!! App\Models\User::getStatusLabel(\App\Models\ActivityOutcome::countPhysicalPerformance($activity->id)) !!}
                                     <td class="text-center">
                                         {{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
                                     <td class="text-center">
@@ -50,17 +53,14 @@
                                     <td class="text-center">
                                         {{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         <a href="/kegiatan/{{ $activity->id }}/manage-kegiatan"
                                             class="btn btn-sm btn-success">Manage</a>
 
-                                    </td>
-                                    <td class="text-center">
+
                                         <button data-toggle="modal" data-target="#editActivityModal"
                                             data-name="{{ $activity->activity_name }}" data-id="{{ $activity->id }}"
                                             class="btn btn-sm btn-warning btn-edit">Edit</button>
-                                    </td>
-                                    <td class="text-center">
                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#deleteActivityModal"
                                             class="btn btn-sm btn-danger btn-delete"
                                             data-id="{{ $activity->id }}">Delete</a>

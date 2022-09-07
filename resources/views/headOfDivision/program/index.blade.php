@@ -22,11 +22,12 @@
                 <thead>
                     <tr>
                         <th max-widht="5%" class="text-center">No</th>
-                        <th max-widht="5%" class="text-center">Nama Program</th>
+                        <th widht="5%" class="text-center">Nama Program</th>
+                        <th>Status</th>
                         <th widht="15%" class="text-center">Kinerja Fisik</th>
                         <th widht="15%" class="text-center">Kinerja Indikator</th>
                         <th widht="15%" class="text-center">Kinerja Keuangan</th>
-                        <th widht="25%" colspan=3>
+                        <th widht="23%" colspan=1>
                             <center>Action
                         </th>
                     </tr>
@@ -36,6 +37,8 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $program->program_name }}</td>
+                            <td>{!! App\Models\User::getStatusLabel(\App\Models\ProgramOutcome::countPhysicalPerformance($program->id)) !!}
+
                             <td class="text-center">
                                 {{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%
                             </td>
@@ -45,17 +48,14 @@
                             <td class="text-center">
                                 {{ \App\Models\Program::countProgramFinance($program->id)['performance'] }}%
                             </td>
-                            <td class="text-center">
+                            </td>
+                            <td>
                                 <a href="/program/{{ $program->id }}/manage-program"
                                     class="btn btn-sm btn-success">Manage</a>
 
-                            </td>
-                            <td class="text-center">
                                 <a href="javascript:void(0)" data-target="#editProgramModal" data-toggle="modal"
                                     data-id="{{ $program->id }}" data-name="{{ $program->program_name }}"
                                     class="btn btn-sm btn-warning btn-edit">Edit</a>
-                            </td>
-                            <td class="text-center">
                                 <a href="javascript:void(0)" data-target="#deleteProgramModal" data-toggle="modal"
                                     data-id="{{ $program->id }}" class="btn btn-sm btn-danger btn-delete">Delete</a>
                             </td>

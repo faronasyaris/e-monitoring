@@ -86,6 +86,8 @@
                 <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
                 <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
                 </th>
+                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut
+                </th>
             </tr>
             <tr>
                 <th class="text-center">Anggaran</th>
@@ -125,6 +127,8 @@
                     <td>{{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%</td>
                     <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
                     <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
+                    <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
                 </tr>
             @endforeach
             <tr>
@@ -137,9 +141,10 @@
                 <td>{{ round($totalFinancePerformance / $countFinancePerformance, 2) }}%</td>
                 <td>{{ round($totalPhysical / $countActivityOutcome, 2) }}%</td>
                 <td>{{ round($totalIndicator / $countIndicator, 2) }}%</td>
+                <td></td>
             </tr>
             <tr>
-                <td colspan="4"></td>
+                <td colspan="5"></td>
                 <td colspan="3">
                     <center>
                         <p>Ciamis,...... {{ session('monthName') }} {{ session('yearName') }} <br>

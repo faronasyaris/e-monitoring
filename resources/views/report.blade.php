@@ -61,6 +61,7 @@
                             <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
                             <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
                             </th>
+                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
                         </tr>
                         <tr>
                             <th class="text-center">Anggaran</th>
@@ -80,6 +81,8 @@
                                 <td>{{ \App\Models\Program::countProgramFinance($program->id)['performance'] }}%</td>
                                 <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%</td>
                                 <td>{{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%</td>
+                                <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -94,6 +97,8 @@
                             <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
                             <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
                             </th>
+                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
+
                         </tr>
                         <tr>
                             <th class="text-center">Anggaran</th>
@@ -113,6 +118,8 @@
                                 <td>{{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%</td>
                                 <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
                                 <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
+                                <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -125,6 +132,8 @@
                             <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan</th>
                             <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
                             <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
+
                         </tr>
                         <tr>
                             <th class="text-center">Anggaran</th>
@@ -146,6 +155,8 @@
                                 </td>
                                 <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%</td>
                                 <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%</td>
+                                <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
                             </tr>
                         @endforeach
                     </tbody>

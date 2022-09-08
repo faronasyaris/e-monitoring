@@ -77,87 +77,180 @@
             Dinas Peternakan Dan Perikanan Kabupaten Ciamis
         </h4>
     </center>
-    <table width="100%" border=1 style="border-collapse: collapse" class="tab">
-        <thead>
-            <tr>
-                <th rowspan="2" class="text-center" style="  vertical-align: middle;">KodeRek</th>
-                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan</th>
-                <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
-                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
-                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut
-                </th>
-            </tr>
-            <tr>
-                <th class="text-center">Anggaran</th>
-                <th class="text-center">Realisasi</th>
-                <th class="text-center">Kinerja%</th>
-            </tr>
-        </thead>
-        @php
-            $totalBudget = 0;
-            $totalRealization = 0;
-            $totalFinancePerformance = 0;
-            $totalPhysical = 0;
-            $totalIndicator = 0;
-            $countFinancePerformance = 0;
-            $countActivityOutcome = 0;
-        @endphp
-        <tbody>
-            @foreach ($data as $subActivity)
-                @php
-                    $plotSubActivity = $subActivity->getPlotting->first();
-                @endphp
-                @php
-                    $totalBudget += $plotSubActivity->budget;
-                    $totalRealization += $plotSubActivity->finance_realization;
-                    $totalFinancePerformance += \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity);
-                    $countFinancePerformance++;
-                    $totalPhysical += \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id);
-                    $countActivityOutcome++;
-                @endphp
+    @if (auth()->user()->role == 'Kepala Bidang')
+        <table width="100%" border=1 style="border-collapse: collapse" class="tab">
+            <thead>
                 <tr>
-                    <td></td>
-                    <td>{{ $subActivity->sub_activity_name }}</td>
-                    <td>Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
-                    </td>
-                    <td>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}
-                    </td>
-                    <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%</td>
-                    <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%</td>
-                    <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
-
+                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">KodeRek</th>
+                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan</th>
+                    <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
+                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut
+                    </th>
                 </tr>
-            @endforeach
-            <tr>
-                <td colspan="2">
-                    <center>Jumlah</center>
-                </td>
-                <td>Rp{{ number_format($totalBudget, 0, '', '.') }}</td>
-                <td>Rp{{ number_format($totalRealization, 0, '', '.') }}
-                </td>
-                <td>{{ round($totalFinancePerformance / $countFinancePerformance, 2) }}%</td>
-                <td>{{ round($totalPhysical / $countActivityOutcome, 2) }}%</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td colspan="2">
-                    <center>
-                        <p>Ciamis,...... {{ session('monthName') }} {{ session('yearName') }} <br>
-                            Kepala Dinas Peternakan dan Perikanan <br>
-                            Kabupaten Ciamis
-                        </p>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
+                <tr>
+                    <th class="text-center">Anggaran</th>
+                    <th class="text-center">Realisasi</th>
+                    <th class="text-center">Kinerja%</th>
+                </tr>
+            </thead>
+            @php
+                $totalBudget = 0;
+                $totalRealization = 0;
+                $totalFinancePerformance = 0;
+                $totalPhysical = 0;
+                $totalIndicator = 0;
+                $countFinancePerformance = 0;
+                $countActivityOutcome = 0;
+            @endphp
+            <tbody>
+                @foreach ($data as $subActivity)
+                    @php
+                        $plotSubActivity = $subActivity->getPlotting->first();
+                    @endphp
+                    @php
+                        $totalBudget += $plotSubActivity->budget;
+                        $totalRealization += $plotSubActivity->finance_realization;
+                        $totalFinancePerformance += \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity);
+                        $countFinancePerformance++;
+                        $totalPhysical += \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id);
+                        $countActivityOutcome++;
+                    @endphp
+                    <tr>
+                        <td></td>
+                        <td>{{ $subActivity->sub_activity_name }}</td>
+                        <td>Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
+                        </td>
+                        <td>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}
+                        </td>
+                        <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%</td>
+                        <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%</td>
+                        <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
 
-                        <h5>{{ @\App\Models\User::where('role', 'Kepala Dinas')->first()->name }}</h5>
-                    </center>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td colspan="2">
+                        <center>Jumlah</center>
+                    </td>
+                    <td>Rp{{ number_format($totalBudget, 0, '', '.') }}</td>
+                    <td>Rp{{ number_format($totalRealization, 0, '', '.') }}
+                    </td>
+                    <td>{{ round($totalFinancePerformance / $countFinancePerformance, 2) }}%</td>
+                    <td>{{ round($totalPhysical / $countActivityOutcome, 2) }}%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="5"></td>
+                    <td colspan="2">
+                        <center>
+                            <p>Ciamis,...... {{ session('monthName') }} {{ session('yearName') }} <br>
+                                Kepala Dinas Peternakan dan Perikanan <br>
+                                Kabupaten Ciamis
+                            </p>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                            <h5>{{ @\App\Models\User::where('role', 'Kepala Dinas')->first()->name }}</h5>
+                        </center>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    @elseif(auth()->user()->role == 'Kepala Dinas')
+        @foreach ($fields as $field)
+            <br>
+            <h4 class="text-align:center">{{ $field->name }}</h4>
+            <table width="100%" border=1 style="border-collapse: collapse" class="tab">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="text-center" style="  vertical-align: middle;">KodeRek</th>
+                        <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan</th>
+                        <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
+                        <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                        <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Anggaran</th>
+                        <th class="text-center">Realisasi</th>
+                        <th class="text-center">Kinerja%</th>
+                    </tr>
+                </thead>
+                @php
+                    $totalBudget = 0;
+                    $totalRealization = 0;
+                    $totalFinancePerformance = 0;
+                    $totalPhysical = 0;
+                    $totalIndicator = 0;
+                    $countFinancePerformance = 0;
+                    $countActivityOutcome = 0;
+                @endphp
+                <tbody>
+                    @foreach ($data->where('field_id', $field->id) as $subActivity)
+                        @php
+                            $plotSubActivity = $subActivity->getPlotting->first();
+                        @endphp
+                        @php
+                            $totalBudget += $plotSubActivity->budget;
+                            $totalRealization += $plotSubActivity->finance_realization;
+                            $totalFinancePerformance += \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity);
+                            $countFinancePerformance++;
+                            $totalPhysical += \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id);
+                            $countActivityOutcome++;
+                        @endphp
+                        <tr>
+                            <td></td>
+                            <td>{{ $subActivity->sub_activity_name }}</td>
+                            <td>Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
+                            </td>
+                            <td>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}
+                            </td>
+                            <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%</td>
+                            <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%</td>
+                            <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="2">
+                            <center>Jumlah</center>
+                        </td>
+                        <td>Rp{{ number_format($totalBudget, 0, '', '.') }}</td>
+                        <td>Rp{{ number_format($totalRealization, 0, '', '.') }}
+                        </td>
+                        <td>{{ $countFinancePerformance > 0 ? round($totalFinancePerformance / $countFinancePerformance, 2) : 0 }}%
+                        </td>
+                        <td>{{ $countActivityOutcome > 0 ? round($totalPhysical / $countActivityOutcome, 2) : 0 }}%
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td colspan="2">
+                            <center>
+                                <p>Ciamis,...... {{ session('monthName') }} {{ session('yearName') }} <br>
+                                    Kepala Dinas Peternakan dan Perikanan <br>
+                                    Kabupaten Ciamis
+                                </p>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+
+                                <h5>{{ @\App\Models\User::where('role', 'Kepala Dinas')->first()->name }}</h5>
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @if (!$loop->last)
+                <div class="page_break"></div>
+            @endif
+        @endforeach
+    @endif
 </body>
 
 </html>

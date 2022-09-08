@@ -209,7 +209,7 @@ class UserController extends Controller
         $request->validate([
             'report' => 'required'
         ]);
-
+        $fields = Field::all();
         if ($request->report == 'program') {
             if (auth()->user()->role == 'Kepala Bidang') {
                 $data =  Program::withAndWhereHas('getPlotting', function ($query) {
@@ -220,7 +220,7 @@ class UserController extends Controller
                     $query->where('month', session('month'));
                 })->where('year', session('year'))->get();
             }
-            $pdf = PDF::loadview('layouts.program_pdf', ['data' => $data]);
+            $pdf = PDF::loadview('layouts.program_pdf', ['data' => $data, 'fields' => $fields]);
             $pdf->setPaper('A4', 'landscape');
             $file =  "report_program" . "_" .  date('Ymdhis') . ".pdf";
             return $pdf->download($file);
@@ -235,7 +235,7 @@ class UserController extends Controller
                     $query->where('month', session('month'));
                 })->where('year', session('year'))->get();
             }
-            $pdf = PDF::loadview('layouts.activity_pdf', ['data' => $data]);
+            $pdf = PDF::loadview('layouts.activity_pdf', ['data' => $data, 'fields' => $fields]);
             $pdf->setPaper('A4', 'landscape');
             $file =  "report_kegiatan" . "_" .  date('Ymdhis') . ".pdf";
             return $pdf->download($file);
@@ -250,7 +250,7 @@ class UserController extends Controller
                     $query->where('month', session('month'));
                 })->where('year', session('year'))->get();
             }
-            $pdf = PDF::loadview('layouts.sub_activity_pdf', ['data' => $data]);
+            $pdf = PDF::loadview('layouts.sub_activity_pdf', ['data' => $data, 'fields' => $fields]);
             $pdf->setPaper('A4', 'landscape');
             $file =  "report_subKegiatan" . "_" .  date('Ymdhis') . ".pdf";
             return $pdf->download($file);

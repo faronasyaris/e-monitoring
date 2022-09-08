@@ -24,6 +24,7 @@
                         <tr>
                             <th max-widht="5%" class="text-center">No</th>
                             <th max-widht="5%" class="text-center">Nama Program</th>
+                            <th>Status</th>
                             <th widht="15%" class="text-center">Kinerja Fisik</th>
                             <th widht="15%" class="text-center">Kinerja Indikator</th>
                             <th widht="15%" class="text-center">Kinerja Keuangan</th>
@@ -37,6 +38,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $program->program_name }}</td>
+                                <td>{!! App\Models\User::getStatusLabel(\App\Models\ProgramOutcome::countPhysicalPerformance($program->id)) !!}
                                 <td class="text-center">
                                     {{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%
                                 </td>

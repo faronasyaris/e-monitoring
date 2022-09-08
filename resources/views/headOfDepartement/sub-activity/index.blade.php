@@ -24,6 +24,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Sub Kegiatan</th>
+                            <th>Status</th>
                             <th>Kinerja Indikator</th>
                             <th>Kinerja Keuangan</th>
                             <th>Total Anggaran</th>
@@ -55,6 +56,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $sub_activity->sub_activity_name }}</td>
+                                                <td>{!! App\Models\User::getStatusLabel(\App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id)) !!}</td>
                                                 <td class="text-center">
                                                     {{ \App\Models\SubActivityOutput::countIndicatorPerformance($sub_activity->id) }}%
                                                 </td>

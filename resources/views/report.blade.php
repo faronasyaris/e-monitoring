@@ -52,115 +52,268 @@
                 <div class="clearfix"></div>
             </div>
             @if (Request::get('report') == 'program')
-                <table id="tableProgram" class="table table-striped table-bordered d-flex">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Program</th>
-                            <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
-                            </th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
-                        </tr>
-                        <tr>
-                            <th class="text-center">Anggaran</th>
-                            <th class="text-center">Realisasi</th>
-                            <th class="text-center">Kinerja%</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($programs as $program)
+                @if (auth()->user()->role == 'Kepala Bidang')
+                    <table id="tableProgram" class="table table-striped table-bordered d-flex">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $program->program_name }}</td>
-                                <td>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalBudget'], 0, '', '.') }}
-                                </td>
-                                <td>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalFinance'], 0, '', '.') }}
-                                </td>
-                                <td>{{ \App\Models\Program::countProgramFinance($program->id)['performance'] }}%</td>
-                                <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%</td>
-                                <td>{{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%</td>
-                                <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) < 100 ? 'Perlu Evaluasi' : '-' }}
-                                </td>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Program</th>
+                                <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
+                                </th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            <tr>
+                                <th class="text-center">Anggaran</th>
+                                <th class="text-center">Realisasi</th>
+                                <th class="text-center">Kinerja%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($programs as $program)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $program->program_name }}</td>
+                                    <td>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalBudget'], 0, '', '.') }}
+                                    </td>
+                                    <td>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalFinance'], 0, '', '.') }}
+                                    </td>
+                                    <td>{{ \App\Models\Program::countProgramFinance($program->id)['performance'] }}%</td>
+                                    <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%</td>
+                                    <td>{{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%</td>
+                                    <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @elseif(auth()->user()->role == 'Kepala Dinas')
+                    @foreach ($fields as $field)
+                        <br>
+                        <h5 class="text-center">{{ $field->name }}</h5>
+                        <table class="table table-striped table-bordered d-flex">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Program</th>
+                                    <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja
+                                        Indikator %
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Anggaran</th>
+                                    <th class="text-center">Realisasi</th>
+                                    <th class="text-center">Kinerja%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($programs->where('field_id', $field->id) as $program)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $program->program_name }}</td>
+                                        <td>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalBudget'], 0, '', '.') }}
+                                        </td>
+                                        <td>Rp{{ number_format(\App\Models\Program::countProgramFinance($program->id)['totalFinance'], 0, '', '.') }}
+                                        </td>
+                                        <td>{{ \App\Models\Program::countProgramFinance($program->id)['performance'] }}%
+                                        </td>
+                                        <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) }}%</td>
+                                        <td>{{ \App\Models\ProgramOutcome::countIndicatorPerformance($program->id) }}%</td>
+                                        <td>{{ \App\Models\ProgramOutcome::countPhysicalPerformance($program->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <br>
+                    @endforeach
+                @endif
             @elseif(Request::get('report') == 'kegiatan')
-                <table id="tableProgram" class="table table-striped table-bordered d-flex">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kegiatan</th>
-                            <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
-                            </th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
-
-                        </tr>
-                        <tr>
-                            <th class="text-center">Anggaran</th>
-                            <th class="text-center">Realisasi</th>
-                            <th class="text-center">Kinerja%</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($activities as $activity)
+                @if (auth()->user()->role == 'Kepala Bidang')
+                    <table id="tableProgram" class="table table-striped table-bordered d-flex">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $activity->activity_name }}</td>
-                                <td>Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalBudget'], 0, '', '.') }}
-                                </td>
-                                <td>Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalFinance'], 0, '', '.') }}
-                                </td>
-                                <td>{{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%</td>
-                                <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
-                                <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
-                                <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kegiatan</th>
+                                <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja Indikator %
+                                </th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
 
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            <tr>
+                                <th class="text-center">Anggaran</th>
+                                <th class="text-center">Realisasi</th>
+                                <th class="text-center">Kinerja%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($activities as $activity)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $activity->activity_name }}</td>
+                                    <td>Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalBudget'], 0, '', '.') }}
+                                    </td>
+                                    <td>Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalFinance'], 0, '', '.') }}
+                                    </td>
+                                    <td>{{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%
+                                    </td>
+                                    <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
+                                    <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%</td>
+                                    <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @elseif(auth()->user()->role == 'Kepala Dinas')
+                    @foreach ($fields as $field)
+                        <br>
+                        <h5 class="text-center">{{ $field->name }}</h5>
+                        <table id="tableProgram" class="table table-striped table-bordered d-flex">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kegiatan
+                                    </th>
+                                    <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Kinerja
+                                        Indikator %
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak
+                                        Lanjut
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Anggaran</th>
+                                    <th class="text-center">Realisasi</th>
+                                    <th class="text-center">Kinerja%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($activities->where('field_id', $field->id) as $activity)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $activity->activity_name }}</td>
+                                        <td>Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalBudget'], 0, '', '.') }}
+                                        </td>
+                                        <td>Rp{{ number_format(\App\Models\Activity::countActivityFinance($activity->id)['totalFinance'], 0, '', '.') }}
+                                        </td>
+                                        <td>{{ \App\Models\Activity::countActivityFinance($activity->id)['performance'] }}%
+                                        </td>
+                                        <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%
+                                        </td>
+                                        <td> {{ \App\Models\ActivityOutcome::countIndicatorPerformance($activity->id) }}%
+                                        </td>
+                                        <td>{{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <br>
+                    @endforeach
+                @endif
             @elseif(Request::get('report') == 'subKegiatan')
-                <table id="tableProgram" class="table table-striped table-bordered d-flex">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan</th>
-                            <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
-                            <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut</th>
-
-                        </tr>
-                        <tr>
-                            <th class="text-center">Anggaran</th>
-                            <th class="text-center">Realisasi</th>
-                            <th class="text-center">Kinerja%</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($subActivities as $subActivity)
-                            @php
-                                $plotSubActivity = $subActivity->getPlotting->first();
-                            @endphp
+                @if (auth()->user()->role == 'Kepala Bidang')
+                    <table id="tableProgram" class="table table-striped table-bordered d-flex">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $subActivity->sub_activity_name }}</td>
-                                <td>Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
-                                </td>
-                                <td>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}
-                                </td>
-                                <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%</td>
-                                <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%</td>
-                                <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan
+                                </th>
+                                <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                                <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak Lanjut
+                                </th>
 
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            <tr>
+                                <th class="text-center">Anggaran</th>
+                                <th class="text-center">Realisasi</th>
+                                <th class="text-center">Kinerja%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($subActivities as $subActivity)
+                                @php
+                                    $plotSubActivity = $subActivity->getPlotting->first();
+                                @endphp
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $subActivity->sub_activity_name }}</td>
+                                    <td>Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
+                                    </td>
+                                    <td>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}
+                                    </td>
+                                    <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%
+                                    </td>
+                                    <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%
+                                    </td>
+                                    <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @elseif(auth()->user()->role == 'Kepala Dinas')
+                    @foreach ($fields as $field)
+                        <br>
+                        <h5 class="text-center">{{ $field->name }}</h5>
+                        <table id="tableProgram" class="table table-striped table-bordered d-flex">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">No</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Sub Kegiatan
+                                    </th>
+                                    <th colspan="3" class="text-center" style="  vertical-align: middle;">Keuangan
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Fisik %</th>
+                                    <th rowspan="2" class="text-center" style="  vertical-align: middle;">Tindak
+                                        Lanjut
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Anggaran</th>
+                                    <th class="text-center">Realisasi</th>
+                                    <th class="text-center">Kinerja%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($subActivities->where('field_id', $field->id) as $subActivity)
+                                    @php
+                                        $plotSubActivity = $subActivity->getPlotting->first();
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $subActivity->sub_activity_name }}</td>
+                                        <td>Rp{{ number_format($plotSubActivity->budget, 0, '', '.') }}
+                                        </td>
+                                        <td>Rp{{ number_format($plotSubActivity->finance_realization, 0, '', '.') }}
+                                        </td>
+                                        <td>{{ \App\Models\PlottingSubActivity::countFinancePerformance($plotSubActivity) }}%
+                                        </td>
+                                        <td> {{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) }}%
+                                        </td>
+                                        <td>{{ \App\Models\SubActivityOutput::countIndicatorPerformance($subActivity->id) < 100 ? 'Perlu Evaluasi' : '-' }}
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <br>
+                    @endforeach
+                @endif
             @endif
             <hr>
             @if (!empty(Request::get('report')))

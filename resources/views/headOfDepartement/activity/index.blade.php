@@ -24,6 +24,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Kegiatan</th>
+                            <th>Status</th>
                             <th>Kinerja Fisik</th>
                             <th>Kinerja Indikator</th>
                             <th>Kinerja Keuangan</th>
@@ -44,6 +45,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $activity->activity_name }}</td>
+                                        <td>{!! App\Models\User::getStatusLabel(\App\Models\ActivityOutcome::countPhysicalPerformance($activity->id)) !!}
+
                                         <td class="text-center">
                                             {{ \App\Models\ActivityOutcome::countPhysicalPerformance($activity->id) }}%</td>
                                         <td class="text-center">

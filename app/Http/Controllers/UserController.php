@@ -179,6 +179,7 @@ class UserController extends Controller
 
     public function reportView()
     {
+        $fields = Field::all();
         if (auth()->user()->role == 'Kepala Bidang') {
             $programs =  Program::withAndWhereHas('getPlotting', function ($query) {
                 $query->where('month', session('month'));
@@ -200,7 +201,7 @@ class UserController extends Controller
                 $query->where('month', session('month'));
             })->where('year', session('year'))->get();
         }
-        return view('report', compact('programs', 'activities', 'subActivities'));
+        return view('report', compact('programs', 'activities', 'subActivities', 'fields'));
     }
 
     public function downloadReport(Request $request)
